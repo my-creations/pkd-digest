@@ -1,0 +1,7 @@
+# Generated draft shortlists (re-run scripts/curate-shortlist.py locally)
+curation/generated/
+__pycache__/
+*.pyc
+.Python
+.venv/
+venv/
