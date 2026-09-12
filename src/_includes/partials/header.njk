@@ -12,7 +12,7 @@
       <span class="wordmark__label" aria-hidden="true">{% if locale == 'pt' %}PKD Digest{% else %}Digest DRP{% endif %}</span>
     </a>
 
-    <nav class="nav" aria-label="Primary">
+    <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
       <ul class="nav__list">
         <li>
           <a href="{{ homePath | url }}" {% if pageType == 'home' %}aria-current="page"{% endif %}>{{ t.nav.home }}</a>
@@ -27,9 +27,13 @@
           <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
             {% if locale == 'pt' %}
               <a class="locale-option" href="{{ langPath | url }}" hreflang="en" lang="en">EN</a>
-              <span class="locale-option is-current" lang="pt" aria-current="true">PT</span>
+              <span class="locale-option is-current" lang="pt" aria-current="true">
+                <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>PT
+              </span>
             {% else %}
-              <span class="locale-option is-current" lang="en" aria-current="true">EN</span>
+              <span class="locale-option is-current" lang="en" aria-current="true">
+                <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>EN
+              </span>
               <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
             {% endif %}
           </div>

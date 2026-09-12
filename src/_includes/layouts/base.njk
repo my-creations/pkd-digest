@@ -3,11 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title or site.title[locale or site.defaultLocale] }} · {{ site.name }}</title>
-    <meta
-      name="description"
-      content="{{ description or site.description[locale or site.defaultLocale] }}"
-    />
+    {% include "partials/meta.njk" %}
     <link rel="stylesheet" href="{{ '/css/main.css' | url }}" />
   </head>
   <body class="site-body" data-page="{{ pageType or 'page' }}">

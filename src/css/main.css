@@ -57,8 +57,37 @@ a:hover {
   z-index: 10;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .skip-link:focus {
   top: 1rem;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .site-header,
@@ -365,4 +394,10 @@ h2 {
 
 .site-footer p {
   margin: 0 0 0.4rem;
+}
+
+.issue-label {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted, #555);
 }

@@ -1,0 +1,37 @@
+{% set loc = locale or site.defaultLocale %}
+{% set metaTitle = title or site.title[loc] %}
+{% set metaDescription = description or site.description[loc] %}
+{% set canonicalUrl = site.url + (page.url | url) %}
+{% if loc == 'pt' %}
+  {% set ogLocale = 'pt_PT' %}
+{% else %}
+  {% set ogLocale = 'en_GB' %}
+{% endif %}
+{% if pageType == 'digest' %}
+  {% set section = 'digest' %}
+{% elif pageType == 'timeline' %}
+  {% set section = 'timeline' %}
+{% else %}
+  {% set section = 'home' %}
+{% endif %}
+{% set enHref = site.url + ('en' | sectionHref(section) | url) %}
+{% set ptHref = site.url + ('pt' | sectionHref(section) | url) %}
+
+<title>{{ metaTitle }} · {{ site.name }}</title>
+<meta name="description" content="{{ metaDescription }}" />
+<link rel="canonical" href="{{ canonicalUrl }}" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ metaTitle }}" />
+<meta property="og:description" content="{{ metaDescription }}" />
+<meta property="og:url" content="{{ canonicalUrl }}" />
+<meta property="og:site_name" content="{{ site.name }}" />
+<meta property="og:locale" content="{{ ogLocale }}" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{{ metaTitle }}" />
+<meta name="twitter:description" content="{{ metaDescription }}" />
+
+<link rel="alternate" hreflang="en" href="{{ enHref }}" />
+<link rel="alternate" hreflang="pt" href="{{ ptHref }}" />
+<link rel="alternate" hreflang="x-default" href="{{ enHref }}" />
