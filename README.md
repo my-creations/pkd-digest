@@ -5,8 +5,6 @@ Weekly bilingual **EN+PT** curated digest on **cystic kidney disease** (general 
 **Dual audience:** patients & families + clinicians  
 **Dual framing per item:** plain-language summary + clinical note
 
-> **Curation (later, out of scope for this PR):** assisted shortlist from PubMed/RSS → human publish. Mentioned here only; not implemented in this scaffold.
-
 ## Site
 
 - **Public URL:** https://my-creations.github.io/pkd-digest/
@@ -50,6 +48,17 @@ Paths above are without `pathPrefix`. With the default prefix, Pages serves them
 See [`docs/content-model.md`](docs/content-model.md).
 
 Cards: `src/content/items/*.md` with nested `summary.en` / `summary.pt` and `clinicalNote.en` / `clinicalNote.pt` in one file.
+
+## Assisted curation (draft shortlist → human publish)
+
+v1 curation is **assisted**, not automatic:
+
+1. Run `python3 scripts/curate-shortlist.py` to fetch public PubMed candidates (optional RSS via `--rss`; optional `--issue YYYY-Www`).
+2. Review the draft shortlist under `curation/generated/` and draft cards under `src/content/items/` (`status: draft`).
+3. Complete EN+PT Dual Framing on keepers, set `issue` if needed, set `status: published`; remove rejected drafts.
+4. Ship through the normal PR / Pages workflow.
+
+**Guarantees:** no API keys or secrets in the repo; no GitHub Action auto-publishes shortlist output to Pages. See [`curation/README.md`](curation/README.md) for the full workflow and front-matter contract.
 
 ## License / medical disclaimer
 
