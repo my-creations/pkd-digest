@@ -1,6 +1,8 @@
 # Content model
 
-Locked for Dev 1 / Dev 2 alignment. Cards live as Markdown files under `src/content/items/*.md`.
+Locked for Dev 1 / Dev 2 / Dev 3 alignment. Cards live as Markdown files under `src/content/items/*.md`.
+
+See also [`CONTEXT.md`](../CONTEXT.md) for product vocabulary (PKD Digest / Digest DRP, Weekly Issue, Dual Framing, Assisted Curation).
 
 ## Dual nested fields (one card, both locales)
 
@@ -12,18 +14,63 @@ Each card carries EN and PT in the **same** file. Do **not** split into locale-s
 | ------------------------------------- | ---------------------- | ------------------------------------------------------------- |
 | `title`                               | string                 | Card title (shared)                                           |
 | `date`                                | date                   | ISO-friendly date; drives timeline order                      |
-| `source`                              | object                 | `{ url, name }` — external source                             |
-| `tags`                                | string[]               | Topic tags                                                    |
-| `audience`                            | string[]               | e.g. `patients`, `clinicians`                                 |
+| `issue`                               | string (optional)      | ISO week `YYYY-Www` grouping cards into a Weekly Issue        |
+| `source`                              | object                 | `{ url, name }` — external source (`url` required)            |
+| `tags`                                | string[]               | Topic tags (locked set below)                                 |
+| `audience`                            | string[]               | Locked: `patients`, `clinicians` (one or both)                |
 | `summary.en` / `summary.pt`           | string                 | Plain-language summary                                        |
 | `clinicalNote.en` / `clinicalNote.pt` | string                 | Short clinical framing                                        |
 | `status`                              | `published` \| `draft` | Only `published` is meant for public lists later              |
 | `placeholder`                         | boolean                | `true` for scaffold/sample cards with no real clinical claims |
 
-## Sample card
+## Locked vocabularies
 
-`src/content/items/sample-placeholder.md` is marked `placeholder: true` and `status: draft`. It uses lorem/sample copy only.
+### `tags` (topic)
+
+When `placeholder` is `false`, each tag must be one of:
+
+- `research`
+- `treatment`
+- `lifestyle`
+- `advocacy`
+
+When `placeholder` is `true`, `sample` and `placeholder` tags are also allowed (layout samples only).
+
+### `audience`
+
+Only:
+
+- `patients`
+- `clinicians`
+
+### `issue`
+
+Optional. When present, must match `^\d{4}-W\d{2}$` (ISO week). Cards that share an `issue` form one **Weekly Issue**.
+
+## Sample weekly issue
+
+`issue: "2026-W36"` is the fictional sample week:
+
+- `src/content/items/sample-placeholder.md`
+- `src/content/items/sample-placeholder-2.md`
+
+Both are `placeholder: true` and `status: draft` with lorem/sample copy only — no real clinical claims.
+
+## Assisted curation (Dev 3)
+
+Shortlist emitters should write draft markdown under `src/content/items/` with:
+
+- `status: draft`
+- `source.url` / `source.name` filled
+- best-guess `tags` + `audience`
+- `summary` / `clinicalNote` empty strings or a one-line title stub
+- `placeholder: false` for real candidates (humans still publish)
+
+Human publish flips `status` to `published` and writes full EN+PT Dual Framing. **No auto-publish.**
 
 ## Rendering (v1)
 
-Cards feed Eleventy collections (`digestItems`, `publishedItems`). They do not emit standalone permalinks in this scaffold; Digest and Timeline pages list them.
+Cards feed Eleventy collections (`digestItems`, `publishedItems`, `latestIssueItems`). They do not emit standalone permalinks in this scaffold.
+
+- **Digest** (`/digest/`, `/pt/digest/`): lists `latestIssueItems` (cards for the newest `issue`, or all cards if none set). Reuses `partials/item-card.njk`.
+- **Timeline** (`/timeline/`, `/pt/timeline/`): lists all `digestItems` chronologically (same card partial).

@@ -45,6 +45,14 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.date - a.date)
   );
 
+  eleventyConfig.addCollection('latestIssueItems', (collectionApi) => {
+    const items = collectionApi.getFilteredByGlob('src/content/items/*.md').sort((a, b) => b.date - a.date);
+    const withIssue = items.filter((item) => typeof item.data.issue === 'string' && item.data.issue);
+    if (withIssue.length === 0) return items;
+    const latestIssue = withIssue[0].data.issue;
+    return withIssue.filter((item) => item.data.issue === latestIssue).sort((a, b) => b.date - a.date);
+  });
+
   return {
     dir: {
       input: 'src',

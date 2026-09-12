@@ -1,6 +1,7 @@
 ---
 title: Sample placeholder card (not clinical content)
 date: 2026-09-01
+issue: '2026-W36'
 source:
   url: https://example.com/sample-source
   name: Example Source (placeholder)
@@ -20,4 +21,4 @@ status: draft
 placeholder: true
 ---
 
-Body copy is optional for v1 cards; dual nested `summary` and `clinicalNote` fields carry the bilingual framing.
+Body copy is optional for v1 cards; dual nested `summary` and `clinicalNote` fields carry the bilingual framing. Part of sample weekly issue `2026-W36`.
