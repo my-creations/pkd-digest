@@ -1,24 +1,24 @@
 ---
-title: Sample placeholder card (not clinical content)
+title: '[Sample] Living with cystic kidney disease — what a weekly digest covers'
 date: 2026-09-01
 issue: '2026-W36'
 source:
-  url: https://example.com/sample-source
-  name: Example Source (placeholder)
+  url: https://example.com/sample-pkd-overview
+  name: Example Journal (placeholder)
 tags:
   - sample
-  - placeholder
+  - lifestyle
 audience:
   - patients
   - clinicians
 summary:
-  en: This is a lorem-ipsum style plain-language summary for layout review. It does not describe any real study, treatment, or clinical claim.
-  pt: Este é um resumo em linguagem simples (lorem ipsum) para rever o layout. Não descreve qualquer estudo, tratamento ou afirmação clínica real.
+  en: 'Fictional layout sample. This card shows how a plain-language blurb might introduce a cystic kidney disease update for patients and families. It is not a real study and makes no clinical claims.'
+  pt: 'Amostra fictícia de layout. Este cartão mostra como um texto em linguagem simples pode apresentar uma atualização sobre doença renal quística a doentes e famílias. Não é um estudo real e não faz afirmações clínicas.'
 clinicalNote:
-  en: Placeholder clinical note. No real evidence, endpoints, or recommendations — sample text only for the scaffold.
-  pt: Nota clínica de placeholder. Sem evidência, endpoints ou recomendações reais — apenas texto de amostra para o scaffold.
+  en: 'Placeholder clinical note only. No endpoints, populations, or recommendations — reserved for real curated items later.'
+  pt: 'Nota clínica de placeholder apenas. Sem endpoints, populações ou recomendações — reservada a itens reais curados mais tarde.'
 status: draft
 placeholder: true
 ---
 
-Body copy is optional for v1 cards; dual nested `summary` and `clinicalNote` fields carry the bilingual framing. Part of sample weekly issue `2026-W36`.
+Sample card for weekly issue `2026-W36` (fictional).

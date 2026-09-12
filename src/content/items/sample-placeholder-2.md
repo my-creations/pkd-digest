@@ -1,10 +1,10 @@
 ---
-title: Second sample card for weekly issue 2026-W36 (not clinical content)
+title: '[Sample] Research round-up — how evidence appears beside the plain blurb'
 date: 2026-09-03
 issue: '2026-W36'
 source:
-  url: https://example.com/sample-source-2
-  name: Example Source 2 (placeholder)
+  url: https://example.com/sample-research-roundup
+  name: Example PubMed-style source (placeholder)
 tags:
   - sample
   - research
@@ -12,13 +12,13 @@ audience:
   - patients
   - clinicians
 summary:
-  en: A second fictional card so the weekly digest layout can show more than one item. Purely for UI review — no real paper, guideline, or patient advice.
-  pt: Um segundo cartão fictício para o layout do digest semanal mostrar mais do que um item. Apenas para rever a UI — sem artigo, guideline ou conselho real.
+  en: 'Second fictional card for the same sample week. Demonstrates dual framing: families get a short explanation; clinicians get a denser note underneath. Not real evidence.'
+  pt: 'Segundo cartão fictício da mesma semana de exemplo. Mostra o enquadramento dual: famílias leem uma explicação curta; clínicos veem uma nota mais densa por baixo. Não é evidência real.'
 clinicalNote:
-  en: Placeholder clinical note for the second sample card. Ignore as evidence.
-  pt: Nota clínica de placeholder no segundo cartão de amostra. Ignorar como evidência.
+  en: 'Placeholder: pretend abstract-level framing (design/population/outcome) without inventing a real paper. Ignore as citation.'
+  pt: 'Placeholder: fingir enquadramento ao nível de abstract (desenho/população/desfecho) sem inventar um artigo real. Ignorar como citação.'
 status: draft
 placeholder: true
 ---
 
-Second card in sample weekly issue `2026-W36`.
+Second sample card for weekly issue `2026-W36` (fictional).

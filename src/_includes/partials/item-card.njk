@@ -43,5 +43,13 @@
         {{ item.data.audience | join(', ') }}
       </p>
     {% endif %}
+    {% if item.data.tags %}
+      <p class="item-card__tags">
+        <span class="item-card__label">{{ t.digest.tagsLabel }}:</span>
+        {% for tag in item.data.tags %}
+          <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </p>
+    {% endif %}
   </footer>
 </article>
