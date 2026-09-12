@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-09-12T00:00:00+00:00",
+  "label": "DRAFT / NOT PUBLISHED — for human review only",
+  "queryNote": "Example payload shape from scripts/curate-shortlist.py (public PubMed; no secrets).",
+  "count": 1,
+  "items": [
+    {
+      "title": "Sample ADPKD research card (placeholder)",
+      "date": "2026-09-12",
+      "source": {
+        "url": "https://pubmed.ncbi.nlm.nih.gov/",
+        "name": "PubMed | example"
+      },
+      "tags": ["research", "treatment"],
+      "audience": ["patients", "clinicians"],
+      "summary": {
+        "en": "Placeholder stub — replace after human review.",
+        "pt": ""
+      },
+      "clinicalNote": {
+        "en": "",
+        "pt": ""
+      },
+      "status": "draft",
+      "placeholder": true,
+      "pmid": ""
+    }
+  ]
+}
