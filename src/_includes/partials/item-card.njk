@@ -16,7 +16,7 @@
   </header>
 
   <div class="item-card__body">
-    <section class="item-card__block">
+    <section class="item-card__block item-card__block--plain">
       <h4 class="item-card__label">{{ t.digest.plainLabel }}</h4>
       <p>{{ summaryText }}</p>
     </section>
@@ -47,7 +47,7 @@
       <p class="item-card__tags">
         <span class="item-card__label">{{ t.digest.tagsLabel }}:</span>
         {% for tag in item.data.tags %}
-          <span class="tag">{{ tag }}</span>
+          <span class="tag badge badge--outline">{{ tag }}</span>
         {% endfor %}
       </p>
     {% endif %}
