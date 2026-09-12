@@ -33,7 +33,7 @@ module.exports = {
     },
     digest: {
       title: 'Weekly digest',
-      lede: 'Placeholder issue page. Published cards will appear here once curation begins.',
+      lede: 'Sample weekly issue for layout review. Cards below are fictional placeholders — not clinical content.',
       empty: 'No published items yet. A sample placeholder card lives in the content model for layout review.',
       issueLabel: 'Sample weekly issue',
       placeholderBadge: 'Placeholder',
@@ -42,6 +42,7 @@ module.exports = {
       clinicalLabel: 'Clinical note',
       sourceLabel: 'Source',
       audienceLabel: 'Audience',
+      tagsLabel: 'Tags',
     },
     timeline: {
       title: 'Timeline',
@@ -83,7 +84,7 @@ module.exports = {
     },
     digest: {
       title: 'Digest semanal',
-      lede: 'Página-placeholder da edição. Os cartões publicados aparecerão aqui quando a curadoria começar.',
+      lede: 'Edição semanal de exemplo para rever o layout. Os cartões abaixo são placeholders fictícios — não são conteúdo clínico.',
       empty: 'Ainda não há itens publicados. Existe um cartão de exemplo no modelo de conteúdo para rever o layout.',
       issueLabel: 'Edição semanal de exemplo',
       placeholderBadge: 'Exemplo',
@@ -92,6 +93,7 @@ module.exports = {
       clinicalLabel: 'Nota clínica',
       sourceLabel: 'Fonte',
       audienceLabel: 'Público',
+      tagsLabel: 'Etiquetas',
     },
     timeline: {
       title: 'Cronologia',

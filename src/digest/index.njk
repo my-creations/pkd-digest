@@ -9,14 +9,18 @@ eleventyComputed:
 ---
 {% set t = i18n.en %}
 {% set locale = 'en' %}
+{% set items = collections.latestIssueItems %}
+{% set latestIssue = items.length and items[0].data.issue %}
 
 <section class="page-header">
   <h1>{{ t.digest.title }}</h1>
   <p class="lede">{{ t.digest.lede }}</p>
+  {% if latestIssue %}
+    <p class="issue-label">{{ t.digest.issueLabel }} <strong>{{ latestIssue }}</strong></p>
+  {% endif %}
 </section>
 
 <section class="section">
-  {% set items = collections.digestItems %}
   {% if items.length %}
     <div class="card-stack">
       {% for item in items %}

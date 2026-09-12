@@ -49,7 +49,7 @@ Paths above are without `pathPrefix`. With the default prefix, Pages serves them
 
 ## Content model
 
-See [`docs/content-model.md`](docs/content-model.md).
+See [`docs/content-model.md`](docs/content-model.md) and [`CONTEXT.md`](CONTEXT.md).
 
 Cards: `src/content/items/*.md` with nested `summary.en` / `summary.pt` and `clinicalNote.en` / `clinicalNote.pt` in one file.
 
