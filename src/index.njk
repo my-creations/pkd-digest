@@ -1,0 +1,35 @@
+---
+layout: layouts/base.njk
+permalink: /
+translationKey: home
+pageType: home
+eleventyComputed:
+  title: "{{ site.title.en }}"
+  description: "{{ site.description.en }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="hero">
+  <p class="eyebrow">{{ t.home.eyebrow }}</p>
+  <h1>{{ t.home.headline }}</h1>
+  <p class="lede">{{ t.home.lede }}</p>
+  <p class="audiences">{{ t.home.audiences }}</p>
+  <div class="hero__actions">
+    <a class="button button--primary" href="{{ '/digest/' | url }}">{{ t.home.ctaDigest }}</a>
+    <a class="button button--secondary" href="{{ '/timeline/' | url }}">{{ t.home.ctaTimeline }}</a>
+  </div>
+</section>
+
+<section class="section">
+  <h2>{{ t.home.howTitle }}</h2>
+  <ul class="feature-list">
+    <li>{{ t.home.howPlain }}</li>
+    <li>{{ t.home.howClinical }}</li>
+  </ul>
+</section>
+
+<section class="section section--muted">
+  <h2>{{ t.home.curationTitle }}</h2>
+  <p>{{ t.home.curationBody }}</p>
+</section>

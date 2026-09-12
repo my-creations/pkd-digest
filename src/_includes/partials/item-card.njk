@@ -1,0 +1,47 @@
+{% set t = i18n[locale] %}
+{% set summaryText = item.data.summary | localized(locale) %}
+{% set clinicalText = item.data.clinicalNote | localized(locale) %}
+<article class="item-card{% if item.data.placeholder %} item-card--placeholder{% endif %}">
+  <header class="item-card__header">
+    <h3 class="item-card__title">{{ item.data.title }}</h3>
+    <p class="item-card__meta">
+      <time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time>
+      {% if item.data.placeholder %}
+        <span class="badge badge--placeholder">{{ t.digest.placeholderBadge }}</span>
+      {% endif %}
+      {% if item.data.status == 'draft' %}
+        <span class="badge badge--draft">{{ t.digest.draftBadge }}</span>
+      {% endif %}
+    </p>
+  </header>
+
+  <div class="item-card__body">
+    <section class="item-card__block">
+      <h4 class="item-card__label">{{ t.digest.plainLabel }}</h4>
+      <p>{{ summaryText }}</p>
+    </section>
+    <section class="item-card__block item-card__block--clinical">
+      <h4 class="item-card__label">{{ t.digest.clinicalLabel }}</h4>
+      <p>{{ clinicalText }}</p>
+    </section>
+  </div>
+
+  <footer class="item-card__footer">
+    {% if item.data.source %}
+      <p>
+        <span class="item-card__label">{{ t.digest.sourceLabel }}:</span>
+        {% if item.data.source.url %}
+          <a href="{{ item.data.source.url }}" rel="noopener noreferrer">{{ item.data.source.name or item.data.source.url }}</a>
+        {% else %}
+          {{ item.data.source.name }}
+        {% endif %}
+      </p>
+    {% endif %}
+    {% if item.data.audience %}
+      <p>
+        <span class="item-card__label">{{ t.digest.audienceLabel }}:</span>
+        {{ item.data.audience | join(', ') }}
+      </p>
+    {% endif %}
+  </footer>
+</article>
