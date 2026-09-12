@@ -35,20 +35,20 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
 Draft cards emit:
 
 ```yaml
-title: "…"
+title: '…'
 date: YYYY-MM-DD
-issue: "YYYY-Www"   # optional Weekly Issue
+issue: 'YYYY-Www' # optional Weekly Issue
 source:
-  url: "https://…"
-  name: "PubMed | journal | outlet"
+  url: 'https://…'
+  name: 'PubMed | journal | outlet'
 tags: [research, treatment, lifestyle, advocacy]
 audience: [patients, clinicians]
 summary:
-  en: "…"
-  pt: ""
+  en: '…'
+  pt: ''
 clinicalNote:
-  en: ""
-  pt: ""
+  en: ''
+  pt: ''
 status: draft
 placeholder: false
 ```
