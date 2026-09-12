@@ -1,0 +1,29 @@
+---
+layout: layouts/base.njk
+permalink: /digest/
+translationKey: digest
+pageType: digest
+eleventyComputed:
+  title: "{{ i18n.en.digest.title }}"
+  description: "{{ i18n.en.digest.lede }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="page-header">
+  <h1>{{ t.digest.title }}</h1>
+  <p class="lede">{{ t.digest.lede }}</p>
+</section>
+
+<section class="section">
+  {% set items = collections.digestItems %}
+  {% if items.length %}
+    <div class="card-stack">
+      {% for item in items %}
+        {% include "partials/item-card.njk" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">{{ t.digest.empty }}</p>
+  {% endif %}
+</section>

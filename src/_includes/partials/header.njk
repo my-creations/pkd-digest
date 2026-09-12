@@ -1,0 +1,40 @@
+{% set t = i18n[locale] %}
+{% set homePath = locale | homeHref %}
+{% set digestPath = locale | sectionHref('digest') %}
+{% set timelinePath = locale | sectionHref('timeline') %}
+{% set switchLocale = locale | otherLocale %}
+{% set langPath = page.url | languageHref(switchLocale) %}
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="{{ homePath | url }}">
+      <span class="wordmark__name">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
+      <span class="wordmark__label" aria-hidden="true">{% if locale == 'pt' %}PKD Digest{% else %}Digest DRP{% endif %}</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li>
+          <a href="{{ homePath | url }}" {% if pageType == 'home' %}aria-current="page"{% endif %}>{{ t.nav.home }}</a>
+        </li>
+        <li>
+          <a href="{{ digestPath | url }}" {% if pageType == 'digest' %}aria-current="page"{% endif %}>{{ t.nav.digest }}</a>
+        </li>
+        <li>
+          <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
+        </li>
+        <li class="nav__language">
+          <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
+            {% if locale == 'pt' %}
+              <a class="locale-option" href="{{ langPath | url }}" hreflang="en" lang="en">EN</a>
+              <span class="locale-option is-current" lang="pt" aria-current="true">PT</span>
+            {% else %}
+              <span class="locale-option is-current" lang="en" aria-current="true">EN</span>
+              <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
+            {% endif %}
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

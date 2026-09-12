@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+permalink: /timeline/
+translationKey: timeline
+pageType: timeline
+eleventyComputed:
+  title: "{{ i18n.en.timeline.title }}"
+  description: "{{ i18n.en.timeline.lede }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="page-header">
+  <h1>{{ t.timeline.title }}</h1>
+  <p class="lede">{{ t.timeline.lede }}</p>
+</section>
+
+<section class="section">
+  {% set items = collections.digestItems %}
+  {% if items.length %}
+    <ol class="timeline-list">
+      {% for item in items %}
+        <li>
+          {% include "partials/item-card.njk" %}
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="empty">{{ t.timeline.empty }}</p>
+  {% endif %}
+</section>
