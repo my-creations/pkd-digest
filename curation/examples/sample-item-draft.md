@@ -1,6 +1,7 @@
 ---
 title: "Sample ADPKD research card (placeholder)"
 date: 2026-09-12
+# issue: "2026-W37"  # optional Weekly Issue
 source:
   url: "https://pubmed.ncbi.nlm.nih.gov/"
   name: "PubMed | example"
@@ -16,4 +17,4 @@ status: draft
 placeholder: true
 ---
 
-<!-- DRAFT / NOT PUBLISHED — example only. Human review required before copying into src/content/items/ -->
+<!-- DRAFT / NOT PUBLISHED — example only. Human review required before set issue + Dual Framing before publish -->

@@ -2,6 +2,8 @@
 """Produce a DRAFT shortlist of PKD / cystic kidney candidates from public PubMed.
 
 No API keys. No auto-publish. Output is labeled draft for human review only.
+Aligns with docs/content-model.md: draft cards under src/content/items/,
+optional issue (YYYY-Www), locked tags/audience, status: draft.
 """
 
 from __future__ import annotations
@@ -257,7 +259,7 @@ def slugify(title: str, pmid: str | None = None) -> str:
 
 
 def to_item_markdown(item: dict) -> str:
-    """Emit one draft card matching planned src/content/items/ front matter."""
+    """Emit one draft card matching docs/content-model.md (src/content/items/)."""
     source = item.get("source") or {}
     tags = item.get("tags") or ["research"]
     audience = item.get("audience") or ["patients", "clinicians"]
@@ -276,38 +278,57 @@ def to_item_markdown(item: dict) -> str:
         "---",
         f"title: {yaml_str(item.get('title') or '')}",
         f"date: {item.get('date') or date.today().isoformat()}",
-        "source:",
-        f"  url: {yaml_str(source.get('url') or '')}",
-        f"  name: {yaml_str(source.get('name') or '')}",
-        f"tags: [{', '.join(tags)}]",
-        f"audience: [{', '.join(audience)}]",
-        "summary:",
-        f"  en: {yaml_str(summary.get('en') or '')}",
-        f"  pt: {yaml_str(summary.get('pt') or '')}",
-        "clinicalNote:",
-        f"  en: {yaml_str(clinical.get('en') or '')}",
-        f"  pt: {yaml_str(clinical.get('pt') or '')}",
-        "status: draft",
-        f"placeholder: {str(bool(item.get('placeholder', False))).lower()}",
-        "---",
-        "",
-        "<!-- DRAFT / NOT PUBLISHED — human review required before copying into src/content/items/ -->",
-        "",
     ]
+    issue = (item.get("issue") or "").strip()
+    if issue:
+        lines.append(f"issue: {yaml_str(issue)}")
+    lines.extend(
+        [
+            "source:",
+            f"  url: {yaml_str(source.get('url') or '')}",
+            f"  name: {yaml_str(source.get('name') or '')}",
+            f"tags: [{', '.join(tags)}]",
+            f"audience: [{', '.join(audience)}]",
+            "summary:",
+            f"  en: {yaml_str(summary.get('en') or '')}",
+            f"  pt: {yaml_str(summary.get('pt') or '')}",
+            "clinicalNote:",
+            f"  en: {yaml_str(clinical.get('en') or '')}",
+            f"  pt: {yaml_str(clinical.get('pt') or '')}",
+            "status: draft",
+            f"placeholder: {str(bool(item.get('placeholder', False))).lower()}",
+            "---",
+            "",
+            "<!-- DRAFT / NOT PUBLISHED — human review required; set issue + Dual Framing before publish -->",
+            "",
+        ]
+    )
     return "\n".join(lines)
 
 
-def write_outputs(items: list[dict], out_dir: Path, stamp: str) -> tuple[Path, Path, Path]:
+
+def write_outputs(
+    items: list[dict],
+    out_dir: Path,
+    stamp: str,
+    items_dir: Path,
+    issue: str | None = None,
+) -> tuple[Path, Path, Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / f"shortlist-{stamp}.json"
     md_path = out_dir / f"shortlist-{stamp}.md"
-    items_dir = out_dir / f"items-{stamp}"
     items_dir.mkdir(parents=True, exist_ok=True)
+
+    if issue:
+        for item in items:
+            item["issue"] = issue
 
     payload = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "label": "DRAFT / NOT PUBLISHED — for human review only",
         "queryNote": "Public PubMed E-utilities (+ optional RSS). No secrets. No auto-publish.",
+        "contentModel": "docs/content-model.md — status: draft under src/content/items/",
+        "issue": issue,
         "count": len(items),
         "items": items,
     }
@@ -316,12 +337,17 @@ def write_outputs(items: list[dict], out_dir: Path, stamp: str) -> tuple[Path, P
     md_lines = [
         f"# DRAFT shortlist — {stamp}",
         "",
-        "> **Not published.** Human reviews this list, then copies chosen cards into `src/content/items/` with `status: published` and full EN+PT summaries.",
+        "> **Not published.** Human reviews this list, completes Dual Framing (EN+PT), optionally sets `issue: YYYY-Www`, then sets `status: published`.",
         "",
         f"Generated: `{payload['generatedAt']}`  ",
         f"Candidates: **{len(items)}**",
+        f"Draft cards dir: `{items_dir}`",
         "",
     ]
+    if issue:
+        md_lines.insert(-1, f"Issue stamp: `{issue}`")
+        md_lines.append("")
+
     for i, item in enumerate(items, 1):
         src = item.get("source") or {}
         md_lines.extend(
@@ -338,11 +364,12 @@ def write_outputs(items: list[dict], out_dir: Path, stamp: str) -> tuple[Path, P
         slug = slugify(item.get("title") or "item", item.get("pmid"))
         card_path = items_dir / f"{slug}.md"
         card_path.write_text(to_item_markdown(item), encoding="utf-8")
-        md_lines.append(f"- draft card: `curation/{items_dir.name}/{card_path.name}`")
+        md_lines.append(f"- draft card: `{card_path.as_posix()}`")
         md_lines.append("")
 
     md_path.write_text("\n".join(md_lines), encoding="utf-8")
     return json_path, md_path, items_dir
+
 
 
 def main() -> int:
@@ -360,7 +387,17 @@ def main() -> int:
     parser.add_argument(
         "--out-dir",
         default=str(Path(__file__).resolve().parents[1] / "curation" / "generated"),
-        help="Output directory for draft shortlists",
+        help="Output directory for shortlist JSON/MD indexes",
+    )
+    parser.add_argument(
+        "--items-dir",
+        default=str(Path(__file__).resolve().parents[1] / "src" / "content" / "items"),
+        help="Directory for draft item markdown (default: src/content/items)",
+    )
+    parser.add_argument(
+        "--issue",
+        default=None,
+        help="Optional Weekly Issue stamp YYYY-Www to stamp on draft cards",
     )
     parser.add_argument(
         "--stamp",
@@ -392,7 +429,9 @@ def main() -> int:
             seen.add(url)
         merged.append(item)
 
-    json_path, md_path, items_dir = write_outputs(merged, Path(args.out_dir), args.stamp)
+    json_path, md_path, items_dir = write_outputs(
+        merged, Path(args.out_dir), args.stamp, Path(args.items_dir), args.issue
+    )
     print(f"Wrote DRAFT shortlist JSON: {json_path}")
     print(f"Wrote DRAFT shortlist MD:   {md_path}")
     print(f"Wrote DRAFT item cards:     {items_dir}/")

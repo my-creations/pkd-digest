@@ -17,15 +17,16 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
      --rss 'https://pubmed.ncbi.nlm.nih.gov/rss/search/1example/'
    ```
 
-   Outputs land under `curation/generated/` (gitignored):
+   Indexes land under `curation/generated/` (gitignored):
 
    - `shortlist-YYYY-MM-DD.json` — machine-readable candidates
    - `shortlist-YYYY-MM-DD.md` — human-readable list
-   - `items-YYYY-MM-DD/*.md` — one draft card per candidate (front matter aligned with the content model)
+
+   Draft cards are written under `src/content/items/` (see `docs/content-model.md`) with `status: draft` and `placeholder: false`. Optional `--issue YYYY-Www` stamps the Weekly Issue field.
 
 2. **Human reviews** the shortlist. Keep, drop, or merge candidates. Prefer cystic kidney disease broadly (PKD and other cystic); tag clearly (e.g. ADPKD vs other cystic) so the weekly bar stays high.
 
-3. **Copy chosen cards** into `src/content/items/` (content-model path). Fill `summary.en` / `summary.pt` (and optional `clinicalNote.*`), set `status: published`, keep `placeholder: false`.
+3. For keepers: fill `summary.en` / `summary.pt` (and optional `clinicalNote.*`), set optional `issue: YYYY-Www`, set `status: published`, keep `placeholder: false`. Drop rejected draft files from `src/content/items/`.
 
 4. **Publish** only through the normal site build / PR process. There is **no** auto-publish Action and **no** secrets required for the shortlist script (public PubMed E-utilities only).
 
@@ -36,6 +37,7 @@ Draft cards emit:
 ```yaml
 title: "…"
 date: YYYY-MM-DD
+issue: "YYYY-Www"   # optional Weekly Issue
 source:
   url: "https://…"
   name: "PubMed | journal | outlet"
@@ -51,7 +53,7 @@ status: draft
 placeholder: false
 ```
 
-Human publish flips `status` to `published` and completes EN+PT summaries.
+Human publish flips `status` to `published`, completes EN+PT Dual Framing, and sets `issue` when grouping into a Weekly Issue.
 
 ## Examples
 

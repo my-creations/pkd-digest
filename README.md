@@ -53,9 +53,9 @@ Cards: `src/content/items/*.md` with nested `summary.en` / `summary.pt` and `cli
 
 v1 curation is **assisted**, not automatic:
 
-1. Run `python3 scripts/curate-shortlist.py` to fetch public PubMed candidates (optional RSS via `--rss`).
-2. Review the draft shortlist under `curation/generated/` (JSON + markdown + per-item draft cards).
-3. Copy chosen items into `src/content/items/`, complete EN+PT summaries, set `status: published`.
+1. Run `python3 scripts/curate-shortlist.py` to fetch public PubMed candidates (optional RSS via `--rss`; optional `--issue YYYY-Www`).
+2. Review the draft shortlist under `curation/generated/` and draft cards under `src/content/items/` (`status: draft`).
+3. Complete EN+PT Dual Framing on keepers, set `issue` if needed, set `status: published`; remove rejected drafts.
 4. Ship through the normal PR / Pages workflow.
 
 **Guarantees:** no API keys or secrets in the repo; no GitHub Action auto-publishes shortlist output to Pages. See [`curation/README.md`](curation/README.md) for the full workflow and front-matter contract.
