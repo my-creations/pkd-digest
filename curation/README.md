@@ -23,7 +23,7 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
    - `shortlist-YYYY-MM-DD.md` — human-readable list
    - `items-YYYY-MM-DD/*.md` — one draft card per candidate (front matter aligned with the content model)
 
-2. **Human reviews** the shortlist. Keep, drop, or merge candidates. Prefer ADPKD-primary items; tag other cystic kidney content clearly.
+2. **Human reviews** the shortlist. Keep, drop, or merge candidates. Prefer cystic kidney disease broadly (PKD and other cystic); tag clearly (e.g. ADPKD vs other cystic) so the weekly bar stays high.
 
 3. **Copy chosen cards** into `src/content/items/` (content-model path). Fill `summary.en` / `summary.pt` (and optional `clinicalNote.*`), set `status: published`, keep `placeholder: false`.
 
