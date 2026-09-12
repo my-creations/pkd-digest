@@ -11,6 +11,10 @@ Weekly bilingual **EN+PT** curated digest on **cystic kidney disease** (general 
 - **pathPrefix:** `/pkd-digest/` (override with `ELEVENTY_PATH_PREFIX`, same pattern as [Portfolio](https://github.com/my-creations/portfolio))
 - **Stack:** Eleventy 3 + Bun (not Vite)
 
+## GitHub Pages
+
+Production deploys `_site/` via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) on pushes to `main` (and `workflow_dispatch`). Default `pathPrefix` remains `/pkd-digest/`.
+
 ## Local run
 
 ```bash
