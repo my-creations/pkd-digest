@@ -23,7 +23,10 @@ DEFAULT_TERM = (
     '("polycystic kidney disease"[Title/Abstract] OR '
     '"autosomal dominant polycystic kidney"[Title/Abstract] OR '
     '"ADPKD"[Title/Abstract] OR '
-    '"cystic kidney disease"[Title/Abstract])'
+    '"cystic kidney disease"[Title/Abstract] OR '
+    '"polycystic liver disease"[Title/Abstract] OR '
+    '"ARPKD"[Title/Abstract]) '
+    'NOT (Letter[Publication Type] OR Comment[Publication Type] OR Editorial[Publication Type])'
 )
 USER_AGENT = "pkd-digest-curate-shortlist/0.1 (public; no-key; draft-only)"
 
