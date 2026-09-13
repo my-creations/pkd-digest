@@ -16,4 +16,5 @@ module.exports = {
   locales: ['en', 'pt'],
   defaultLocale: 'en',
   buildYear: new Date().getFullYear(),
+  contactEmail: 'pmrobalo@gmail.com',
 };

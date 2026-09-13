@@ -821,3 +821,22 @@ h2 {
     padding: 0.55rem 0.9rem;
   }
 }
+
+.legal-page h2 {
+  margin-top: 1.75rem;
+  font-size: 1.1rem;
+}
+.legal-page p {
+  max-width: 42rem;
+}
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+  margin: 0.75rem 0;
+}
+.site-footer__links a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

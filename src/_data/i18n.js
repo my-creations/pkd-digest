@@ -23,7 +23,27 @@ module.exports = {
       tagline: 'Curated for patients, families, and clinicians.',
       copyright: 'All rights reserved.',
       notMedicalAdvice: 'Educational curation only — not medical advice.',
+      contact: 'Contact',
       privacy: 'Privacy',
+      terms: 'Terms',
+    },
+    terms: {
+      title: 'Terms & disclaimer',
+      lede: 'A short disclaimer for using PKD Digest.',
+      notAdviceTitle: 'Not medical advice',
+      notAdviceBody:
+        'Content on this site is for general education and information only. It is not a substitute for professional medical advice, diagnosis, or treatment. Do not ignore or delay seeking care because of something you read here.',
+      accuracyTitle: 'Accuracy and currency',
+      accuracyBody:
+        'We curate summaries in good faith from public sources, but we may be incomplete, delayed, or wrong. Always verify important details with the original source and your care team.',
+      noWarrantyTitle: 'No warranty',
+      noWarrantyBody:
+        'The site is provided “as is,” without warranties of any kind. To the fullest extent allowed by law, the maintainers are not liable for decisions you make based on this content.',
+      licensingTitle: 'Site and source material',
+      licensingBody:
+        'Site code is on GitHub. Linked papers and guidelines remain the property of their publishers; we provide attribution and links, not republication of full texts.',
+      contactTitle: 'Contact',
+      contactBody: 'For site issues or corrections:',
     },
     home: {
       eyebrow: 'Weekly curated digest',
@@ -99,7 +119,27 @@ module.exports = {
       tagline: 'Curadoria para doentes, famílias e clínicos.',
       copyright: 'Todos os direitos reservados.',
       notMedicalAdvice: 'Curadoria educativa — não constitui aconselhamento médico.',
+      contact: 'Contacto',
       privacy: 'Privacidade',
+      terms: 'Termos',
+    },
+    terms: {
+      title: 'Termos e aviso',
+      lede: 'Um aviso breve sobre o uso do Digest DRP.',
+      notAdviceTitle: 'Não é aconselhamento médico',
+      notAdviceBody:
+        'O conteúdo deste site é apenas informação e educação geral. Não substitui aconselhamento, diagnóstico ou tratamento médico profissional. Não ignore nem atrase cuidados por causa do que leu aqui.',
+      accuracyTitle: 'Exactidão e actualidade',
+      accuracyBody:
+        'Curamos resumos de boa fé a partir de fontes públicas, mas podem estar incompletos, atrasados ou incorrectos. Confirme sempre detalhes importantes na fonte original e com a sua equipa de saúde.',
+      noWarrantyTitle: 'Sem garantia',
+      noWarrantyBody:
+        'O site é disponibilizado “tal como está”, sem garantias de qualquer tipo. Na máxima extensão permitida por lei, os maintainers não são responsáveis por decisões tomadas com base neste conteúdo.',
+      licensingTitle: 'Site e material de origem',
+      licensingBody:
+        'O código do site está no GitHub. Artigos e guidelines ligados continuam a pertencer aos editores; fornecemos atribuição e ligações, não a republicação de textos completos.',
+      contactTitle: 'Contacto',
+      contactBody: 'Para problemas do site ou correções:',
     },
     home: {
       eyebrow: 'Digest semanal curado',
