@@ -64,6 +64,10 @@ v1 curation is **assisted**, not automatic:
 
 **Guarantees:** no API keys or secrets in the repo; no GitHub Action auto-publishes shortlist output to Pages. See [`curation/README.md`](curation/README.md) for the full workflow and front-matter contract.
 
+## Privacy / analytics
+
+**v1 decision: no analytics.** The site does not load Plausible, GA, or other tracking scripts. Policy for visitors: [`/privacy/`](https://my-creations.github.io/pkd-digest/privacy/) (PT: [`/pt/privacy/`](https://my-creations.github.io/pkd-digest/pt/privacy/)). Maintainer note: [`docs/privacy.md`](docs/privacy.md). Plausible remains the preferred _future_ option only if product explicitly revisits metrics.
+
 ## License / medical disclaimer
 
 Educational curation scaffold only — **not medical advice**.

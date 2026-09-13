@@ -8,6 +8,7 @@
       {% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}
       · {{ t.footer.copyright }}
       · <a href="{{ site.repo }}">GitHub</a>
+      · <a href="{{ ('/privacy/' if locale != 'pt' else '/pt/privacy/') | url }}">{{ t.footer.privacy }}</a>
     </p>
   </div>
 </footer>
