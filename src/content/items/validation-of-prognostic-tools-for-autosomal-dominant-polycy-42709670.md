@@ -16,7 +16,7 @@ summary:
 clinicalNote:
   en: 'Retrospective multiethnic ADPKD cohort (n=276). Modified clinical PROPKD (no genotype) and ultrasound kidney length associated with ESKD (high-risk modified PROPKD HR ~4.3). Supports pragmatic risk tools where Mayo imaging class/MRI/genotype are unavailable; external validity outside this setting remains limited.'
   pt: 'Coorte retrospetiva multiétnica ADPKD (n=276). PROPKD clínico modificado (sem genótipo) e comprimento renal por ecografia associados a ESKD (PROPKD modificado de alto risco HR ~4,3). Apoia ferramentas pragmáticas sem Mayo/MRI/genótipo; validade externa ainda limitada.'
-status: draft
+status: published
 placeholder: false
 ---
 

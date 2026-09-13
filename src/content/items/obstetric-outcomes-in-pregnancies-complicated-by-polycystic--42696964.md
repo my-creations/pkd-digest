@@ -17,7 +17,7 @@ summary:
 clinicalNote:
   en: 'HCUP-NIS 2016–2021 retrospective cohort (ICD-10 Q61.x). After age adjustment, PKD pregnancies had higher odds of cesarean delivery and obstetric complications (preeclampsia, GDM, anemia, genitourinary infections). Administrative data limit severity staging and ADPKD vs other cystic kidney subtypes.'
   pt: 'Coorte retrospetiva HCUP-NIS 2016–2021 (ICD-10 Q61.x). Após ajuste por idade, gravidezes PKD com mais cesariana e complicações obstétricas (pré-eclâmpsia, DG, anemia, infeções geniturinárias). Dados administrativos limitam estadiamento e distinção ADPKD vs outros subtipos quísticos.'
-status: draft
+status: published
 placeholder: false
 ---
 

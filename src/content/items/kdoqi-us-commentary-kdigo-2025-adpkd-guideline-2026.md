@@ -17,7 +17,7 @@ summary:
 clinicalNote:
   en: 'KDOQI society commentary on the KDIGO 2025 ADPKD clinical practice guideline (AJKD). High-signal for guideline-concordant U.S. practice; not primary evidence — pair with the parent KDIGO CPG and verify local formulary/imaging access.'
   pt: 'Comentário societário KDOQI à CPG KDIGO 2025 de ADPKD (AJKD). Alto sinal para prática alinhada à guideline nos EUA; não é evidência primária — cruzar com a CPG KDIGO e validar formulário/imagem locais.'
-status: draft
+status: published
 placeholder: false
 ---
 

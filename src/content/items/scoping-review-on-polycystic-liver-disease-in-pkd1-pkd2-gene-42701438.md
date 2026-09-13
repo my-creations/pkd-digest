@@ -17,7 +17,7 @@ summary:
 clinicalNote:
   en: 'Scoping review (PRISMA; 29 studies, 2014–2024) on PLD in PKD1/PKD2 carriers. Links genotype–phenotype to hepatic cyst burden; somatostatin analogues reduce liver volume/symptoms in selected cases; mTOR inhibitors show modest/variable benefit. Maps evidence gaps rather than claiming new RCT efficacy.'
   pt: 'Scoping review (PRISMA; 29 estudos, 2014–2024) sobre PLD em portadores PKD1/PKD2. Liga genótipo–fenótipo à carga quística hepática; análogos da somatostatina reduzem volume/sintomas em casos selecionados; inibidores mTOR com benefício modesto/variável. Mapeia lacunas, sem novas alegações de eficácia de RCT.'
-status: draft
+status: published
 placeholder: false
 ---
 
