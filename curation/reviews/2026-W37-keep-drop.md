@@ -46,3 +46,14 @@ Pool was usable but noisy (letters, comments, empty abstracts, deep basic scienc
 - Optional public RSS later (e.g. journal TOC) — not required for this week
 
 Dual Framing EN+PT stubs are draft-quality; Dev2 invited to tighten before publish.
+
+## Non-PubMed drafts (Dev1) — pending KEEP decision
+
+Added as `status: draft` for human review (not yet in the ≤6 KEEP set):
+
+| File                                                     | Why high-signal                                                   | Suggested action                                                   |
+| -------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026.md` | KDOQI commentary on KDIGO 2025 ADPKD guideline (AJKD + KDIGO PDF) | **Promote to KEEP** — swap out weaker clinical item if hard cap ≤6 |
+| `pkd-cures-act-hr-9169-2026.md`                          | H.R. 9169 PKD Cures Act / NIH roadmap; advocacy orgs              | **Promote to KEEP** (advocacy slot) or hold as tagged extra        |
+
+Proposed swap if hard ≤6: drop `42696964` (obstetric) and/or `42648283` (semaglutide RWE) in favor of guideline commentary + Cures Act — awaiting Tech Lead call.
