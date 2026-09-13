@@ -16,6 +16,7 @@ module.exports = {
       tagline: 'Curated for patients, families, and clinicians.',
       copyright: 'All rights reserved.',
       notMedicalAdvice: 'Educational curation only — not medical advice.',
+      privacy: 'Privacy',
     },
     home: {
       eyebrow: 'Weekly curated digest',
@@ -49,6 +50,23 @@ module.exports = {
       lede: 'Cards in chronological order when present.',
       empty: 'No published timeline items yet.',
     },
+    privacy: {
+      title: 'Privacy',
+      lede: 'How PKD Digest handles analytics and personal data.',
+      decisionTitle: 'Analytics decision (v1)',
+      decisionBody:
+        'We do not use analytics, advertising pixels, or third-party tracking scripts on this site. There is no Plausible, Google Analytics, or similar tag in the layout.',
+      whyTitle: 'Why none for now',
+      whyBody:
+        'This digest serves patients, families, and clinicians around cystic kidney disease. Keeping the site free of traffic trackers avoids unnecessary third-party data flows. GitHub Pages / GitHub may still process standard server or CDN logs outside this repository’s control.',
+      cookiesTitle: 'Cookies',
+      cookiesBody:
+        'This static site does not set its own analytics cookies. Essential hosting/CDN behaviour may still apply at the infrastructure layer.',
+      revisitTitle: 'Revisit',
+      revisitBody:
+        'If we later need privacy-friendly aggregate traffic metrics, Plausible (cookieless) is the preferred candidate — only after an explicit product decision and a separate PR. Until then, “no analytics” remains the documented policy.',
+      legalNote: 'Educational curation only — not medical advice. See also the medical disclaimer on the site.',
+    },
   },
   pt: {
     localeName: 'Português',
@@ -67,6 +85,7 @@ module.exports = {
       tagline: 'Curadoria para doentes, famílias e clínicos.',
       copyright: 'Todos os direitos reservados.',
       notMedicalAdvice: 'Curadoria educativa — não constitui aconselhamento médico.',
+      privacy: 'Privacidade',
     },
     home: {
       eyebrow: 'Digest semanal curado',
@@ -99,6 +118,23 @@ module.exports = {
       title: 'Cronologia',
       lede: 'Cartões por ordem cronológica, quando existirem.',
       empty: 'Ainda não há itens publicados na cronologia.',
+    },
+    privacy: {
+      title: 'Privacidade',
+      lede: 'Como o Digest DRP trata analytics e dados pessoais.',
+      decisionTitle: 'Decisão de analytics (v1)',
+      decisionBody:
+        'Não usamos analytics, pixels de publicidade nem scripts de tracking de terceiros neste site. Não há Plausible, Google Analytics nem tags semelhantes no layout.',
+      whyTitle: 'Porquê nenhum por agora',
+      whyBody:
+        'Este digest serve doentes, famílias e clínicos em torno da doença renal quística. Evitar trackers de tráfego reduz fluxos desnecessários de dados a terceiros. O GitHub Pages / GitHub pode ainda processar logs de servidor ou CDN fora do controlo deste repositório.',
+      cookiesTitle: 'Cookies',
+      cookiesBody:
+        'Este site estático não define cookies próprios de analytics. Pode ainda aplicar-se comportamento essencial de hosting/CDN ao nível da infraestrutura.',
+      revisitTitle: 'Revisão futura',
+      revisitBody:
+        'Se mais tarde precisarmos de métricas agregadas privacy-friendly, Plausible (sem cookies) é o candidato preferido — só após decisão explícita de produto e um PR separado. Até lá, a política documentada é “sem analytics”.',
+      legalNote: 'Curadoria educativa — não constitui aconselhamento médico. Ver também o aviso médico no site.',
     },
   },
 };
