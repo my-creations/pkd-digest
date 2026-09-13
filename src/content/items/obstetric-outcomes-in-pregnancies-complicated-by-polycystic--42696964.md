@@ -17,4 +17,4 @@ status: draft
 placeholder: false
 ---
 
-<!-- DRAFT / NOT PUBLISHED — Dual Framing stubs for Tech Lead audit; Dev2 may tighten EN+PT -->
+<!-- DRAFT / NOT PUBLISHED — TL-locked KEEP; Dual Framing stubs pending Dev2 tighten + TL framing audit -->
