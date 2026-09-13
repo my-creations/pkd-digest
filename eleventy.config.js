@@ -34,6 +34,10 @@ module.exports = function (eleventyConfig) {
     return obj[locale] ?? obj.en ?? '';
   });
 
+  function isPublicItem(item) {
+    return item.data.status === 'published' && item.data.placeholder !== true;
+  }
+
   eleventyConfig.addCollection('digestItems', (collectionApi) =>
     collectionApi.getFilteredByGlob('src/content/items/*.md').sort((a, b) => b.date - a.date)
   );
@@ -41,12 +45,15 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addCollection('publishedItems', (collectionApi) =>
     collectionApi
       .getFilteredByGlob('src/content/items/*.md')
-      .filter((item) => item.data.status === 'published' && item.data.placeholder !== true)
+      .filter(isPublicItem)
       .sort((a, b) => b.date - a.date)
   );
 
   eleventyConfig.addCollection('latestIssueItems', (collectionApi) => {
-    const items = collectionApi.getFilteredByGlob('src/content/items/*.md').sort((a, b) => b.date - a.date);
+    const items = collectionApi
+      .getFilteredByGlob('src/content/items/*.md')
+      .filter(isPublicItem)
+      .sort((a, b) => b.date - a.date);
     const withIssue = items.filter((item) => typeof item.data.issue === 'string' && item.data.issue);
     if (withIssue.length === 0) return items;
     const latestIssue = withIssue[0].data.issue;
