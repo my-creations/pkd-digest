@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+permalink: /404.html
+translationKey: not-found
+pageType: page
+title: Page not found
+eleventyExcludeFromCollections: true
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="page-header not-found">
+  <p class="eyebrow">PKD Digest · Digest DRP</p>
+  <h1>{{ t.meta.notFoundTitle }}</h1>
+  <p class="lede">{{ t.meta.notFoundBody }}</p>
+  <div class="hero__actions">
+    <a class="button button--primary" href="{{ '/' | url }}">{{ t.meta.notFoundCta }}</a>
+    <a class="button button--secondary" href="{{ '/pt/' | url }}">{{ t.meta.notFoundCtaPt }}</a>
+  </div>
+</section>
