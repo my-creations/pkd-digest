@@ -12,13 +12,10 @@ audience:
   - patients
   - clinicians
 summary:
-  en: 'U.S. KDOQI experts explain how the international KDIGO 2025 ADPKD guideline applies to everyday care in the United States — useful context for patients and clinicians comparing global recommendations with local practice.'
-  pt: 'Especialistas KDOQI dos EUA explicam como a guideline internacional KDIGO 2025 de ADPKD se aplica aos cuidados do dia a dia nos Estados Unidos — contexto útil para doentes e clínicos a comparar recomendações globais com a prática local.'
+  en: 'U.S. kidney experts (KDOQI) walk through the international KDIGO 2025 ADPKD guideline and what it means for everyday care in the United States — from diagnosis and imaging to treatment choices. Helpful when comparing global recommendations with what your local clinic can offer.'
+  pt: 'Especialistas renais dos EUA (KDOQI) percorrem a guideline internacional KDIGO 2025 de ADPKD e o que significa para os cuidados do dia a dia nos Estados Unidos — do diagnóstico e imagem às opções de tratamento. Útil para comparar recomendações globais com o que a clínica local consegue oferecer.'
 clinicalNote:
-  en: 'KDOQI society commentary on the KDIGO 2025 ADPKD clinical practice guideline (AJKD). High-signal for guideline-concordant U.S. practice; not primary evidence — pair with the parent KDIGO CPG and verify local formulary/imaging access.'
-  pt: 'Comentário societário KDOQI à CPG KDIGO 2025 de ADPKD (AJKD). Alto sinal para prática alinhada à guideline nos EUA; não é evidência primária — cruzar com a CPG KDIGO e validar formulário/imagem locais.'
-status: published
-placeholder: false
+  en: 'KDOQI society commentary on the KDIGO 2025 ADPKD clinical practice guideline (AJKD). Use as a U.S.-practice bridge to the parent KDIGO CPG (diagnosis, risk stratification, disease-modifying therapy, extra-renal care). Not primary evidence — verify local formulary, imaging access, and payer constraints before changing pathways.'
+  pt: 'Comentário societário KDOQI à CPG KDIGO 2025 de ADPKD (AJKD). Serve de ponte prática EUA→CPG KDIGO (diagnóstico, estratificação de risco, terapêutica disease-modifying, cuidados extra-renais). Não é evidência primária — validar formulário, acesso a imagem e restrições de pagamento locais antes de mudar vias.'
+status: publishedplaceholder: false
 ---
-
-Draft Dual Framing for Tech Lead audit (2026-W37 KEEP). Not published.
