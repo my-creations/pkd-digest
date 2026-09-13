@@ -5,16 +5,20 @@ issue: '2026-W37'
 source:
   url: 'https://www.ajkd.org/article/S0272-6386(26)00003-X/fulltext'
   name: 'AJKD | KDOQI commentary (also KDIGO PDF)'
-tags: [research, advocacy]
-audience: [patients, clinicians]
+tags:
+  - research
+  - advocacy
+audience:
+  - patients
+  - clinicians
 summary:
-  en: 'US KDOQI experts comment on the KDIGO 2025 ADPKD guideline — a practical guide to what the international recommendations mean for care in the United States.'
-  pt: 'Especialistas KDOQI dos EUA comentam a guideline KDIGO 2025 de ADPKD — um guia prático do que as recomendações internacionais significam para os cuidados nos Estados Unidos.'
+  en: 'U.S. KDOQI experts explain how the international KDIGO 2025 ADPKD guideline applies to everyday care in the United States — useful context for patients and clinicians comparing global recommendations with local practice.'
+  pt: 'Especialistas KDOQI dos EUA explicam como a guideline internacional KDIGO 2025 de ADPKD se aplica aos cuidados do dia a dia nos Estados Unidos — contexto útil para doentes e clínicos a comparar recomendações globais com a prática local.'
 clinicalNote:
-  en: 'Society commentary on KDIGO 2025 ADPKD CPG (KDOQI/AJKD; companion KDIGO PDF). High-signal for guideline-concordant care; verify local applicability.'
-  pt: 'Comentário societário à CPG KDIGO 2025 ADPKD (KDOQI/AJKD; PDF KDIGO associado). Alto sinal para cuidados alinhados à guideline; validar aplicabilidade local.'
+  en: 'KDOQI society commentary on the KDIGO 2025 ADPKD clinical practice guideline (AJKD). High-signal for guideline-concordant U.S. practice; not primary evidence — pair with the parent KDIGO CPG and verify local formulary/imaging access.'
+  pt: 'Comentário societário KDOQI à CPG KDIGO 2025 de ADPKD (AJKD). Alto sinal para prática alinhada à guideline nos EUA; não é evidência primária — cruzar com a CPG KDIGO e validar formulário/imagem locais.'
 status: draft
 placeholder: false
 ---
 
-<!-- DRAFT / NOT PUBLISHED — non-PubMed candidate from Dev1 shortlist; Dual Framing stubs -->
+Draft Dual Framing for Tech Lead audit (2026-W37 KEEP). Not published.

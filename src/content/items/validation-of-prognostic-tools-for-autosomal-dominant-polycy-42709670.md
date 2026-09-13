@@ -1,20 +1,23 @@
 ---
-title: 'Validation of Prognostic Tools for Autosomal Dominant Polycystic Kidney Disease Progression in a Multiethnic South African Cohort ​.'
+title: 'Validation of Prognostic Tools for Autosomal Dominant Polycystic Kidney Disease Progression in a Multiethnic South African Cohort'
 date: 2026-09-08
 issue: '2026-W37'
 source:
   url: 'https://pubmed.ncbi.nlm.nih.gov/42709670/'
   name: 'PubMed | Kidney360'
-tags: [research]
-audience: [patients, clinicians]
+tags:
+  - research
+audience:
+  - patients
+  - clinicians
 summary:
-  en: 'This Kidney360 study checks how well common ADPKD progression risk tools work in a multiethnic South African group — important because many tools were built on other populations.'
-  pt: 'Este estudo Kidney360 testa quão bem as ferramentas habituais de risco de progressão na ADPKD funcionam numa coorte multiétnica da África do Sul — relevante porque muitas foram desenvolvidas noutras populações.'
+  en: 'A South African study checked simpler ways to estimate how fast ADPKD might progress when MRI and genetic tests are hard to get. Clinical clues (age, sex, hypertension, urinary events) and ultrasound kidney length still helped flag higher risk of kidney failure.'
+  pt: 'Um estudo na África do Sul testou formas mais simples de estimar a progressão da ADPKD quando MRI e testes genéticos são difíceis de obter. Sinais clínicos (idade, sexo, hipertensão, eventos urológicos) e o comprimento do rim por ecografia ajudaram a identificar maior risco de falência renal.'
 clinicalNote:
-  en: 'External validation of ADPKD prognostic tools for therapy selection; interpret generalizability to multiethnic African cohorts.'
-  pt: 'Validação externa de ferramentas prognósticas de ADPKD para seleção terapêutica; atenção à generalização a coortes africanas multiétnicas.'
+  en: 'Retrospective multiethnic ADPKD cohort (n=276). Modified clinical PROPKD (no genotype) and ultrasound kidney length associated with ESKD (high-risk modified PROPKD HR ~4.3). Supports pragmatic risk tools where Mayo imaging class/MRI/genotype are unavailable; external validity outside this setting remains limited.'
+  pt: 'Coorte retrospetiva multiétnica ADPKD (n=276). PROPKD clínico modificado (sem genótipo) e comprimento renal por ecografia associados a ESKD (PROPKD modificado de alto risco HR ~4,3). Apoia ferramentas pragmáticas sem Mayo/MRI/genótipo; validade externa ainda limitada.'
 status: draft
 placeholder: false
 ---
 
-<!-- DRAFT / NOT PUBLISHED — TL-locked KEEP; Dual Framing stubs pending Dev2 tighten + TL framing audit -->
+Draft Dual Framing for Tech Lead audit (2026-W37 KEEP). Not published.
