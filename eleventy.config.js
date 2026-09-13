@@ -4,9 +4,12 @@ const { homeHref, sectionHref, languageHref, otherLocale } = require('./lib/loca
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     'src/css': 'css',
+    'src/assets/favicons': 'assets/favicons',
+    'src/assets/og-default.png': 'assets/og-default.png',
   });
 
   eleventyConfig.addWatchTarget('src/css/');
+  eleventyConfig.addWatchTarget('src/assets/');
 
   eleventyConfig.addFilter('isoDate', (value) => {
     if (!value) return '';
