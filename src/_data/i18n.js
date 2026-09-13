@@ -27,15 +27,15 @@ module.exports = {
       howTitle: 'How each card works',
       howPlain: 'Plain-language summary — what it means for patients and families.',
       howClinical: 'Clinical note — concise framing for clinicians.',
-      curationTitle: 'Curation (later)',
+      curationTitle: 'How curation works',
       curationBody:
-        'Future issues will use assisted curation (PubMed/RSS shortlist → human publish). That pipeline is out of scope for this scaffold.',
+        'Assisted curation: PubMed/RSS shortlist, then human Dual Framing and publish. Educational only — not medical advice.',
     },
     digest: {
       title: 'Weekly digest',
-      lede: 'Sample weekly issue for layout review. Cards below are fictional placeholders — not clinical content.',
-      empty: 'No published items yet. A sample placeholder card lives in the content model for layout review.',
-      issueLabel: 'Sample weekly issue',
+      lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note (EN+PT).',
+      empty: 'No published items for this issue yet.',
+      issueLabel: 'Weekly issue',
       placeholderBadge: 'Placeholder',
       draftBadge: 'Draft',
       plainLabel: 'Plain language',
@@ -47,7 +47,7 @@ module.exports = {
     timeline: {
       title: 'Timeline',
       lede: 'Cards in chronological order when present.',
-      empty: 'No items to list yet. Add markdown cards under src/content/items/.',
+      empty: 'No published timeline items yet.',
     },
   },
   pt: {
@@ -78,15 +78,15 @@ module.exports = {
       howTitle: 'Como funciona cada cartão',
       howPlain: 'Resumo em linguagem simples — o que significa para doentes e famílias.',
       howClinical: 'Nota clínica — enquadramento conciso para clínicos.',
-      curationTitle: 'Curadoria (mais tarde)',
+      curationTitle: 'Como funciona a curadoria',
       curationBody:
-        'Edições futuras usarão curadoria assistida (lista PubMed/RSS → publicação humana). Esse pipeline está fora do âmbito deste scaffold.',
+        'Curadoria assistida: lista PubMed/RSS, depois Dual Framing humano e publicação. Apenas educativo — não constitui aconselhamento médico.',
     },
     digest: {
       title: 'Digest semanal',
-      lede: 'Edição semanal de exemplo para rever o layout. Os cartões abaixo são placeholders fictícios — não são conteúdo clínico.',
-      empty: 'Ainda não há itens publicados. Existe um cartão de exemplo no modelo de conteúdo para rever o layout.',
-      issueLabel: 'Edição semanal de exemplo',
+      lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve (EN+PT).',
+      empty: 'Ainda não há itens publicados nesta edição.',
+      issueLabel: 'Edição semanal',
       placeholderBadge: 'Exemplo',
       draftBadge: 'Rascunho',
       plainLabel: 'Linguagem simples',
@@ -98,7 +98,7 @@ module.exports = {
     timeline: {
       title: 'Cronologia',
       lede: 'Cartões por ordem cronológica, quando existirem.',
-      empty: 'Ainda não há itens. Adicione markdown em src/content/items/.',
+      empty: 'Ainda não há itens publicados na cronologia.',
     },
   },
 };
