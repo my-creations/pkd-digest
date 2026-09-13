@@ -16,5 +16,6 @@ summary:
 clinicalNote:
   en: 'Retrospective multiethnic ADPKD cohort (n=276; 54% Black). Modified clinical PROPKD (no genotype) predicted ESKD (high-risk HR 4.34, 95% CI 2.88–6.71); US kidney length >16.5 cm HR 1.87. Discrimination moderate overall (AUC 0.66 vs length 0.61) but highest in Black patients (AUC 0.78) vs White (AUC 0.51). Pragmatic adjunct where Mayo/MRI/genotype unavailable — does not replace Mayo imaging classification where accessible.'
   pt: 'Coorte retrospetiva multiétnica ADPKD (n=276; 54% Black). PROPKD clínico modificado (sem genótipo) previu ESKD (alto risco HR 4,34, IC 95% 2,88–6,71); comprimento renal US >16,5 cm HR 1,87. Discriminação moderada no global (AUC 0,66 vs comprimento 0,61) mas mais alta em doentes Black (AUC 0,78) vs White (AUC 0,51). Adjunto pragmático sem Mayo/MRI/genótipo — não substitui a classificação Mayo por imagem onde disponível.'
-status: publishedplaceholder: false
+status: published
+placeholder: false
 ---

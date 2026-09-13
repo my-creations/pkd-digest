@@ -16,5 +16,6 @@ summary:
 clinicalNote:
   en: 'PS-matched cohort NTUH 2006–2021 (1,044 ADPKD vs 4,176 controls; prior UTI excluded; mean follow-up 4.2 y). Incident UTI 17.9% vs 15.6% (aHR 1.20, 95% CI 1.02–1.42); stronger in males (aHR 1.59) and CKD stages 3b–5 (aHR 1.51). Recurrent UTI IRR 1.32 (95% CI 1.15–1.51). Contemporary epidemiology with moderate absolute difference; residual confounding and ICD limits on separating cyst infection remain.'
   pt: 'Coorte PS-matched NTUH 2006–2021 (1.044 ADPKD vs 4.176 controlos; ITU prévia excluída; seguimento médio 4,2 a). ITU incidente 17,9% vs 15,6% (aHR 1,20, IC 95% 1,02–1,42); mais forte em homens (aHR 1,59) e CKD 3b–5 (aHR 1,51). ITU recorrente IRR 1,32 (IC 95% 1,15–1,51). Epidemiologia contemporânea com diferença absoluta moderada; permanece confounding residual e limites ICD para separar infeção de quisto.'
-status: publishedplaceholder: false
+status: published
+placeholder: false
 ---
