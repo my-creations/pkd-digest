@@ -7,10 +7,26 @@
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="wordmark" href="{{ homePath | url }}">
-      <span class="wordmark__name">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
-      <span class="wordmark__label" aria-hidden="true">{% if locale == 'pt' %}PKD Digest{% else %}Digest DRP{% endif %}</span>
-    </a>
+    <div class="site-header__brand">
+      <a class="wordmark" href="{{ homePath | url }}">
+        <span class="wordmark__name">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
+        <span class="wordmark__label" aria-hidden="true">{% if locale == 'pt' %}PKD Digest{% else %}Digest DRP{% endif %}</span>
+      </a>
+
+      <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
+        {% if locale == 'pt' %}
+          <a class="locale-option" href="{{ langPath | url }}" hreflang="en" lang="en">EN</a>
+          <span class="locale-option is-current" lang="pt" aria-current="true">
+            <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>PT
+          </span>
+        {% else %}
+          <span class="locale-option is-current" lang="en" aria-current="true">
+            <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>EN
+          </span>
+          <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
+        {% endif %}
+      </div>
+    </div>
 
     <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
       <ul class="nav__list">
@@ -22,21 +38,6 @@
         </li>
         <li>
           <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
-        </li>
-        <li class="nav__language">
-          <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
-            {% if locale == 'pt' %}
-              <a class="locale-option" href="{{ langPath | url }}" hreflang="en" lang="en">EN</a>
-              <span class="locale-option is-current" lang="pt" aria-current="true">
-                <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>PT
-              </span>
-            {% else %}
-              <span class="locale-option is-current" lang="en" aria-current="true">
-                <span class="visually-hidden">{{ t.nav.currentLanguage }}: </span>EN
-              </span>
-              <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
-            {% endif %}
-          </div>
         </li>
       </ul>
     </nav>
