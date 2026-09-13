@@ -1,6 +1,6 @@
 ---
 title: 'Scoping Review on Polycystic Liver Disease in PKD1/PKD2 Gene Carriers: Genetic Aspects, Pathophysiology, and Therapeutic Approaches'
-date: 2026-01-01
+date: 2026-08-05
 issue: '2026-W37'
 source:
   url: 'https://pubmed.ncbi.nlm.nih.gov/42701438/'
