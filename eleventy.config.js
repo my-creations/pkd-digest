@@ -34,6 +34,10 @@ module.exports = function (eleventyConfig) {
     return obj[locale] ?? obj.en ?? '';
   });
 
+  eleventyConfig.addFilter('findByTranslationKey', (collection = [], key, locale) =>
+    collection.find((item) => item.data.translationKey === key && item.data.locale === locale)
+  );
+
   function isPublicItem(item) {
     return item.data.status === 'published' && item.data.placeholder !== true;
   }

@@ -3,6 +3,13 @@ module.exports = {
     localeName: 'English',
     otherLocale: 'pt',
     otherLocaleLabel: 'PT',
+    meta: {
+      notFoundTitle: 'Page not found',
+      notFoundBody:
+        'This page is not part of PKD Digest. The weekly cystic kidney disease digest is still available from the home page.',
+      notFoundCta: 'Back to PKD Digest home',
+      notFoundCtaPt: 'Início Digest DRP (PT)',
+    },
     nav: {
       home: 'Home',
       digest: 'Digest',
@@ -54,6 +61,13 @@ module.exports = {
     localeName: 'Português',
     otherLocale: 'en',
     otherLocaleLabel: 'EN',
+    meta: {
+      notFoundTitle: 'Página não encontrada',
+      notFoundBody:
+        'Esta página não faz parte do Digest DRP. O digest semanal sobre doença renal quística continua disponível na página inicial.',
+      notFoundCta: 'Voltar ao início Digest DRP',
+      notFoundCtaPt: 'PKD Digest home (EN)',
+    },
     nav: {
       home: 'Início',
       digest: 'Digest',
