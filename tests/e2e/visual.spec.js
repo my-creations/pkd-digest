@@ -120,3 +120,20 @@ test.describe('narrow fold layout', () => {
     }
   });
 });
+
+test.describe('page header rhythm', () => {
+  test('title and lede keep breathing room', async ({ page }) => {
+    for (const path of ['digest/', 'timeline/', 'pt/digest/']) {
+      await page.goto(path);
+
+      const title = page.locator('.page-header h1');
+      const lede = page.locator('.page-header .lede');
+      await expect(title).toBeVisible();
+      await expect(lede).toBeVisible();
+
+      const titleBox = await rect(title);
+      const ledeBox = await rect(lede);
+      expect(ledeBox.top - titleBox.bottom).toBeGreaterThanOrEqual(20);
+    }
+  });
+});
