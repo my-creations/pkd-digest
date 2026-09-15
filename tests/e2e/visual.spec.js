@@ -91,3 +91,32 @@ test.describe('visual layout invariants', () => {
     expect(box.bottom).toBeGreaterThan(0);
   });
 });
+
+test.describe('narrow fold layout', () => {
+  // Closed-fold width (~344px): filter labels stack above their chips,
+  // chips and switches stay compact and on-screen.
+  test.use({ viewport: { width: 344, height: 882 } });
+
+  test('filter rows stack and nothing overflows the viewport', async ({ page }) => {
+    for (const path of ['digest/', 'timeline/']) {
+      await page.goto(path);
+
+      const overflow = await page.evaluate(() => ({
+        pageWidth: document.documentElement.scrollWidth,
+        viewportWidth: window.innerWidth,
+      }));
+      expect(overflow.pageWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+
+      const label = page.locator('[data-filter-group="tag"] .filters__label').first();
+      const chip = page.locator('[data-filter-group="tag"] .chip').first();
+      const labelBox = await rect(label);
+      const chipBox = await rect(chip);
+      expect(labelBox.bottom).toBeLessThanOrEqual(chipBox.top + 1);
+
+      for (const sel of ['.filters', '.dual__switch']) {
+        const box = await rect(page.locator(sel).first());
+        expect(box.right).toBeLessThanOrEqual(overflow.viewportWidth + 1);
+      }
+    }
+  });
+});
