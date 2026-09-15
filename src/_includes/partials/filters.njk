@@ -1,0 +1,33 @@
+{# Card filters (progressive enhancement: no-JS shows everything).
+   Expects `t` (i18n) and `locale`. Cards carry data-tags/data-audience. #}
+{% set f = t.digest.filters %}
+<div
+  class="filters"
+  data-filters
+  data-msg-none="{{ f.shownNone }}"
+  data-msg-one="{{ f.shownOne }}"
+  data-msg-many="{{ f.shownMany }}"
+>
+  <div class="filters__group" role="group" aria-label="{{ f.topicLabel }}" data-filter-group="tag">
+    <span class="filters__label" aria-hidden="true">{{ f.topicLabel }}</span>
+    <button type="button" class="chip is-active" data-filter-value="all" aria-pressed="true">{{ f.all }}</button>
+    {% for tag in ['research', 'treatment', 'lifestyle', 'advocacy'] %}
+      <button type="button" class="chip" data-filter-value="{{ tag }}" aria-pressed="false">
+        {{ f.tagNames[tag] }}
+      </button>
+    {% endfor %}
+  </div>
+  <div class="filters__group" role="group" aria-label="{{ f.audienceLabel }}" data-filter-group="audience">
+    <span class="filters__label" aria-hidden="true">{{ f.audienceLabel }}</span>
+    <button type="button" class="chip is-active" data-filter-value="all" aria-pressed="true">{{ f.all }}</button>
+    {% for audience in ['patients', 'clinicians'] %}
+      <button type="button" class="chip" data-filter-value="{{ audience }}" aria-pressed="false">
+        {{ f.audienceNames[audience] }}
+      </button>
+    {% endfor %}
+  </div>
+  <div class="filters__meta">
+    <button type="button" class="filters__reset" data-filters-reset>{{ f.reset }}</button>
+    <p class="filters__count" aria-live="polite" data-filters-count></p>
+  </div>
+</div>

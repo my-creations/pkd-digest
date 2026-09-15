@@ -28,12 +28,14 @@ eleventyComputed:
     <span>{{ t.footer.notMedicalAdvice }}</span>
   </p>
 
+  {% include "partials/filters.njk" %}
+
   <div class="digest-shell">
     <aside class="digest-rail" aria-label="{{ t.digest.inThisIssue }}">
       <h2>{{ t.digest.inThisIssue }}</h2>
       <ol>
         {% for item in items %}
-          <li>
+          <li data-rail-item="{{ loop.index }}">
             <a href="#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) | truncate(48) }}</a>
           </li>
         {% endfor %}
@@ -41,7 +43,7 @@ eleventyComputed:
     </aside>
 
     <div class="digest-river">
-      <article class="digest-lead" id="digest-item-1">
+      <article class="digest-lead" id="digest-item-1" data-filterable data-filter-index="1" data-tags="{{ lead.data.tags | join(' ') }}" data-audience="{{ lead.data.audience | join(' ') }}">
         <p class="digest-kicker">{{ t.digest.leadStory }} · 1 · <time datetime="{{ lead.date | isoDate }}">{{ lead.date | displayDate(locale) }}</time></p>
         <h2><a class="digest-link" href="{{ locale | cardHref(lead.fileSlug) | url }}">{{ lead.data.title | localized(locale) }}</a></h2>
         <p class="digest-standfirst">{{ leadSummary }}</p>
@@ -70,7 +72,7 @@ eleventyComputed:
         {% if not loop.first %}
           {% set summaryText = item.data.summary | localized(locale) %}
           {% set clinicalText = item.data.clinicalNote | localized(locale) %}
-          <article class="digest-item" id="digest-item-{{ loop.index }}">
+          <article class="digest-item" id="digest-item-{{ loop.index }}" data-filterable data-filter-index="{{ loop.index }}" data-tags="{{ item.data.tags | join(' ') }}" data-audience="{{ item.data.audience | join(' ') }}">
             <div class="digest-num" aria-hidden="true">{{ loop.index }}</div>
             <div>
               <p class="digest-kicker"><time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time></p>
@@ -101,6 +103,7 @@ eleventyComputed:
       {% endfor %}
 
       <p class="digest-foot">{{ t.footer.notMedicalAdvice }}</p>
+      <p class="empty" data-filters-empty hidden>{{ t.digest.filters.shownNone }}</p>
     </div>
   </div>
 {% else %}

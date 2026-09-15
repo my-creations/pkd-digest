@@ -62,6 +62,25 @@ module.exports = {
     digest: {
       title: 'Weekly digest',
       cardBack: 'All cards',
+      filters: {
+        topicLabel: 'Topic',
+        audienceLabel: 'Audience',
+        all: 'All',
+        reset: 'Reset filters',
+        shownNone: 'No cards match these filters.',
+        shownOne: 'Showing 1 card.',
+        shownMany: 'Showing {n} cards.',
+        tagNames: {
+          research: 'Research',
+          treatment: 'Treatment',
+          lifestyle: 'Lifestyle',
+          advocacy: 'Advocacy',
+        },
+        audienceNames: {
+          patients: 'Patients & families',
+          clinicians: 'Clinicians',
+        },
+      },
       lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note, in English and Portuguese.',
       empty: 'No published items for this issue yet.',
       issueLabel: 'Weekly issue',
@@ -161,6 +180,25 @@ module.exports = {
     digest: {
       title: 'Digest semanal',
       cardBack: 'Todos os cartões',
+      filters: {
+        topicLabel: 'Tema',
+        audienceLabel: 'Público',
+        all: 'Todos',
+        reset: 'Limpar filtros',
+        shownNone: 'Nenhum cartão corresponde a estes filtros.',
+        shownOne: 'A mostrar 1 cartão.',
+        shownMany: 'A mostrar {n} cartões.',
+        tagNames: {
+          research: 'Investigação',
+          treatment: 'Tratamento',
+          lifestyle: 'Estilo de vida',
+          advocacy: 'Advocacia',
+        },
+        audienceNames: {
+          patients: 'Doentes e famílias',
+          clinicians: 'Clínicos',
+        },
+      },
       lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve, em inglês e português.',
       empty: 'Ainda não há itens publicados nesta edição.',
       issueLabel: 'Edição semanal',
