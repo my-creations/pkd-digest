@@ -901,18 +901,49 @@ h2 {
   max-width: 44rem;
 }
 
-.digest-clinical summary {
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--clinical-label);
-}
-
 .digest-clinical p {
   margin: 0.5rem 0 0;
   line-height: 1.6;
+}
+
+/* ——— Dual framing toggle ——— */
+.dual__switch {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+}
+
+.dual__btn {
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+}
+
+.dual__btn:hover {
+  color: var(--foreground);
+}
+
+.dual__btn.is-active {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.item-card__body > .dual__switch {
+  grid-column: 1 / -1;
+}
+
+.item-card__body.is-dual > section {
+  grid-column: 1 / -1;
 }
 
 .digest-foot {

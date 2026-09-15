@@ -46,11 +46,16 @@ eleventyComputed:
       <article class="digest-lead" id="digest-item-1" data-filterable data-filter-index="1" data-tags="{{ lead.data.tags | join(' ') }}" data-audience="{{ lead.data.audience | join(' ') }}">
         <p class="digest-kicker">{{ t.digest.leadStory }} · 1 · <time datetime="{{ lead.date | isoDate }}">{{ lead.date | displayDate(locale) }}</time></p>
         <h2><a class="digest-link" href="{{ locale | cardHref(lead.fileSlug) | url }}">{{ lead.data.title | localized(locale) }}</a></h2>
-        <p class="digest-standfirst">{{ leadSummary }}</p>
-        <details class="digest-clinical">
-          <summary>{{ t.digest.clinicalLabel }}</summary>
-          <p>{{ leadClinical }}</p>
-        </details>
+        <div class="dual" data-dual>
+          <div class="dual__switch" role="group" aria-label="{{ t.digest.dualLabel }}">
+            <button type="button" class="dual__btn is-active" data-dual-view="plain" aria-pressed="true">{{ t.digest.plainLabel }}</button>
+            <button type="button" class="dual__btn" data-dual-view="clinical" aria-pressed="false">{{ t.digest.clinicalLabel }}</button>
+          </div>
+          <p class="digest-standfirst" data-dual-panel="plain">{{ leadSummary }}</p>
+          <div class="digest-clinical" data-dual-panel="clinical" hidden>
+            <p>{{ leadClinical }}</p>
+          </div>
+        </div>
         <p class="digest-meta">
           {% if lead.data.source.url %}
             <a href="{{ lead.data.source.url }}" target="_blank" rel="noopener noreferrer">{{ lead.data.source.name or lead.data.source.url }}</a>
@@ -77,11 +82,16 @@ eleventyComputed:
             <div>
               <p class="digest-kicker"><time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time></p>
               <h3><a class="digest-link" href="{{ locale | cardHref(item.fileSlug) | url }}">{{ item.data.title | localized(locale) }}</a></h3>
-              <p class="digest-lede">{{ summaryText }}</p>
-              <details class="digest-clinical">
-                <summary>{{ t.digest.clinicalLabel }}</summary>
-                <p>{{ clinicalText }}</p>
-              </details>
+              <div class="dual" data-dual>
+                <div class="dual__switch" role="group" aria-label="{{ t.digest.dualLabel }}">
+                  <button type="button" class="dual__btn is-active" data-dual-view="plain" aria-pressed="true">{{ t.digest.plainLabel }}</button>
+                  <button type="button" class="dual__btn" data-dual-view="clinical" aria-pressed="false">{{ t.digest.clinicalLabel }}</button>
+                </div>
+                <p class="digest-lede" data-dual-panel="plain">{{ summaryText }}</p>
+                <div class="digest-clinical" data-dual-panel="clinical" hidden>
+                  <p>{{ clinicalText }}</p>
+                </div>
+              </div>
               <p class="digest-meta">
                 {% if item.data.source.url %}
                   <a href="{{ item.data.source.url }}" target="_blank" rel="noopener noreferrer">{{ item.data.source.name or item.data.source.url }}</a>

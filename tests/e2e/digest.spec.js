@@ -25,7 +25,7 @@ test.describe('digest broadsheet rail', () => {
     expect(linkCount).toBeGreaterThan(0);
     expect(articleCount).toBe(linkCount);
     expect(await page.locator('.digest-standfirst, .digest-lede').count()).toBe(linkCount);
-    expect(await page.locator('details.digest-clinical').count()).toBe(linkCount);
+    expect(await page.locator('[data-dual-panel="clinical"]').count()).toBe(linkCount);
 
     for (let index = 0; index < linkCount; index += 1) {
       const target = `#digest-item-${index + 1}`;
@@ -45,13 +45,13 @@ test.describe('digest broadsheet rail', () => {
     await expect(page.locator('#digest-item-1')).toBeInViewport();
   });
 
-  test('clinical disclosures open on demand', async ({ page }) => {
+  test('clinical framing opens on demand via the toggle', async ({ page }) => {
     await page.goto('digest/');
 
-    const clinical = page.locator('details.digest-clinical').first();
-    await expect(clinical).not.toHaveAttribute('open', '');
-    await clinical.locator('summary').click();
-    await expect(clinical).toHaveAttribute('open', '');
+    const lead = page.locator('.digest-lead');
+    await expect(lead.locator('[data-dual-panel="clinical"]')).toBeHidden();
+    await lead.locator('[data-dual-view="clinical"]').click();
+    await expect(lead.locator('[data-dual-panel="clinical"]')).toBeVisible();
   });
 
   test('switches to the Portuguese digest with localized rail copy', async ({ page }) => {

@@ -63,6 +63,7 @@ module.exports = {
     digest: {
       title: 'Weekly digest',
       cardBack: 'All cards',
+      dualLabel: 'Reading view',
       filters: {
         topicLabel: 'Topic',
         audienceLabel: 'Audience',
@@ -192,6 +193,7 @@ module.exports = {
     digest: {
       title: 'Digest semanal',
       cardBack: 'Todos os cartões',
+      dualLabel: 'Vista de leitura',
       filters: {
         topicLabel: 'Tema',
         audienceLabel: 'Público',
