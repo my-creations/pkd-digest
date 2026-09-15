@@ -17,12 +17,16 @@
     <h1 class="item-card__title">{{ titleText }}</h1>
   </header>
 
-  <div class="item-card__body">
-    <section class="item-card__block item-card__block--plain">
+  <div class="item-card__body" data-dual>
+    <div class="dual__switch" role="group" aria-label="{{ t.digest.dualLabel }}">
+      <button type="button" class="dual__btn is-active" data-dual-view="plain" aria-pressed="true">{{ t.digest.plainLabel }}</button>
+      <button type="button" class="dual__btn" data-dual-view="clinical" aria-pressed="false">{{ t.digest.clinicalLabel }}</button>
+    </div>
+    <section class="item-card__block item-card__block--plain" data-dual-panel="plain">
       <h2 class="item-card__label">{{ t.digest.plainLabel }}</h2>
       <p>{{ summaryText }}</p>
     </section>
-    <section class="item-card__block item-card__block--clinical">
+    <section class="item-card__block item-card__block--clinical" data-dual-panel="clinical" hidden>
       <h2 class="item-card__label">{{ t.digest.clinicalLabel }}</h2>
       <p>{{ clinicalText }}</p>
     </section>
