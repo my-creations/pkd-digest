@@ -106,4 +106,13 @@ test.describe('card filters', () => {
     await page.locator('[data-filters-reset]').click();
     expect(await page.locator('.timeline-list [data-filterable]:not([hidden])').count()).toBe(total);
   });
+
+  test('timeline list section renders without an outer frame', async ({ page }) => {
+    for (const path of ['timeline/', 'pt/timeline/']) {
+      await page.goto(path);
+      const section = page.locator('.timeline-list').locator('xpath=ancestor::section[1]');
+      await expect(section).toHaveClass(/section--bare/);
+      expect(await section.evaluate((el) => getComputedStyle(el).borderTopWidth)).toBe('0px');
+    }
+  });
 });

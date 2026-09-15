@@ -15,7 +15,7 @@ eleventyComputed:
   <p class="lede">{{ t.timeline.lede }}</p>
 </section>
 
-<section class="section">
+<section class="section section--bare">
   {% set items = collections.publishedItems %}
   {% if items.length %}
     {% include "partials/filters.njk" %}
