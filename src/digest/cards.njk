@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.publishedItems
+  size: 1
+  alias: card
+permalink: /digest/{{ pagination.items[0].fileSlug }}/
+pageType: card
+eleventyComputed:
+  title: "{{ card.data.title.en }}"
+  description: "{{ card.data.summary.en }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+{% include "partials/card-page.njk" %}

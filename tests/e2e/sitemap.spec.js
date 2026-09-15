@@ -24,8 +24,18 @@ test.describe('sitemap', () => {
     }
   });
 
+  test('lists standalone card permalinks in both locales', async ({ request }) => {
+    const res = await request.get('sitemap.xml');
+    expect(res.ok()).toBeTruthy();
+    const xml = await res.text();
+    const card = '/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/';
+    expect(xml).toContain(`<loc>${ORIGIN}/pkd-digest${card}</loc>`);
+    expect(xml).toContain(`<loc>${ORIGIN}/pkd-digest/pt${card}</loc>`);
+  });
+
   test('cross-links EN/PT alternates', async ({ request }) => {
     const res = await request.get('sitemap.xml');
+    expect(res.ok()).toBeTruthy();
     const xml = await res.text();
     expect(xml).toContain('hreflang="en"');
     expect(xml).toContain('hreflang="pt"');

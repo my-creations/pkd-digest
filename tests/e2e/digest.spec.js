@@ -64,6 +64,17 @@ test.describe('digest broadsheet rail', () => {
     await expect(page.locator('.locale-switcher .locale-option.is-current')).toContainText('PT');
   });
 
+  test('external source links open in a new tab', async ({ page }) => {
+    await page.goto('digest/');
+
+    const external = page.locator('.digest-river a[href^="http"]');
+    expect(await external.count()).toBeGreaterThan(0);
+    for (let index = 0; index < (await external.count()); index += 1) {
+      await expect(external.nth(index)).toHaveAttribute('target', '_blank');
+      await expect(external.nth(index)).toHaveAttribute('rel', /noopener/);
+    }
+  });
+
   test('has no horizontal page overflow', async ({ page }) => {
     await page.goto('digest/');
 

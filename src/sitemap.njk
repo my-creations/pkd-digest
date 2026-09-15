@@ -5,7 +5,7 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {%- for page in collections.all -%}
-{%- if page.url and page.data.eleventyExcludeFromCollections != true -%}
+{%- if page.url and page.data.eleventyExcludeFromCollections != true and page.data.pageType != 'card' -%}
   <url>
     <loc>{{ site.url }}{{ page.url | url }}</loc>
     {%- if page.data.translationKey -%}
@@ -20,5 +20,22 @@ eleventyExcludeFromCollections: true
     {%- endif -%}
   </url>
 {%- endif -%}
+{%- endfor -%}
+{# Standalone card permalinks are paginated pages: Eleventy only keeps the
+   first pagination page in collections.all, so emit them from the source
+   collection instead (both locales, cross-linked). #}
+{%- for item in collections.publishedItems -%}
+  {%- set enCard = site.url + ('en' | cardHref(item.fileSlug) | url) -%}
+  {%- set ptCard = site.url + ('pt' | cardHref(item.fileSlug) | url) -%}
+  <url>
+    <loc>{{ enCard }}</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ enCard }}" />
+    <xhtml:link rel="alternate" hreflang="pt" href="{{ ptCard }}" />
+  </url>
+  <url>
+    <loc>{{ ptCard }}</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ enCard }}" />
+    <xhtml:link rel="alternate" hreflang="pt" href="{{ ptCard }}" />
+  </url>
 {%- endfor -%}
 </urlset>

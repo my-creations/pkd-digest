@@ -32,7 +32,7 @@
       <p>
         <span class="item-card__label">{{ t.digest.sourceLabel }}:</span>
         {% if item.data.source.url %}
-          <a href="{{ item.data.source.url }}" rel="noopener noreferrer">{{ item.data.source.name or item.data.source.url }}</a>
+          <a href="{{ item.data.source.url }}" target="_blank" rel="noopener noreferrer">{{ item.data.source.name or item.data.source.url }}</a>
         {% else %}
           {{ item.data.source.name }}
         {% endif %}

@@ -1,4 +1,4 @@
-const { homeHref, sectionHref, languageHref, otherLocale } = require('./lib/locale-routes');
+const { homeHref, sectionHref, cardHref, languageHref, otherLocale } = require('./lib/locale-routes');
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -29,6 +29,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter('homeHref', (locale) => homeHref(locale));
   eleventyConfig.addFilter('sectionHref', (locale, section) => sectionHref(locale, section));
+  eleventyConfig.addFilter('cardHref', (locale, slug) => cardHref(locale, slug));
   eleventyConfig.addFilter('otherLocale', (locale) => otherLocale(locale));
   eleventyConfig.addFilter('languageHref', (currentPath, targetLocale) => languageHref(currentPath, targetLocale));
 

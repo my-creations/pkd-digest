@@ -21,6 +21,10 @@
 {% endif %}
 {% set enHref = site.url + ('en' | sectionHref(section) | url) %}
 {% set ptHref = site.url + ('pt' | sectionHref(section) | url) %}
+{% if pageType == 'card' and card %}
+  {% set enHref = site.url + ('en' | cardHref(card.fileSlug) | url) %}
+  {% set ptHref = site.url + ('pt' | cardHref(card.fileSlug) | url) %}
+{% endif %}
 
 <title>{{ metaTitle }} · {{ site.name }}</title>
 <meta name="description" content="{{ metaDescription }}" />
