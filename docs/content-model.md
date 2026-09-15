@@ -72,7 +72,7 @@ Human publish flips `status` to `published` and writes full EN+PT Dual Framing. 
 
 Cards feed Eleventy collections (`digestItems`, `publishedItems`, `latestIssueItems`) and emit standalone permalinks:
 
-- **Card pages** (`/digest/<slug>/`, `/pt/digest/<slug>/`): one page per published card via pagination (`digest/cards.njk`, `pt/digest/cards.njk`), with full Dual Framing, canonical + EN/PT alternate meta, and a back link to the digest. Only `published` non-placeholder cards get pages.
+- **Card pages** (`/digest/<slug>/`, `/pt/digest/<slug>/`): one page per published card via pagination (`digest/cards.njk`, `pt/digest/cards.njk`), with full Dual Framing, canonical + EN/PT alternate meta, a back link to the digest, and a “See also” section (up to 3 other published cards ranked by shared tags, then newest). Only `published` non-placeholder cards get pages.
 - **Digest** (`/digest/`, `/pt/digest/`): lists `latestIssueItems` (cards for the newest `issue`, or all cards if none set). River titles link to the standalone card pages; the rail keeps in-page `#digest-item-N` anchors.
 - **Timeline** (`/timeline/`, `/pt/timeline/`): lists all `digestItems` chronologically (same card partial).
 

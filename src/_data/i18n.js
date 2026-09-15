@@ -106,6 +106,9 @@ module.exports = {
       resultsOne: '1 matching card.',
       resultsMany: '{n} matching cards.',
     },
+    card: {
+      relatedTitle: 'See also',
+    },
     timeline: {
       title: 'Timeline',
       lede: 'Cards in chronological order when present.',
@@ -235,6 +238,9 @@ module.exports = {
       noResults: 'Nenhum cartão corresponde a essa pesquisa.',
       resultsOne: '1 cartão correspondente.',
       resultsMany: '{n} cartões correspondentes.',
+    },
+    card: {
+      relatedTitle: 'Ver também',
     },
     timeline: {
       title: 'Cronologia',
