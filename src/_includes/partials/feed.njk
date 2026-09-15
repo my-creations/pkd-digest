@@ -1,0 +1,32 @@
+{# Atom feed body for the latest weekly issue. Expects `locale` and `t` (i18n). #}
+{% set digestUrl = site.url + (locale | sectionHref('digest') | url) %}
+{% set feedUrl = site.url + ((('/pt/feed.xml' if locale == 'pt' else '/feed.xml')) | url) %}
+{% set items = collections.latestIssueItems %}
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ t.digest.title }} · {{ site.name if locale != 'pt' else site.namePt }}</title>
+  <subtitle>{{ t.digest.lede }}</subtitle>
+  <link href="{{ digestUrl }}" />
+  <link href="{{ feedUrl }}" rel="self" />
+  <id>{{ digestUrl }}</id>
+  {% if items.length %}
+  <updated>{{ items[0].date | toRfc3339 }}</updated>
+  {% endif %}
+  <author>
+    <name>{{ site.name }}</name>
+  </author>
+  {% for item in items %}
+  {% set titleText = item.data.title | localized(locale) %}
+  {% set summaryText = item.data.summary | localized(locale) %}
+  {% set clinicalText = item.data.clinicalNote | localized(locale) %}
+  {% set entryUrl = digestUrl + '#digest-item-' + loop.index %}
+  {% set entryHtml %}<p>{{ summaryText }}</p><p><strong>{{ t.digest.clinicalLabel }}:</strong> {{ clinicalText }}</p>{% if item.data.source.url %}<p>{{ t.digest.sourceLabel }}: <a href="{{ item.data.source.url }}">{{ item.data.source.name or item.data.source.url }}</a></p>{% endif %}{% endset %}
+  <entry>
+    <title>{{ titleText }}</title>
+    <link href="{{ entryUrl }}" />
+    <id>{{ entryUrl }}</id>
+    <updated>{{ item.date | toRfc3339 }}</updated>
+    <summary>{{ summaryText }}</summary>
+    <content type="html">{{ entryHtml | safe }}</content>
+  </entry>
+  {% endfor %}
+</feed>

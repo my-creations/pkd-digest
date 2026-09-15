@@ -17,6 +17,12 @@ module.exports = function (eleventyConfig) {
     return date.toISOString().slice(0, 10);
   });
 
+  eleventyConfig.addFilter('toRfc3339', (value) => {
+    if (!value) return '';
+    const date = value instanceof Date ? value : new Date(value);
+    return date.toISOString();
+  });
+
   eleventyConfig.addFilter('displayDate', (value, locale = 'en') => {
     if (!value) return '';
     const date = value instanceof Date ? value : new Date(value);
