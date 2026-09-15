@@ -5,7 +5,10 @@
   "count": 1,
   "items": [
     {
-      "title": "Sample ADPKD research card (placeholder)",
+      "title": {
+        "en": "Sample ADPKD research card (placeholder)",
+        "pt": "Cartão de investigação ADPKD de exemplo (placeholder)"
+      },
       "date": "2026-09-12",
       "source": {
         "url": "https://pubmed.ncbi.nlm.nih.gov/",

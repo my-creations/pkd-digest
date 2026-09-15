@@ -5,7 +5,7 @@ function card(overrides = {}) {
   return {
     file: 'example.md',
     data: {
-      title: 'Example finding',
+      title: { en: 'Example finding', pt: 'Descoberta de exemplo.' },
       date: '2026-09-02',
       source: { url: 'https://example.invalid/study', name: 'Example Journal' },
       tags: ['research'],
@@ -39,12 +39,14 @@ describe('content validation', () => {
 
   it('blocks published cards from shipping empty Portuguese stubs', () => {
     const { data } = card({ status: 'published' });
+    data.title.pt = '';
     data.summary.pt = '';
     data.clinicalNote.pt = '   ';
     const errors = validateDocuments([{ file: 'pt-stub.md', data }]);
 
     expect(errors).toEqual(
       expect.arrayContaining([
+        expect.stringContaining('published cards need a non-empty title.pt'),
         expect.stringContaining('published cards need a non-empty summary.pt'),
         expect.stringContaining('published cards need a non-empty clinicalNote.pt'),
       ])

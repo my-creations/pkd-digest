@@ -10,18 +10,18 @@ Each card carries EN and PT in the **same** file. Do **not** split into locale-s
 
 ## Front matter
 
-| Field                                 | Type                   | Notes                                                         |
-| ------------------------------------- | ---------------------- | ------------------------------------------------------------- |
-| `title`                               | string                 | Card title (shared)                                           |
-| `date`                                | date                   | ISO-friendly date; drives timeline order                      |
-| `issue`                               | string (optional)      | ISO week `YYYY-Www` grouping cards into a Weekly Issue        |
-| `source`                              | object                 | `{ url, name }` — external source (`url` required)            |
-| `tags`                                | string[]               | Topic tags (locked set below)                                 |
-| `audience`                            | string[]               | Locked: `patients`, `clinicians` (one or both)                |
-| `summary.en` / `summary.pt`           | string                 | Plain-language summary                                        |
-| `clinicalNote.en` / `clinicalNote.pt` | string                 | Short clinical framing                                        |
-| `status`                              | `published` \| `draft` | Only `published` is meant for public lists later              |
-| `placeholder`                         | boolean                | `true` for scaffold/sample cards with no real clinical claims |
+| Field                                 | Type                   | Notes                                                                       |
+| ------------------------------------- | ---------------------- | --------------------------------------------------------------------------- |
+| `title.en` / `title.pt`               | string                 | Card title in each locale — PT must be a real translation, not a copy of EN |
+| `date`                                | date                   | ISO-friendly date; drives timeline order                                    |
+| `issue`                               | string (optional)      | ISO week `YYYY-Www` grouping cards into a Weekly Issue                      |
+| `source`                              | object                 | `{ url, name }` — external source (`url` required)                          |
+| `tags`                                | string[]               | Topic tags (locked set below)                                               |
+| `audience`                            | string[]               | Locked: `patients`, `clinicians` (one or both)                              |
+| `summary.en` / `summary.pt`           | string                 | Plain-language summary                                                      |
+| `clinicalNote.en` / `clinicalNote.pt` | string                 | Short clinical framing                                                      |
+| `status`                              | `published` \| `draft` | Only `published` is meant for public lists later                            |
+| `placeholder`                         | boolean                | `true` for scaffold/sample cards with no real clinical claims               |
 
 ## Locked vocabularies
 

@@ -15,12 +15,12 @@
   --border: #d9cbae;
   --ring: #9e2b25;
 
-  /* Dual framing — more distinct */
+  /* Dual framing — warm paper pair, oxblood clinical marker */
   --plain-bg: #faf8f3;
   --plain-border: #ddd4c4;
-  --clinical-bg: #eef6f7;
-  --clinical-border: #a8c4ca;
-  --clinical-label: #1a6b74;
+  --clinical-bg: #f6ead0;
+  --clinical-border: #c9b183;
+  --clinical-label: #9e2b25;
 
   /* Shape / elevation */
   --radius: 0.75rem;

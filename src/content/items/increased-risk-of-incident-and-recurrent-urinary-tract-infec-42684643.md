@@ -1,5 +1,7 @@
 ---
-title: 'Increased risk of incident and recurrent urinary tract infection in autosomal dominant polycystic kidney disease: a contemporary propensity score-matched cohort study'
+title:
+  en: 'Increased risk of incident and recurrent urinary tract infection in autosomal dominant polycystic kidney disease: a contemporary propensity score-matched cohort study'
+  pt: 'Risco aumentado de infeção do trato urinário incidente e recorrente na doença renal poliquística autossómica dominante: estudo de coorte contemporâneo com emparelhamento por propensity score'
 date: 2026-09-02
 issue: '2026-W37'
 source:

@@ -1,5 +1,7 @@
 ---
-title: 'Prevalence of unruptured intracranial aneurysms according to comorbidities, risk factors, country, and time period: a systematic review and meta-analysis'
+title:
+  en: 'Prevalence of unruptured intracranial aneurysms according to comorbidities, risk factors, country, and time period: a systematic review and meta-analysis'
+  pt: 'Prevalência de aneurismas intracranianos não rotos segundo comorbilidades, fatores de risco, país e período: revisão sistemática e meta-análise'
 date: 2026-10-01
 issue: '2026-W37'
 source:

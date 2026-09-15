@@ -48,7 +48,7 @@ module.exports = {
     home: {
       eyebrow: 'Weekly curated digest',
       headline: 'Cystic kidney disease, explained twice.',
-      lede: 'PKD Digest (Digest DRP) is a bilingual EN+PT weekly digest on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries a plain-language summary and a short clinical note.',
+      lede: 'PKD Digest (Digest DRP) is a weekly digest in English and Portuguese on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries a plain-language summary and a short clinical note.',
       audiences: 'For patients & families · For clinicians',
       ctaDigest: 'This week’s digest',
       ctaTimeline: 'Browse the timeline',
@@ -61,7 +61,7 @@ module.exports = {
     },
     digest: {
       title: 'Weekly digest',
-      lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note (EN+PT).',
+      lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note, in English and Portuguese.',
       empty: 'No published items for this issue yet.',
       issueLabel: 'Weekly issue',
       inThisIssue: 'In this issue',
@@ -146,7 +146,7 @@ module.exports = {
     home: {
       eyebrow: 'Digest semanal curado',
       headline: 'Doença renal quística, explicada duas vezes.',
-      lede: 'O Digest DRP (PKD Digest) é um digest semanal bilingue EN+PT sobre doença renal quística — em geral, não só ADPKD. Cada item tem um resumo em linguagem simples e uma nota clínica breve.',
+      lede: 'O Digest DRP (PKD Digest) é um digest semanal em inglês e português sobre doença renal quística — em geral, não só ADPKD. Cada item tem um resumo em linguagem simples e uma nota clínica breve.',
       audiences: 'Para doentes e famílias · Para clínicos',
       ctaDigest: 'Digest desta semana',
       ctaTimeline: 'Ver a cronologia',
@@ -159,7 +159,7 @@ module.exports = {
     },
     digest: {
       title: 'Digest semanal',
-      lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve (EN+PT).',
+      lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve, em inglês e português.',
       empty: 'Ainda não há itens publicados nesta edição.',
       issueLabel: 'Edição semanal',
       inThisIssue: 'Nesta edição',
@@ -174,7 +174,7 @@ module.exports = {
     },
     timeline: {
       title: 'Cronologia',
-      lede: 'Cartões por ordem cronológica, quando existirem.',
+      lede: 'Cartões publicados, do mais recente para o mais antigo.',
       empty: 'Ainda não há itens publicados na cronologia.',
     },
     privacy: {

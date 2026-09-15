@@ -1,9 +1,10 @@
 {% set t = i18n[locale] %}
 {% set summaryText = item.data.summary | localized(locale) %}
 {% set clinicalText = item.data.clinicalNote | localized(locale) %}
+{% set titleText = item.data.title | localized(locale) %}
 <article class="item-card{% if item.data.placeholder %} item-card--placeholder{% endif %}">
   <header class="item-card__header">
-    <h3 class="item-card__title">{{ item.data.title }}</h3>
+    <h3 class="item-card__title">{{ titleText }}</h3>
     <p class="item-card__meta">
       <time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time>
       {% if item.data.placeholder %}
@@ -35,12 +36,6 @@
         {% else %}
           {{ item.data.source.name }}
         {% endif %}
-      </p>
-    {% endif %}
-    {% if item.data.audience %}
-      <p>
-        <span class="item-card__label">{{ t.digest.audienceLabel }}:</span>
-        {{ item.data.audience | join(', ') }}
       </p>
     {% endif %}
     {% if item.data.tags %}

@@ -65,12 +65,15 @@ function validateDocuments(documents) {
       }
     }
 
-    if (!isLocalePair(data.summary) || !isLocalePair(data.clinicalNote)) {
-      errors.push(`${file}: summary and clinicalNote must each include en and pt strings`);
+    if (!isLocalePair(data.title) || !isLocalePair(data.summary) || !isLocalePair(data.clinicalNote)) {
+      errors.push(`${file}: title, summary and clinicalNote must each include en and pt strings`);
     }
 
     if (data.status === 'published' && data.placeholder !== true) {
       for (const locale of ['en', 'pt']) {
+        if (!data.title?.[locale]?.trim()) {
+          errors.push(`${file}: published cards need a non-empty title.${locale}`);
+        }
         if (!data.summary?.[locale]?.trim()) {
           errors.push(`${file}: published cards need a non-empty summary.${locale}`);
         }
