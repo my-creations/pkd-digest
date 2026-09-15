@@ -1197,6 +1197,51 @@ h2 {
   font-variant-numeric: tabular-nums;
 }
 
+/* ——— Print: take the issue to the appointment ——— */
+@media print {
+  .topbar,
+  .site-footer,
+  .filters,
+  .digest-rail,
+  .dual__switch,
+  .card-related,
+  .card-back,
+  .skip-link {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .digest-shell,
+  .digest-item {
+    display: block;
+  }
+
+  [data-dual-panel][hidden] {
+    display: block !important;
+  }
+
+  .digest-lead,
+  .digest-item,
+  .item-card {
+    break-inside: avoid;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .digest-meta a[href^='http']::after,
+  .item-card__footer a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* ——— Mobile layout (<640 / <480) ———
    Compact header: wordmark + locale on one row; nav as a dense
    horizontal row. Tighter page gutters; cards nearly full-bleed.
