@@ -57,6 +57,14 @@ test.describe('card permalinks', () => {
     await expect(page.locator('main h1')).toContainText('Comentário KDOQI');
   });
 
+  test('card source link opens in a new tab', async ({ page }) => {
+    await page.goto(`digest/${SLUG}/`);
+
+    const source = page.locator('.item-card__footer a[href^="http"]');
+    await expect(source).toHaveAttribute('target', '_blank');
+    await expect(source).toHaveAttribute('rel', /noopener/);
+  });
+
   test('digest river titles link to their standalone cards', async ({ page }) => {
     await page.goto('digest/');
 
