@@ -1260,6 +1260,11 @@ h2 {
     padding-right: env(safe-area-inset-right, 0px);
   }
 
+  /* Page titles keep generous side margins while cards stay full-bleed. */
+  .page-header {
+    padding-inline: var(--space-3);
+  }
+
   .masthead {
     padding: 1.1rem 0.9rem 0.9rem;
     padding-top: max(1.1rem, env(safe-area-inset-top, 0px));
