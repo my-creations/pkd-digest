@@ -174,7 +174,7 @@ module.exports = {
     },
     timeline: {
       title: 'Cronologia',
-      lede: 'Cartões por ordem cronológica, quando existirem.',
+      lede: 'Cartões publicados, do mais recente para o mais antigo.',
       empty: 'Ainda não há itens publicados na cronologia.',
     },
     privacy: {
