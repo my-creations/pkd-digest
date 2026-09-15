@@ -16,12 +16,14 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:lighthouse": "lhci autorun",
     "test:all": "bun run test:unit && bun run test:e2e",
     "prepare": "husky"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
     "@axe-core/playwright": "^4.13.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.63.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",

@@ -12,8 +12,9 @@
       <span class="wordmark__tagline">{% if locale == 'pt' %}Doença renal quística · Semanal{% else %}Cystic kidney disease · Weekly{% endif %}</span>
     </a>
   </div>
+</header>
 
-  <div class="topbar">
+<div class="topbar">
     <div class="topbar__inner">
       <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
         <ul class="nav__list">
@@ -24,7 +25,6 @@
             <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
           </li>
         </ul>
-      </nav>
 
       <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
         {% if locale == 'pt' %}
@@ -39,6 +39,6 @@
           <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
         {% endif %}
       </div>
+      </nav>
     </div>
   </div>
-</header>
