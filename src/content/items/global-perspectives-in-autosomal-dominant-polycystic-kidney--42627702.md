@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Global Perspectives in Autosomal Dominant Polycystic Kidney Disease: Mexico.'
-  pt: ''
+  pt: 'Perspetivas globais na doença renal poliquística autossómica dominante: México.'
 date: 2026-08-21
 issue: '2026-W34'
 source:

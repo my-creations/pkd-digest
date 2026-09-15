@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Targeted analysis of salicylate binding partners in renal epithelial cells reveals major AMPK dependency.'
-  pt: ''
+  pt: 'Análise dirigida dos parceiros de ligação do salicilato em células epiteliais renais revela grande dependência de AMPK.'
 date: 2026-08-25
 issue: '2026-W35'
 source:

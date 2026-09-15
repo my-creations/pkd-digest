@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Quantitative analysis of d-amino acids in renal samples using derivatization.'
-  pt: ''
+  pt: 'Análise quantitativa de D-aminoácidos em amostras renais por derivatização.'
 date: 2026-08-12
 issue: '2026-W33'
 source:

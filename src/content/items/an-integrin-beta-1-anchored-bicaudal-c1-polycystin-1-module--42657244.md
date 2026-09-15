@@ -1,7 +1,7 @@
 ---
 title:
   en: 'An integrin beta-1-anchored bicaudal C1-polycystin-1 module essential for tubular morphogenesis in polycystic kidney disease.'
-  pt: ''
+  pt: 'Um módulo de bicaudal C1–policistina-1 ancorado pela integrina beta-1, essencial para a morfogénese tubular na doença renal poliquística.'
 date: 2026-09-18
 issue: '2026-W34'
 source:

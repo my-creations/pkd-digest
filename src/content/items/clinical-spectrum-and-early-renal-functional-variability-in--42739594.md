@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Clinical Spectrum and Early Renal Functional Variability in a Nationwide Greek Pediatric HNF1B Multicenter Cohort.'
-  pt: ''
+  pt: 'Espetro clínico e variabilidade funcional renal precoce numa coorte pediátrica multicêntrica nacional grega com HNF1B.'
 date: 2026-08-26
 issue: '2026-W35'
 source:

@@ -1,7 +1,7 @@
 ---
 title:
   en: 'TBC1D23-AAVR interaction drives endosome-to-TGN trafficking required for rAAV transduction.'
-  pt: ''
+  pt: 'A interação TBC1D23–AAVR impulsiona o tráfego do endossoma para o TGN, necessário à transdução por rAAV.'
 date: 2026-08-18
 issue: '2026-W33'
 source:

@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Modeling Complex Developmental Disease: The Case of Polycystic Kidney Disease.'
-  pt: ''
+  pt: 'Modelar doenças complexas do desenvolvimento: o caso da doença renal poliquística.'
 date: 2026-08-10
 issue: '2026-W33'
 source:

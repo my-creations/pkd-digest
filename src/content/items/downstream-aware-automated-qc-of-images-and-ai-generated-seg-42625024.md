@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Downstream-Aware Automated QC of Images and AI-Generated Segmentations.'
-  pt: ''
+  pt: 'Controlo de qualidade automatizado de imagens e segmentações por IA, pensado para a análise subsequente.'
 date: 2026-08-20
 issue: '2026-W34'
 source:

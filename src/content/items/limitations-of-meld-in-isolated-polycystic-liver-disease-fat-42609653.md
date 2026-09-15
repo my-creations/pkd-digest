@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Limitations of MELD in Isolated Polycystic Liver Disease: Fatal Traumatic Cyst Rupture Complicated by Abdominal Compartment Syndrome.'
-  pt: ''
+  pt: 'Limitações do MELD na doença hepática poliquística isolada: rutura traumática fatal de quisto complicada por síndrome compartimental abdominal.'
 date: 2026-01-01
 issue: '2026-W33'
 source:

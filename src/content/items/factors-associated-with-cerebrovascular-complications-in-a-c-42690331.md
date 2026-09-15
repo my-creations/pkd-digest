@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Factors associated with cerebrovascular complications in a cohort of patients with autosomal dominant polycystic kidney disease in South Africa.'
-  pt: ''
+  pt: 'Fatores associados a complicações cerebrovasculares numa coorte de doentes com doença renal poliquística autossómica dominante na África do Sul.'
 date: 2026-08-21
 issue: '2026-W34'
 source:

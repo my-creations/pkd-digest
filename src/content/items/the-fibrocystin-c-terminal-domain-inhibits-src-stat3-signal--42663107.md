@@ -1,7 +1,7 @@
 ---
 title:
   en: 'The fibrocystin C-terminal domain inhibits Src/STAT3 signal induced cystogenesis of kidney epithelial cells.'
-  pt: ''
+  pt: 'O domínio C-terminal da fibrocistina inibe a cistogénese induzida por sinalização Src/STAT3 em células epiteliais renais.'
 date: 2026-08-28
 issue: '2026-W35'
 source:

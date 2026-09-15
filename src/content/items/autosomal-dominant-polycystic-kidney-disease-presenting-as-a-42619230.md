@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Autosomal Dominant Polycystic Kidney Disease Presenting as a Painless Epigastric Mass: A Case Report.'
-  pt: ''
+  pt: 'Doença renal poliquística autossómica dominante a apresentar-se como massa epigástrica indolor: relato de caso.'
 date: 2026-08-20
 issue: '2026-W34'
 source:

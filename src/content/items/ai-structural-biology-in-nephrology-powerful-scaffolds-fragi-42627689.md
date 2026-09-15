@@ -1,7 +1,7 @@
 ---
 title:
   en: 'AI Structural Biology in Nephrology: Powerful Scaffolds, Fragile Certainties.'
-  pt: ''
+  pt: 'Biologia estrutural com IA em nefrologia: andaimes poderosos, certezas frágeis.'
 date: 2026-08-21
 issue: '2026-W34'
 source:

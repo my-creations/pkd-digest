@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Prognostic Performance of Ellipsoid Kidney Volume Measurement in a Computed Tomography-Heavy ADPKD Cohort: A Retrospective Observational Cohort Study.'
-  pt: ''
+  pt: 'Desempenho prognóstico da medição elipsoide do volume renal numa coorte ADPKD com uso intensivo de TAC: estudo observacional retrospetivo de coorte.'
 date: 2026-01-01
 issue: '2026-W33'
 source:

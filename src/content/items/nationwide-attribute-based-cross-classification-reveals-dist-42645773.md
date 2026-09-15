@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Nationwide attribute-based cross-classification reveals distinct risk patterns of major complications in ADPKD.'
-  pt: ''
+  pt: 'Classificação cruzada nacional por atributos revela padrões de risco distintos para complicações major na ADPKD.'
 date: 2026-08-26
 issue: '2026-W35'
 source:

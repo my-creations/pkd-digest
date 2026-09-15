@@ -1,7 +1,7 @@
 ---
 title:
   en: 'Kidney outcomes and safety of sodium-glucose cotransporter-2 inhibitor therapy in autosomal dominant polycystic kidney disease: systematic review and meta-analysis.'
-  pt: ''
+  pt: 'Desfechos renais e segurança dos inibidores SGLT2 na doença renal poliquística autossómica dominante: revisão sistemática e meta-análise.'
 date: 2026-09-01
 issue: '2026-W33'
 source:
