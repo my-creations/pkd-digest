@@ -39,6 +39,45 @@ test.describe('visual layout invariants', () => {
     expect(lead.bottom).toBeLessThanOrEqual(firstItem.top + 1);
   });
 
+  test('filter bar keeps breathing room above the issue content', async ({ page }) => {
+    await page.goto('digest/');
+
+    const bar = page.locator('[data-filters]');
+    const shell = page.locator('.digest-shell');
+    await expect(bar).toBeVisible();
+    await expect(shell).toBeVisible();
+
+    const barBox = await rect(bar);
+    const shellBox = await rect(shell);
+    expect(shellBox.top).toBeGreaterThanOrEqual(barBox.bottom + 16);
+  });
+
+  test('language toggle options are equal and centered', async ({ page }) => {
+    for (const path of ['digest/', 'pt/digest/']) {
+      await page.goto(path);
+
+      const switcher = page.locator('.locale-switcher');
+      const options = switcher.locator('.locale-option');
+      await expect(options).toHaveCount(2);
+
+      const switcherBox = await rect(switcher);
+      const first = await rect(options.nth(0));
+      const second = await rect(options.nth(1));
+
+      // Equal-width segments…
+      expect(Math.abs(first.right - first.left - (second.right - second.left))).toBeLessThanOrEqual(1);
+      // …optically centered horizontally and vertically inside the pill.
+      const middle = (first.right + second.left) / 2;
+      const pillMiddle = (switcherBox.left + switcherBox.right) / 2;
+      expect(Math.abs(middle - pillMiddle)).toBeLessThanOrEqual(2);
+      for (const box of [first, second]) {
+        const optionMiddle = (box.top + box.bottom) / 2;
+        const pillVertical = (switcherBox.top + switcherBox.bottom) / 2;
+        expect(Math.abs(optionMiddle - pillVertical)).toBeLessThanOrEqual(2);
+      }
+    }
+  });
+
   test('section bar stays stuck while the river scrolls', async ({ page }) => {
     await page.goto('digest/');
 
