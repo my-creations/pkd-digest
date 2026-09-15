@@ -16,6 +16,8 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
    python3 scripts/curate-shortlist.py --retmax 8
    ```
 
+   Add `--skip-existing` to drop candidates whose source URL is already curated (what the weekly CI run uses).
+
    Optional public RSS feeds:
 
    ```bash
@@ -63,7 +65,7 @@ Human publish flips `status` to `published`, completes EN+PT Dual Framing, and s
 
 ## Scheduled / manual runs (CI)
 
-[`.github/workflows/curate-shortlist.yml`](../.github/workflows/curate-shortlist.yml) runs the same script weekly (Mondays 07:00 UTC) and on manual dispatch, writing indexes and draft cards under the gitignored `curation/generated/` and uploading them as a `draft-shortlist` workflow artifact. It never commits and never publishes — a human still downloads the artifact, curates keepers into `src/content/items/`, and ships through the normal PR / Pages workflow.
+[`.github/workflows/curate-shortlist.yml`](../.github/workflows/curate-shortlist.yml) runs the same script weekly (Mondays 07:00 UTC) and on manual dispatch: it fetches candidates with `--skip-existing` (already-curated source URLs are not re-proposed), stamps the current ISO week as `issue`, validates the drafts, uploads the indexes as a `draft-shortlist` workflow artifact, and opens (or updates) a review PR with the new `status: draft` cards. It never commits to `main` and never publishes — a human still curates keepers into `published` and merges; merging is what publishes to Pages.
 
 ## Examples
 

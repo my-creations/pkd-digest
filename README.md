@@ -30,18 +30,18 @@ bun run build
 
 Useful scripts:
 
-| Script                     | Purpose                                      |
-| -------------------------- | -------------------------------------------- |
-| `bun run build`            | Validate content + Eleventy build → `_site/` |
-| `bun run start` / `dev`    | Local Eleventy server                        |
-| `bun run format`           | Format with oxfmt                            |
-| `bun run format:check`     | CI format check                              |
-| `bun run validate:content` | Light front-matter checks on content cards   |
-| `bun run lint` / `lint:fix`  | Lint JS with oxlint / autofix                  |
-| `bun run test` / `test:unit` | Unit tests with Vitest (default `test`)       |
-| `bun run test:e2e`           | Playwright e2e on desktop + mobile Chromium   |
-| `bun run test:all`           | Unit + e2e                                    |
-| `bun run curate:shortlist`   | Manual PubMed draft shortlist (human review)  |
+| Script                       | Purpose                                      |
+| ---------------------------- | -------------------------------------------- |
+| `bun run build`              | Validate content + Eleventy build → `_site/` |
+| `bun run start` / `dev`      | Local Eleventy server                        |
+| `bun run format`             | Format with oxfmt                            |
+| `bun run format:check`       | CI format check                              |
+| `bun run validate:content`   | Light front-matter checks on content cards   |
+| `bun run lint` / `lint:fix`  | Lint JS with oxlint / autofix                |
+| `bun run test` / `test:unit` | Unit tests with Vitest (default `test`)      |
+| `bun run test:e2e`           | Playwright e2e on desktop + mobile Chromium  |
+| `bun run test:all`           | Unit + e2e                                   |
+| `bun run curate:shortlist`   | Manual PubMed draft shortlist (human review) |
 
 ## Locale routing
 
@@ -62,7 +62,7 @@ Cards: `src/content/items/*.md` with nested `summary.en` / `summary.pt` and `cli
 
 v1 curation is **assisted**, not automatic:
 
-1. Run `bun run curate:shortlist` (or `python3 scripts/curate-shortlist.py --retmax 8`) to fetch public PubMed candidates (optional RSS via `--rss`; optional `--issue YYYY-Www`). The same draft runs weekly via [`.github/workflows/curate-shortlist.yml`](.github/workflows/curate-shortlist.yml) (Mondays 07:00 UTC, plus manual dispatch) and uploads the draft JSON/MD as a workflow artifact — still draft-only, never published.
+1. Run `bun run curate:shortlist` (or `python3 scripts/curate-shortlist.py --retmax 8`) to fetch public PubMed candidates (optional RSS via `--rss`; optional `--issue YYYY-Www`; `--skip-existing` drops already-curated URLs). The same draft runs weekly via [`.github/workflows/curate-shortlist.yml`](.github/workflows/curate-shortlist.yml) (Mondays 07:00 UTC, plus manual dispatch), which validates the drafts, uploads the indexes as an artifact, and opens a review PR with the new `status: draft` cards — still draft-only, never published directly.
 2. Review the draft shortlist under `curation/generated/` and draft cards under `src/content/items/` (`status: draft`).
 3. Complete EN+PT Dual Framing on keepers, set `issue` if needed, set `status: published`; remove rejected drafts.
 4. Ship through the normal PR / Pages workflow.

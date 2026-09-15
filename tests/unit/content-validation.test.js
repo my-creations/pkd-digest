@@ -41,7 +41,7 @@ describe('content validation', () => {
         expect.stringContaining('placeholder must be boolean'),
         expect.stringContaining('tag "gossip" is not in the locked set'),
         expect.stringContaining('audience "doctors" must be patients|clinicians'),
-      ]),
+      ])
     );
   });
 
@@ -64,7 +64,7 @@ describe('content validation', () => {
         expect.stringContaining('source.url is required'),
         expect.stringContaining('issue must match YYYY-Www'),
         expect.stringContaining('summary and clinicalNote must each include en and pt strings'),
-      ]),
+      ])
     );
   });
 });

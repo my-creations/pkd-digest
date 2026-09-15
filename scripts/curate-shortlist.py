@@ -174,6 +174,21 @@ def _guess_tags(text: str) -> list[str]:
     return out or ["research"]
 
 
+def existing_source_urls(items_dir: Path) -> set[str]:
+    """Source URLs already curated (published or draft), so weekly runs don't re-propose them."""
+    urls: set[str] = set()
+    if not items_dir.exists():
+        return urls
+    for path in sorted(items_dir.glob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for match in re.finditer(r"^\s*url:\s*['\"]?(https?://[^'\"\s]+)", text, re.M):
+            urls.add(match.group(1).rstrip("/"))
+    return urls
+
+
 def fetch_rss_items(feed_url: str, limit: int) -> list[dict]:
     """Optional public RSS (Atom/RSS). Best-effort; failures are non-fatal."""
     try:
@@ -407,6 +422,11 @@ def main() -> int:
         default=date.today().isoformat(),
         help="Filename stamp (default: today ISO date)",
     )
+    parser.add_argument(
+        "--skip-existing",
+        action="store_true",
+        help="Drop candidates whose source URL is already curated under --items-dir",
+    )
     args = parser.parse_args()
 
     print("Fetching PubMed (public E-utilities, no API key)…", file=sys.stderr)
@@ -431,6 +451,16 @@ def main() -> int:
         if url:
             seen.add(url)
         merged.append(item)
+
+    if args.skip_existing:
+        known = existing_source_urls(Path(args.items_dir))
+        before = len(merged)
+        merged = [
+            item
+            for item in merged
+            if ((item.get("source") or {}).get("url") or "").rstrip("/") not in known
+        ]
+        print(f"Skipped {before - len(merged)} already-curated item(s).", file=sys.stderr)
 
     json_path, md_path, items_dir = write_outputs(
         merged, Path(args.out_dir), args.stamp, Path(args.items_dir), args.issue

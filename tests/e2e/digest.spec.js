@@ -10,7 +10,7 @@ test.describe('digest broadsheet rail', () => {
     await expect(page.locator('.locale-switcher .locale-option.is-current')).toContainText('EN');
     await expect(page.locator('.locale-switcher a.locale-option[hreflang="pt"]')).toHaveAttribute(
       'href',
-      '/pkd-digest/pt/digest/',
+      '/pkd-digest/pt/digest/'
     );
   });
 
