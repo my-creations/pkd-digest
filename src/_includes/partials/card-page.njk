@@ -53,3 +53,17 @@
     {% endif %}
   </footer>
 </article>
+
+{% set related = collections.publishedItems | relatedCards(card, 3) %}
+{% if related.length %}
+<section class="card-related" aria-label="{{ t.card.relatedTitle }}">
+  <h2>{{ t.card.relatedTitle }}</h2>
+  <ul>
+    {% for rel in related %}
+      <li>
+        <a href="{{ locale | cardHref(rel.slug) | url }}">{{ rel.title | localized(locale) }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

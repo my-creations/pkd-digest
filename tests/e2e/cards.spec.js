@@ -49,6 +49,33 @@ test.describe('card permalinks', () => {
     }
   });
 
+  test('shows related cards without linking to itself', async ({ page }) => {
+    await page.goto(`digest/${SLUG}/`);
+
+    const section = page.locator('.card-related');
+    await expect(section.locator('h2')).toContainText('See also');
+    const links = section.locator('a');
+    expect(await links.count()).toBe(3);
+    for (let index = 0; index < 3; index += 1) {
+      const href = await links.nth(index).getAttribute('href');
+      expect(href).toMatch(/^\/pkd-digest\/digest\/.+\/$/);
+      expect(href).not.toContain(SLUG);
+    }
+  });
+
+  test('related cards use the PT locale on PT pages', async ({ page }) => {
+    await page.goto(`pt/digest/${SLUG}/`);
+
+    const section = page.locator('.card-related');
+    await expect(section.locator('h2')).toContainText('Ver também');
+    const links = section.locator('a');
+    expect(await links.count()).toBe(3);
+    for (let index = 0; index < 3; index += 1) {
+      const href = await links.nth(index).getAttribute('href');
+      expect(href).toMatch(/^\/pkd-digest\/pt\/digest\/.+\/$/);
+    }
+  });
+
   test('language switcher maps a card to the same card', async ({ page }) => {
     await page.goto(`digest/${SLUG}/`);
     await page.locator('.locale-switcher a.locale-option[hreflang="pt"]').click();
