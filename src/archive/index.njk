@@ -1,0 +1,46 @@
+---
+layout: layouts/base.njk
+permalink: /archive/
+translationKey: archive
+pageType: archive
+eleventyComputed:
+  title: "{{ i18n.en.archive.title }}"
+  description: "{{ i18n.en.archive.lede }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="page-header">
+  <h1>{{ t.archive.title }}</h1>
+  <p class="lede">{{ t.archive.lede }}</p>
+</section>
+
+<section class="section">
+  {% set groups = collections.publishedItems | groupByIssue %}
+  {% if groups.length %}
+    <ol class="archive-list">
+      {% for group in groups %}
+        <li class="archive-issue">
+          <h2>{{ t.digest.issueLabel }} <strong>{{ group.issue }}</strong></h2>
+          <p class="archive-count">
+            {% if group.items.length == 1 %}
+              {{ t.archive.cardsOne }}
+            {% else %}
+              {{ t.archive.cardsMany | replace('{n}', group.items.length) }}
+            {% endif %}
+          </p>
+          <ul>
+            {% for item in group.items %}
+              <li>
+                <a href="{{ locale | cardHref(item.slug) | url }}">{{ item.title | localized(locale) }}</a>
+                <time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="empty">{{ t.archive.empty }}</p>
+  {% endif %}
+</section>
