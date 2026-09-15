@@ -4,6 +4,7 @@ const { homeHref, sectionHref, cardHref, languageHref, otherLocale } = require('
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     'src/css': 'css',
+    'src/js': 'js',
     'src/assets/favicons': 'assets/favicons',
     'src/assets/og-default.png': 'assets/og-default.png',
   });

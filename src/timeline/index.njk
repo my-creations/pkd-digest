@@ -18,13 +18,15 @@ eleventyComputed:
 <section class="section">
   {% set items = collections.publishedItems %}
   {% if items.length %}
+    {% include "partials/filters.njk" %}
     <ol class="timeline-list">
       {% for item in items %}
-        <li>
+        <li data-filterable data-tags="{{ item.data.tags | join(' ') }}" data-audience="{{ item.data.audience | join(' ') }}">
           {% include "partials/item-card.njk" %}
         </li>
       {% endfor %}
     </ol>
+    <p class="empty" data-filters-empty hidden>{{ t.digest.filters.shownNone }}</p>
   {% else %}
     <p class="empty">{{ t.timeline.empty }}</p>
   {% endif %}
