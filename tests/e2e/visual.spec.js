@@ -117,6 +117,11 @@ test.describe('narrow fold layout', () => {
         const box = await rect(page.locator(sel).first());
         expect(box.right).toBeLessThanOrEqual(overflow.viewportWidth + 1);
       }
+
+      // Page titles keep side margins instead of touching the screen edges.
+      const headerTitle = await rect(page.locator('.page-header h1'));
+      expect(headerTitle.left).toBeGreaterThanOrEqual(12);
+      expect(overflow.viewportWidth - headerTitle.right).toBeGreaterThanOrEqual(12);
     }
   });
 });
