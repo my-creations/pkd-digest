@@ -8,7 +8,7 @@ const { test, expect } = require('@playwright/test');
 async function rect(locator) {
   const box = await locator.boundingBox();
   expect(box).not.toBeNull();
-  return box;
+  return { left: box.x, top: box.y, right: box.x + box.width, bottom: box.y + box.height };
 }
 
 async function computedPosition(locator) {
