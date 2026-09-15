@@ -24,6 +24,14 @@ module.exports = defineConfig({
       name: 'e2e-chromium-mobile',
       use: { ...devices['Pixel 7'] },
     },
+    {
+      name: 'e2e-firefox-desktop',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'e2e-webkit-desktop',
+      use: { ...devices['Desktop Safari'] },
+    },
   ],
   webServer: {
     command: 'bun run build && bunx eleventy --serve --port=8901',
