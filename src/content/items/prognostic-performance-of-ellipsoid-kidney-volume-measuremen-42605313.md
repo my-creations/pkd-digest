@@ -10,11 +10,11 @@ source:
 tags: [research, treatment]
 audience: [patients, clinicians]
 summary:
-  en: 'BACKGROUND: Accurate prognostic classification in autosomal dominant polycystic kidney disease is important for risk stratification and treatment decisions, including tolvaptan eligibility. Although the ellipsoid method has shown good performance for kidney volume measurement in …'
-  pt: ''
+  en: 'Deciding who qualifies for tolvaptan hinges on precise kidney measurements — usually traced by hand on scans. In 151 Canadian patients, a quick ellipsoid formula on mostly CT scans matched hand-tracing well enough to flag high-risk disease. Handy where MRI is scarce.'
+  pt: 'Decidir quem pode fazer tolvaptan depende de medir bem os rins — em geral traçados à mão. Em 151 doentes canadianos, uma fórmula elipsoide rápida em TAC (sobretudo) igualou bem o traçado manual para sinalizar doença de alto risco. Útil onde a ressonância escasseia.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'Retrospective agreement study, Ottawa clinic (107 CT plus 44 MRI). Ellipsoid versus manual height-adjusted TKV for Mayo classification and high-risk (1C–1E) disease. Single center — supports CT-based stratification locally, validate before adopting.'
+  pt: 'Estudo retrospetivo de concordância, clínica de Otava (107 TAC mais 44 RM). Elipsoide vs segmentação manual do VRTa para classificação Mayo e alto risco (1C–1E). Unicêntrico — apoia estratificação por TAC localmente, validar antes de adotar.'
 status: draft
 placeholder: false
 ---

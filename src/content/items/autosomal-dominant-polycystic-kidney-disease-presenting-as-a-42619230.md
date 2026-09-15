@@ -10,11 +10,11 @@ source:
 tags: [research]
 audience: [patients, clinicians]
 summary:
-  en: 'BACKGROUND Autosomal dominant polycystic kidney disease (ADPKD) is the most common inherited renal disorder, typically presenting with hypertension, hematuria, or progressive renal dysfunction. However, it can have a broad range of initial presentations and, in uncommon cases, ma…'
-  pt: ''
+  en: 'A 62-year-old woman came in with a painless lump in the upper belly — it turned out to be ADPKD with liver cysts, even with no family history. A reminder that ADPKD can disguise itself as other abdominal conditions.'
+  pt: 'Uma mulher de 62 anos chegou com um caroço indolor na parte alta da barriga — era ADPKD com quistos hepáticos, mesmo sem história familiar. Um lembrete de que a ADPKD se pode disfarçar de outras doenças abdominais.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'Single case report. Teaching point for the differential diagnosis of upper abdominal masses; the patient was screened for mitral valve prolapse and aneurysms (normal) and followed for blood pressure with nephrology. Anecdote, not guidance.'
+  pt: 'Relato de caso único. Lição para o diagnóstico diferencial de massas abdominais altas; a doente foi rastreada para prolapso mitral e aneurismas (normal) e seguida para a tensão arterial com nefrologia. Anedota clínica, não orientação.'
 status: draft
 placeholder: false
 ---
