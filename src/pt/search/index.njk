@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+permalink: /pt/search/
+translationKey: search
+pageType: search
+eleventyComputed:
+  title: "{{ i18n.pt.search.title }}"
+  description: "{{ i18n.pt.search.lede }}"
+---
+{% set t = i18n.pt %}
+{% set locale = 'pt' %}
+
+<section class="page-header">
+  <h1>{{ t.search.title }}</h1>
+  <p class="lede">{{ t.search.lede }}</p>
+</section>
+
+<section
+  class="section search"
+  data-search
+  data-locale="pt"
+  data-index-url="{{ '/pt/search-index.json' | url }}"
+  data-msg-hint="{{ t.search.hint }}"
+  data-msg-none="{{ t.search.noResults }}"
+  data-msg-one="{{ t.search.resultsOne }}"
+  data-msg-many="{{ t.search.resultsMany }}"
+>
+  <label class="search__label" for="search-input">{{ t.search.label }}</label>
+  <input
+    class="search__input"
+    id="search-input"
+    name="q"
+    type="search"
+    autocomplete="off"
+    placeholder="{{ t.search.placeholder }}"
+  />
+  <p class="search__status" aria-live="polite" data-search-status>{{ t.search.hint }}</p>
+  <ol class="search__results" data-search-results></ol>
+</section>

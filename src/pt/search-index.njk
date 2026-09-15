@@ -1,0 +1,16 @@
+---
+permalink: /pt/search-index.json
+eleventyExcludeFromCollections: true
+---
+[
+{% for item in collections.publishedItems %}
+  {
+    "slug": {{ item.fileSlug | dump | safe }},
+    "title": {{ item.data.title.pt | dump | safe }},
+    "summary": {{ item.data.summary.pt | dump | safe }},
+    "clinicalNote": {{ item.data.clinicalNote.pt | dump | safe }},
+    "tags": {{ item.data.tags | dump | safe }},
+    "date": {{ item.date | isoDate | dump | safe }}
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]

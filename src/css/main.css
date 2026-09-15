@@ -1043,6 +1043,51 @@ h2 {
   color: var(--muted-foreground);
 }
 
+/* ——— Search page ——— */
+.search__label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-1);
+}
+
+.search__input {
+  width: 100%;
+  max-width: 36rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.search__input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.search__status {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.search__results {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+  max-width: 72ch;
+}
+
+.search__results a {
+  font-weight: 700;
+}
+
 /* ——— Mobile layout (<640 / <480) ———
    Compact header: wordmark + locale on one row; nav as a dense
    horizontal row. Tighter page gutters; cards nearly full-bleed.
