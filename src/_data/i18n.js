@@ -22,6 +22,7 @@ module.exports = {
     footer: {
       tagline: 'Curated for patients, families, and clinicians.',
       search: 'Search',
+      archive: 'Archive',
       copyright: 'All rights reserved.',
       notMedicalAdvice: 'Educational curation only — not medical advice.',
       privacy: 'Privacy',
@@ -106,6 +107,13 @@ module.exports = {
       resultsOne: '1 matching card.',
       resultsMany: '{n} matching cards.',
     },
+    archive: {
+      title: 'Issue archive',
+      lede: 'Past weekly issues of the digest, newest first — every published card, in English and Portuguese.',
+      empty: 'No archived issues yet.',
+      cardsOne: '1 card.',
+      cardsMany: '{n} cards.',
+    },
     card: {
       relatedTitle: 'See also',
     },
@@ -155,6 +163,7 @@ module.exports = {
     footer: {
       tagline: 'Curadoria para doentes, famílias e clínicos.',
       search: 'Pesquisa',
+      archive: 'Arquivo',
       copyright: 'Todos os direitos reservados.',
       notMedicalAdvice: 'Curadoria educativa — não constitui aconselhamento médico.',
       privacy: 'Privacidade',
@@ -238,6 +247,13 @@ module.exports = {
       noResults: 'Nenhum cartão corresponde a essa pesquisa.',
       resultsOne: '1 cartão correspondente.',
       resultsMany: '{n} cartões correspondentes.',
+    },
+    archive: {
+      title: 'Arquivo de edições',
+      lede: 'Edições semanais passadas do digest, das mais recentes para as mais antigas — todos os cartões publicados, em inglês e português.',
+      empty: 'Ainda não há edições arquivadas.',
+      cardsOne: '1 cartão.',
+      cardsMany: '{n} cartões.',
     },
     card: {
       relatedTitle: 'Ver também',

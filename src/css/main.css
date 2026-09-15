@@ -1154,6 +1154,49 @@ h2 {
   font-weight: 700;
 }
 
+/* ——— Issue archive ——— */
+.archive-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.archive-issue h2 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin: 0 0 var(--space-1);
+}
+
+.archive-count {
+  margin: 0 0 var(--space-2);
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.archive-issue ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+  max-width: 72ch;
+}
+
+.archive-issue li li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+}
+
+.archive-issue time {
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ——— Mobile layout (<640 / <480) ———
    Compact header: wordmark + locale on one row; nav as a dense
    horizontal row. Tighter page gutters; cards nearly full-bleed.

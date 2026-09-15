@@ -9,6 +9,8 @@ test.describe('digest accessibility', () => {
     'pt/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/',
     'search/',
     'pt/search/',
+    'archive/',
+    'pt/archive/',
   ]) {
     test(`has no axe violations on ${path}`, async ({ page }) => {
       await page.goto(path);

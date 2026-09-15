@@ -75,5 +75,6 @@ Cards feed Eleventy collections (`digestItems`, `publishedItems`, `latestIssueIt
 - **Card pages** (`/digest/<slug>/`, `/pt/digest/<slug>/`): one page per published card via pagination (`digest/cards.njk`, `pt/digest/cards.njk`), with full Dual Framing, canonical + EN/PT alternate meta, a back link to the digest, and a “See also” section (up to 3 other published cards ranked by shared tags, then newest). Only `published` non-placeholder cards get pages.
 - **Digest** (`/digest/`, `/pt/digest/`): lists `latestIssueItems` (cards for the newest `issue`, or all cards if none set). River titles link to the standalone card pages; the rail keeps in-page `#digest-item-N` anchors.
 - **Timeline** (`/timeline/`, `/pt/timeline/`): lists all `digestItems` chronologically (same card partial).
+- **Archive** (`/archive/`, `/pt/archive/`): past weekly issues newest-first, grouped from `publishedItems` by `issue` (`lib/issues.js`), each linking to card permalinks.
 
 Known Eleventy quirk: only the first page of a paginated template lands in `collections.all`, so the sitemap emits card URLs from `collections.publishedItems` directly (both locales, cross-linked) instead of relying on collection membership.

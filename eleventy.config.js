@@ -1,5 +1,6 @@
 const { homeHref, sectionHref, cardHref, languageHref, otherLocale } = require('./lib/locale-routes');
 const { relatedCards } = require('./lib/related-cards');
+const { groupByIssue } = require('./lib/issues');
 
 /** @param {import("@11ty/eleventy").UserConfig} eleventyConfig */
 module.exports = function (eleventyConfig) {
@@ -48,6 +49,16 @@ module.exports = function (eleventyConfig) {
       })),
       { slug: card.fileSlug, tags: (card.data && card.data.tags) || [], date: card.date },
       limit
+    )
+  );
+  eleventyConfig.addFilter('groupByIssue', (items = []) =>
+    groupByIssue(
+      items.map((item) => ({
+        slug: item.fileSlug,
+        title: item.data.title,
+        date: item.date,
+        issue: item.data.issue,
+      }))
     )
   );
   eleventyConfig.addFilter('otherLocale', (locale) => otherLocale(locale));
