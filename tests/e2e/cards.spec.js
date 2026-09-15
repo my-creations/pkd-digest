@@ -26,6 +26,29 @@ test.describe('card permalinks', () => {
     await expect(page.locator('.card-back a')).toHaveAttribute('href', '/pkd-digest/pt/digest/');
   });
 
+  test('card pages cross-link EN/PT alternates in metadata', async ({ page }) => {
+    await page.goto(`digest/${SLUG}/`);
+    await expect(page.locator('link[rel="alternate"][hreflang="pt"]')).toHaveAttribute(
+      'href',
+      `https://my-creations.github.io/pkd-digest/pt/digest/${SLUG}/`
+    );
+
+    await page.goto(`pt/digest/${SLUG}/`);
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
+      'href',
+      `https://my-creations.github.io/pkd-digest/digest/${SLUG}/`
+    );
+  });
+
+  test('drafts and placeholders get no standalone page', async ({ request }) => {
+    for (const slug of ['sample-placeholder', 'sample-placeholder-2']) {
+      const en = await request.get(`digest/${slug}/`);
+      expect(en.status()).toBe(404);
+      const pt = await request.get(`pt/digest/${slug}/`);
+      expect(pt.status()).toBe(404);
+    }
+  });
+
   test('language switcher maps a card to the same card', async ({ page }) => {
     await page.goto(`digest/${SLUG}/`);
     await page.locator('.locale-switcher a.locale-option[hreflang="pt"]').click();
