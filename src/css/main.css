@@ -487,6 +487,14 @@ h2 {
   background: var(--muted);
 }
 
+/* Bare variant: groups framed cards/lists without adding another frame. */
+.section--bare {
+  padding: var(--space-6) 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
 .feature-list {
   margin: 0;
   padding-left: 1.2rem;
