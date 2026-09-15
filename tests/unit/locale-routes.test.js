@@ -12,12 +12,16 @@ describe('locale routes', () => {
     expect(routes.sectionHref('pt', 'digest')).toBe('/pt/digest/');
     expect(routes.sectionHref('en', 'timeline')).toBe('/timeline/');
     expect(routes.sectionHref('pt', 'timeline')).toBe('/pt/timeline/');
+    expect(routes.sectionHref('en', 'search')).toBe('/search/');
+    expect(routes.sectionHref('pt', 'search')).toBe('/pt/search/');
   });
 
   it('maps the current section across locales', () => {
     expect(routes.languageHref('/digest/', 'pt')).toBe('/pt/digest/');
     expect(routes.languageHref('/pt/digest/', 'en')).toBe('/digest/');
     expect(routes.languageHref('/timeline/', 'pt')).toBe('/pt/timeline/');
+    expect(routes.languageHref('/search/', 'pt')).toBe('/pt/search/');
+    expect(routes.languageHref('/pt/search/', 'en')).toBe('/search/');
   });
 
   it('resolves standalone card permalinks per locale', () => {

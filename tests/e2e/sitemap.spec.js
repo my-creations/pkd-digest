@@ -12,6 +12,8 @@ const ROUTES = [
   '/pkd-digest/pt/privacy/',
   '/pkd-digest/terms/',
   '/pkd-digest/pt/terms/',
+  '/pkd-digest/search/',
+  '/pkd-digest/pt/search/',
 ];
 
 test.describe('sitemap', () => {

@@ -21,6 +21,7 @@ module.exports = {
     },
     footer: {
       tagline: 'Curated for patients, families, and clinicians.',
+      search: 'Search',
       copyright: 'All rights reserved.',
       notMedicalAdvice: 'Educational curation only — not medical advice.',
       privacy: 'Privacy',
@@ -94,6 +95,16 @@ module.exports = {
       audienceLabel: 'Audience',
       tagsLabel: 'Tags',
     },
+    search: {
+      title: 'Search cards',
+      lede: 'Search published cards in English and Portuguese — titles, summaries, and clinical notes.',
+      label: 'Search terms',
+      placeholder: 'e.g. tolvaptan, pregnancy, cyst infection…',
+      hint: 'Type above to search across all published cards.',
+      noResults: 'No cards match that search.',
+      resultsOne: '1 matching card.',
+      resultsMany: '{n} matching cards.',
+    },
     timeline: {
       title: 'Timeline',
       lede: 'Cards in chronological order when present.',
@@ -139,6 +150,7 @@ module.exports = {
     },
     footer: {
       tagline: 'Curadoria para doentes, famílias e clínicos.',
+      search: 'Pesquisa',
       copyright: 'Todos os direitos reservados.',
       notMedicalAdvice: 'Curadoria educativa — não constitui aconselhamento médico.',
       privacy: 'Privacidade',
@@ -211,6 +223,16 @@ module.exports = {
       sourceLabel: 'Fonte',
       audienceLabel: 'Público',
       tagsLabel: 'Etiquetas',
+    },
+    search: {
+      title: 'Pesquisar cartões',
+      lede: 'Pesquisa cartões publicados em inglês e português — títulos, resumos e notas clínicas.',
+      label: 'Termos de pesquisa',
+      placeholder: 'ex. tolvaptan, gravidez, infeção…',
+      hint: 'Escreve acima para pesquisar todos os cartões publicados.',
+      noResults: 'Nenhum cartão corresponde a essa pesquisa.',
+      resultsOne: '1 cartão correspondente.',
+      resultsMany: '{n} cartões correspondentes.',
     },
     timeline: {
       title: 'Cronologia',
