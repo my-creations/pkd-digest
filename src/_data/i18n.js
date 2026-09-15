@@ -61,6 +61,7 @@ module.exports = {
     },
     digest: {
       title: 'Weekly digest',
+      cardBack: 'All cards',
       lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note, in English and Portuguese.',
       empty: 'No published items for this issue yet.',
       issueLabel: 'Weekly issue',
@@ -159,6 +160,7 @@ module.exports = {
     },
     digest: {
       title: 'Digest semanal',
+      cardBack: 'Todos os cartões',
       lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve, em inglês e português.',
       empty: 'Ainda não há itens publicados nesta edição.',
       issueLabel: 'Edição semanal',

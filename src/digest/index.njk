@@ -43,7 +43,7 @@ eleventyComputed:
     <div class="digest-river">
       <article class="digest-lead" id="digest-item-1">
         <p class="digest-kicker">{{ t.digest.leadStory }} · 1 · <time datetime="{{ lead.date | isoDate }}">{{ lead.date | displayDate(locale) }}</time></p>
-        <h2>{{ lead.data.title | localized(locale) }}</h2>
+        <h2><a class="digest-link" href="{{ locale | cardHref(lead.fileSlug) | url }}">{{ lead.data.title | localized(locale) }}</a></h2>
         <p class="digest-standfirst">{{ leadSummary }}</p>
         <details class="digest-clinical">
           <summary>{{ t.digest.clinicalLabel }}</summary>
@@ -74,7 +74,7 @@ eleventyComputed:
             <div class="digest-num" aria-hidden="true">{{ loop.index }}</div>
             <div>
               <p class="digest-kicker"><time datetime="{{ item.date | isoDate }}">{{ item.date | displayDate(locale) }}</time></p>
-              <h3>{{ item.data.title | localized(locale) }}</h3>
+              <h3><a class="digest-link" href="{{ locale | cardHref(item.fileSlug) | url }}">{{ item.data.title | localized(locale) }}</a></h3>
               <p class="digest-lede">{{ summaryText }}</p>
               <details class="digest-clinical">
                 <summary>{{ t.digest.clinicalLabel }}</summary>

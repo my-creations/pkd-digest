@@ -70,7 +70,10 @@ Human publish flips `status` to `published` and writes full EN+PT Dual Framing. 
 
 ## Rendering (v1)
 
-Cards feed Eleventy collections (`digestItems`, `publishedItems`, `latestIssueItems`). They do not emit standalone permalinks in this scaffold.
+Cards feed Eleventy collections (`digestItems`, `publishedItems`, `latestIssueItems`) and emit standalone permalinks:
 
-- **Digest** (`/digest/`, `/pt/digest/`): lists `latestIssueItems` (cards for the newest `issue`, or all cards if none set). Reuses `partials/item-card.njk`.
+- **Card pages** (`/digest/<slug>/`, `/pt/digest/<slug>/`): one page per published card via pagination (`digest/cards.njk`, `pt/digest/cards.njk`), with full Dual Framing, canonical + EN/PT alternate meta, and a back link to the digest. Only `published` non-placeholder cards get pages.
+- **Digest** (`/digest/`, `/pt/digest/`): lists `latestIssueItems` (cards for the newest `issue`, or all cards if none set). River titles link to the standalone card pages; the rail keeps in-page `#digest-item-N` anchors.
 - **Timeline** (`/timeline/`, `/pt/timeline/`): lists all `digestItems` chronologically (same card partial).
+
+Known Eleventy quirk: only the first page of a paginated template lands in `collections.all`, so the sitemap emits card URLs from `collections.publishedItems` directly (both locales, cross-linked) instead of relying on collection membership.

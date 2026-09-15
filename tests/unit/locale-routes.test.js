@@ -20,6 +20,22 @@ describe('locale routes', () => {
     expect(routes.languageHref('/timeline/', 'pt')).toBe('/pt/timeline/');
   });
 
+  it('resolves standalone card permalinks per locale', () => {
+    expect(routes.cardHref('en', 'my-card')).toBe('/digest/my-card/');
+    expect(routes.cardHref('pt', 'my-card')).toBe('/pt/digest/my-card/');
+  });
+
+  it('maps card permalinks to the same card across locales', () => {
+    expect(routes.languageHref('/digest/my-card/', 'pt')).toBe('/pt/digest/my-card/');
+    expect(routes.languageHref('/pt/digest/my-card/', 'en')).toBe('/digest/my-card/');
+    expect(routes.languageHref('/pkd-digest/digest/my-card/', 'pt')).toBe('/pt/digest/my-card/');
+  });
+
+  it('rejects unknown card slugs', () => {
+    expect(() => routes.cardHref('en', '')).toThrow('Unknown card slug');
+    expect(() => routes.cardHref('es', 'my-card')).toThrow('Unknown locale: es');
+  });
+
   it('falls back to locale home for unknown sections', () => {
     expect(routes.languageHref('/unknown-section/', 'pt')).toBe('/pt/');
     expect(routes.languageHref('/', 'en')).toBe('/');

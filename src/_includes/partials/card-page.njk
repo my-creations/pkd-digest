@@ -1,0 +1,51 @@
+{# Standalone card page. Expects `card` (published collection item), `locale`, and `t` (i18n). #}
+{% set titleText = card.data.title | localized(locale) %}
+{% set summaryText = card.data.summary | localized(locale) %}
+{% set clinicalText = card.data.clinicalNote | localized(locale) %}
+
+<p class="card-back">
+  <a href="{{ locale | sectionHref('digest') | url }}">← {{ t.digest.cardBack }}</a>
+</p>
+
+<article class="item-card item-card--standalone">
+  <header class="item-card__header">
+    <p class="digest-kicker">
+      {{ t.digest.issueLabel }}
+      {% if card.data.issue %}<strong>{{ card.data.issue }}</strong> · {% endif %}
+      <time datetime="{{ card.date | isoDate }}">{{ card.date | displayDate(locale) }}</time>
+    </p>
+    <h1 class="item-card__title">{{ titleText }}</h1>
+  </header>
+
+  <div class="item-card__body">
+    <section class="item-card__block item-card__block--plain">
+      <h2 class="item-card__label">{{ t.digest.plainLabel }}</h2>
+      <p>{{ summaryText }}</p>
+    </section>
+    <section class="item-card__block item-card__block--clinical">
+      <h2 class="item-card__label">{{ t.digest.clinicalLabel }}</h2>
+      <p>{{ clinicalText }}</p>
+    </section>
+  </div>
+
+  <footer class="item-card__footer">
+    {% if card.data.source %}
+      <p>
+        <span class="item-card__label">{{ t.digest.sourceLabel }}:</span>
+        {% if card.data.source.url %}
+          <a href="{{ card.data.source.url }}" rel="noopener noreferrer">{{ card.data.source.name or card.data.source.url }}</a>
+        {% else %}
+          {{ card.data.source.name }}
+        {% endif %}
+      </p>
+    {% endif %}
+    {% if card.data.tags %}
+      <p class="item-card__tags">
+        <span class="item-card__label">{{ t.digest.tagsLabel }}:</span>
+        {% for tag in card.data.tags %}
+          <span class="tag badge badge--outline">{{ tag }}</span>
+        {% endfor %}
+      </p>
+    {% endif %}
+  </footer>
+</article>

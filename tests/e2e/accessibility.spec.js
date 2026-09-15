@@ -2,7 +2,12 @@ const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
 test.describe('digest accessibility', () => {
-  for (const path of ['digest/', 'pt/digest/']) {
+  for (const path of [
+    'digest/',
+    'pt/digest/',
+    'digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/',
+    'pt/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/',
+  ]) {
     test(`has no axe violations on ${path}`, async ({ page }) => {
       await page.goto(path);
 
