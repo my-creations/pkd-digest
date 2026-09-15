@@ -29,6 +29,28 @@ describe('content validation', () => {
     expect(validateDocuments([doc])).toEqual([]);
   });
 
+  it('lets drafts keep empty Portuguese stubs for later human translation', () => {
+    const { data } = card({ status: 'draft' });
+    data.summary.pt = '';
+    data.clinicalNote.en = '';
+    data.clinicalNote.pt = '';
+    expect(validateDocuments([{ file: 'draft.md', data }])).toEqual([]);
+  });
+
+  it('blocks published cards with empty summaries or clinical notes in either language', () => {
+    const { data } = card({ status: 'published' });
+    data.summary.pt = '';
+    data.clinicalNote.en = '';
+    const errors = validateDocuments([{ file: 'half-done.md', data }]);
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('published cards need a non-empty summary.pt'),
+        expect.stringContaining('published cards need a non-empty clinicalNote.en'),
+      ])
+    );
+  });
+
   it('reports missing fields and invalid enums', () => {
     const { data } = card({ status: 'archived', placeholder: 'no', tags: ['gossip'], audience: ['doctors'] });
     delete data.title;

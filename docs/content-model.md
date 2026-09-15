@@ -66,7 +66,7 @@ Shortlist emitters should write draft markdown under `src/content/items/` with:
 - `summary` / `clinicalNote` empty strings or a one-line title stub
 - `placeholder: false` for real candidates (humans still publish)
 
-Human publish flips `status` to `published` and writes full EN+PT Dual Framing. **No auto-publish.**
+Human publish flips `status` to `published` and writes full EN+PT Dual Framing. **No auto-publish.** CI enforces this: `validate:content` fails published non-placeholder cards with an empty `summary` or `clinicalNote` in either language.
 
 ## Rendering (v1)
 
