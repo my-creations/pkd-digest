@@ -10,11 +10,11 @@ source:
 tags: [research, treatment]
 audience: [patients, clinicians]
 summary:
-  en: 'Autosomal dominant polycystic kidney disease (ADPKD) is the most prevalent genetic kidney disease and is characterized by the formation and growth of fluid-filled renal cysts. With the current treatment tolvaptan not suited for the majority of patients, an urgent need remains for…'
-  pt: ''
+  en: 'An old anti-inflammatory ingredient (salicylate, from salsalate) slows cyst growth in lab models — but how? In ADPKD kidney cells, almost all of the effect runs through the AMPK energy switch, though one or two side effects do not. Drug clues, not a treatment.'
+  pt: 'Um velho anti-inflamatório (salicilato, do salsalato) abranda quistos em modelos — mas como? Em células renais ADPKD, quase todo o efeito passa pelo interruptor energético AMPK, embora um ou outro efeito não. Pistas para fármacos, não tratamento.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'Mechanistic study in Pkd1-null renal epithelial lines: salicylate effects on metabolism, proliferation and inflammation largely AMPK-dependent, plus AMPK-independent mitochondrial uncoupling. Preclinical pharmacology — salsalate is not established ADPKD therapy.'
+  pt: 'Estudo mecanístico em linhas epiteliais renais sem Pkd1: efeitos do salicilato no metabolismo, proliferação e inflamação largamente dependentes de AMPK, mais desacoplamento mitocondrial independente. Farmacologia pré-clínica — o salsalato não é terapêutica estabelecida na ADPKD.'
 status: draft
 placeholder: false
 ---

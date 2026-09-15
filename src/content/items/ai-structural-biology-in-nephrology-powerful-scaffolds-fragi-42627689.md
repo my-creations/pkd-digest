@@ -10,11 +10,11 @@ source:
 tags: [research]
 audience: [patients, clinicians]
 summary:
-  en: 'Artificial intelligence (AI)-based protein structure prediction has rapidly entered nephrology, providing plausible atomic models for channels, transporters, receptors and scaffolds that previously lacked structural information. AlphaFold and RoseTTAFold now underpin mechanistic …'
-  pt: ''
+  en: 'AI tools that predict protein shapes (AlphaFold and RoseTTAFold) now give kidney researchers 3D models of proteins that were once black boxes, helping explain inherited diseases like ADPKD. But the models can look more certain than they really are — especially for complex membrane proteins — and they show frozen snapshots of moving parts.'
+  pt: 'Ferramentas de IA que preveem a forma das proteínas (AlphaFold e RoseTTAFold) dão hoje aos investigadores renais modelos 3D de proteínas antes indecifráveis, ajudando a explicar doenças hereditárias como a ADPKD. Mas os modelos podem parecer mais certos do que são — sobretudo em proteínas de membrana complexas — e mostram fotografias paradas de peças em movimento.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'JASN review on AI structural biology in nephrology. Strengths: mapping genetic and biochemical data onto 3D scaffolds, support for experimental design. Limits: modest agreement with mutagenesis data for variant classification or stability prediction; static snapshots of dynamic ensembles. A design aid, not a diagnostic tool.'
+  pt: 'Revisão JASN sobre biologia estrutural com IA em nefrologia. Pontos fortes: mapear dados genéticos e bioquímicos em modelos 3D, apoio ao desenho experimental. Limites: concordância modesta com mutagénese na classificação de variantes ou previsão de estabilidade; fotografias estáticas de conjuntos dinâmicos. Ajuda ao desenho, não ferramenta diagnóstica.'
 status: draft
 placeholder: false
 ---

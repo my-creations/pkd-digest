@@ -10,11 +10,11 @@ source:
 tags: [research, treatment]
 audience: [patients, clinicians]
 summary:
-  en: 'd-Amino acids are the enantiomers of l-amino acids that occur in minimal concentrations within organisms and exert significant effects on physiological regulation and pathological progression. Abnormal d-amino acid levels are closely associated with neurological disorders and met…'
-  pt: ''
+  en: 'A new lab method measures mirror-image amino acids in blood, urine and cyst fluid. As kidney disease worsened, one of them (d-serine) rose in blood and fell in urine — a possible future warning signal. Very early, method-stage science.'
+  pt: 'Um novo método laboratorial mede aminoácidos-espelho no sangue, na urina e no líquido de quistos. À medida que a doença renal piorava, um deles (D-serina) subia no sangue e descia na urina — possível sinal de alerta futuro. Muito precoce, ciência de método.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'Analytical-chemistry study (LC-MS/MS with l-FDLA derivatization) in CKD and ADPKD fluids. Plasma d-serine rises while urinary d-serine falls with dysfunction — biomarker hypothesis only, far from clinical use.'
+  pt: 'Estudo de química analítica (LC-MS/MS com derivatização l-FDLA) em fluidos de DRC e ADPKD. A D-serina plasmática sobe e a urinária desce com a disfunção — só hipótese de biomarcador, longe do uso clínico.'
 status: draft
 placeholder: false
 ---

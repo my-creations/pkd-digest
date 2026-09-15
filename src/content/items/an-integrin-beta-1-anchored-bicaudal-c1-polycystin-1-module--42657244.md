@@ -10,11 +10,11 @@ source:
 tags: [research]
 audience: [patients, clinicians]
 summary:
-  en: 'Genetic variants in the RNA-binding protein bicaudal C1 (BICC1) have been linked to very-early-onset polycystic kidney disease (PKD). This study identifies a crucial integrin-beta1 (ITGB1)-BICC1-polycystin-1 (PC1) complex that regulates F-actin organization and cell adhesion in h…'
-  pt: ''
+  en: 'Scientists found a protein team — integrin-beta1, BICC1 and polycystin-1 — that keeps kidney tube cells gripping their surroundings correctly. When any part breaks, cells stiffen, grip less and cysts can form. Lab work only, no treatment yet.'
+  pt: 'Cientistas encontraram uma equipa de proteínas — integrina beta-1, BICC1 e policistina-1 — que mantém as células dos túbulos renais bem agarradas ao meio. Quando uma peça falha, as células enrijecem, agarram menos e podem formar-se quistos. Só trabalho de laboratório, sem tratamento ainda.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'iScience cell-biology study in human kidney cells and knockout models. Defines an ITGB1–BICC1–PC1/FBLIM1 axis controlling F-actin organization and adhesion; blocking F-actin branching directly triggers cysts. Novel mechanism, strictly preclinical.'
+  pt: 'Estudo iScience de biologia celular em células renais humanas e modelos knockout. Define um eixo ITGB1–BICC1–PC1/FBLIM1 que controla a actina-F e a adesão; bloquear a ramificação desencadeia quistos. Mecanismo novo, estritamente pré-clínico.'
 status: draft
 placeholder: false
 ---

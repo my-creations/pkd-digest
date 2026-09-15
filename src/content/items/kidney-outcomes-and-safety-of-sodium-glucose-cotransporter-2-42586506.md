@@ -7,14 +7,14 @@ issue: '2026-W33'
 source:
   url: 'https://pubmed.ncbi.nlm.nih.gov/42586506/'
   name: 'PubMed | Diabetes research and clinical practice'
-tags: [research, treatment, advocacy]
+tags: [research, treatment]
 audience: [patients, clinicians]
 summary:
-  en: 'BACKGROUND: Autosomal dominant polycystic kidney disease (ADPKD) is the most common hereditary kidney disease and among the leading causes of kidney failure globally. Sodium-glucose cotransporter (SGLT)2 inhibitor therapy is a novel therapeutic alternative for chronic kidney dise…'
-  pt: ''
+  en: 'Diabetes drugs that protect kidneys (SGLT2 inhibitors) were never properly tested in ADPKD — those patients were left out of the big trials. Pooling six small studies (451 patients), kidney decline slowed a little in year one, with no clear effect on kidney size. Promising but thin evidence.'
+  pt: 'Os remédios da diabetes que protegem os rins (inibidores SGLT2) nunca foram bem testados na ADPKD — esses doentes ficaram fora dos grandes ensaios. Juntando seis estudos pequenos (451 doentes), o declínio renal abrandou um pouco no primeiro ano, sem efeito claro no tamanho dos rins. Promissor, mas evidência fina.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'PROSPERO-registered systematic review and meta-analysis, six studies, n=451. First-year eGFR-slope attenuation +0.65 mL/min/1.73 m²/yr versus pre-slope (CI 0.05–1.26); no TKV effect and no slope difference versus control. Hypothesis-generating — not a prescribing basis in ADPKD.'
+  pt: 'Revisão sistemática e meta-análise registada PROSPERO, seis estudos, n=451. Atenuação do declive da TFG +0,65 mL/min/1,73 m²/ano vs pré-tratamento (IC 0,05–1,26); sem efeito no VRT nem diferença vs controlo. Gera hipóteses — não base para prescrever na ADPKD.'
 status: draft
 placeholder: false
 ---

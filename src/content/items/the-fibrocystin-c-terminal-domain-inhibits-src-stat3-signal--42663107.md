@@ -10,11 +10,11 @@ source:
 tags: [research]
 audience: [patients, clinicians]
 summary:
-  en: 'Autosomal recessive polycystic kidney disease (ARPKD) is caused by impaired function of fibrocystin/polyductin (FPC) in collecting duct epithelia resulting in cyst formation. We hypothesized that the membrane-bound C-terminal FPC domain (FPCct) is necessary to suppress cystogenes…'
-  pt: ''
+  en: 'In recessive PKD, a broken fibrocystin protein lets kidney cells overreact through a Src/STAT3 signal, filling with fluid. Lab-grown kidney cells show the tail end of fibrocystin puts the brakes on — a possible future drug target. Cells in dishes, not patients.'
+  pt: 'Na DRP recessiva, a fibrocistina avariada deixa as células renais reagir em excesso via sinal Src/STAT3, enchendo-se de líquido. Células em cultura mostram que a cauda da fibrocistina trava o processo — possível alvo futuro. Células em pratos, não doentes.'
 clinicalNote:
-  en: ''
-  pt: ''
+  en: 'In vitro ARPKD model (principal-like MDCK monolayers, 2D and 3D): FPC loss raises cAMP and secretion; wild-type FPC tail dampens Src–STAT3. Defines a druggable axis in principle — years from any therapy.'
+  pt: 'Modelo in vitro de DRPAR (monocamadas pl-MDCK, 2D e 3D): perda de FPC sobe cAMP e secreção; cauda FPC normal trava Src–STAT3. Define um eixo potencialmente medicável — a anos de qualquer terapêutica.'
 status: draft
 placeholder: false
 ---
