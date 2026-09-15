@@ -9,7 +9,7 @@ test.describe('atom feed', () => {
     expect(xml).toContain('<feed xmlns="http://www.w3.org/2005/Atom">');
     expect(xml).toContain('<link href="https://my-creations.github.io/pkd-digest/digest/" />');
     expect(xml).toContain('KDOQI US Commentary');
-    expect(xml).toContain('/digest/#digest-item-1');
+    expect(xml).toContain('/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/');
     expect(xml).toMatch(/<updated>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
 
     const entries = xml.match(/<entry>/g) || [];

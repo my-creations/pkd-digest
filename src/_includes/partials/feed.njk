@@ -18,7 +18,7 @@
   {% set titleText = item.data.title | localized(locale) %}
   {% set summaryText = item.data.summary | localized(locale) %}
   {% set clinicalText = item.data.clinicalNote | localized(locale) %}
-  {% set entryUrl = digestUrl + '#digest-item-' + loop.index %}
+  {% set entryUrl = site.url + (locale | cardHref(item.fileSlug) | url) %}
   {% set entryHtml %}<p>{{ summaryText }}</p><p><strong>{{ t.digest.clinicalLabel }}:</strong> {{ clinicalText }}</p>{% if item.data.source.url %}<p>{{ t.digest.sourceLabel }}: <a href="{{ item.data.source.url }}">{{ item.data.source.name or item.data.source.url }}</a></p>{% endif %}{% endset %}
   <entry>
     <title>{{ titleText }}</title>
