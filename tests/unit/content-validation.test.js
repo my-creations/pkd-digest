@@ -37,6 +37,21 @@ describe('content validation', () => {
     expect(validateDocuments([{ file: 'draft.md', data }])).toEqual([]);
   });
 
+  it('blocks published cards from shipping empty Portuguese stubs', () => {
+    const { data } = card({ status: 'published' });
+    data.summary.pt = '';
+    data.clinicalNote.pt = '   ';
+    const errors = validateDocuments([{ file: 'pt-stub.md', data }]);
+
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('published cards need a non-empty summary.pt'),
+        expect.stringContaining('published cards need a non-empty clinicalNote.pt'),
+      ])
+    );
+    expect(errors.some((error) => error.includes('summary.en') || error.includes('clinicalNote.en'))).toBe(false);
+  });
+
   it('blocks published cards with empty summaries or clinical notes in either language', () => {
     const { data } = card({ status: 'published' });
     data.summary.pt = '';
