@@ -54,3 +54,6 @@
 <link rel="alternate" hreflang="en" href="{{ enHref }}" />
 <link rel="alternate" hreflang="pt" href="{{ ptHref }}" />
 <link rel="alternate" hreflang="x-default" href="{{ enHref }}" />
+{% if pageType == 'digest' %}
+<link rel="alternate" type="application/atom+xml" title="{{ metaTitle }} (Atom)" href="{{ site.url }}{{ (('/pt/feed.xml' if loc == 'pt' else '/feed.xml')) | url }}" />
+{% endif %}

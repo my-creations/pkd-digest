@@ -50,17 +50,22 @@ jobs:
           done
 
       # Elsevier (ajkd.org) blocks bots with 403; that source is verified at curation time.
+      # Remap absolute production URLs to the local build so staged-but-undeployed
+      # pages (e.g. feed.xml autodiscovery) resolve instead of 404ing on prod.
       - name: Link check (lychee)
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --verbose --no-progress --max-retries 3 --timeout 20
             --exclude-loopback=false --exclude 'https://www\.ajkd\.org/.*'
+            --remap 'https://my-creations\.github\.io/pkd-digest http://127.0.0.1:8901/pkd-digest'
             http://127.0.0.1:8901/pkd-digest/
             http://127.0.0.1:8901/pkd-digest/digest/
             http://127.0.0.1:8901/pkd-digest/pt/digest/
             http://127.0.0.1:8901/pkd-digest/timeline/
             http://127.0.0.1:8901/pkd-digest/pt/timeline/
+            http://127.0.0.1:8901/pkd-digest/feed.xml
+            http://127.0.0.1:8901/pkd-digest/pt/feed.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
