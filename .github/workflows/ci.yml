@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Format + Build
+    name: Format + Lint + Test + Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,6 +25,18 @@ jobs:
 
       - name: Format check
         run: bun run format:check
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Unit tests
+        run: bun run test:unit
+
+      - name: Install Playwright browser
+        run: bunx playwright install --with-deps chromium
+
+      - name: E2E tests
+        run: bun run test:e2e
 
       - name: Build
         run: bun run build

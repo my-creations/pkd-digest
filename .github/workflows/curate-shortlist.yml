@@ -1,0 +1,92 @@
+name: Weekly curation shortlist
+
+on:
+  schedule:
+    # Mondays 07:00 UTC — draft candidates only, never published directly.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      retmax:
+        description: 'Max PubMed results'
+        required: false
+        default: '8'
+      issue:
+        description: 'Optional Weekly Issue stamp (YYYY-Www, defaults to current week)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: weekly-shortlist
+  cancel-in-progress: false
+
+jobs:
+  shortlist:
+    name: Draft shortlist PR (no direct publish)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.10
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Generate draft shortlist
+        env:
+          RETMAX: ${{ inputs.retmax || '8' }}
+          ISSUE_INPUT: ${{ inputs.issue || '' }}
+        run: |
+          if [ -n "$ISSUE_INPUT" ]; then
+            ISSUE="$ISSUE_INPUT"
+          else
+            ISSUE=$(date +%G-W%V)
+          fi
+          echo "ISSUE=$ISSUE" >> "$GITHUB_ENV"
+          python3 scripts/curate-shortlist.py --retmax "$RETMAX" --issue "$ISSUE" --skip-existing \
+            --out-dir curation/generated --items-dir src/content/items
+
+      - name: Validate drafts
+        run: bun run validate:content
+
+      - name: Upload draft shortlist
+        uses: actions/upload-artifact@v4
+        with:
+          name: draft-shortlist
+          path: curation/generated/
+          if-no-files-found: error
+
+      - name: Open review PR when new candidates exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="automation/weekly-shortlist-$ISSUE"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -B "$BRANCH"
+          git add src/content/items
+          if git diff --cached --quiet; then
+            echo 'No new candidates — nothing to propose.'
+            exit 0
+          fi
+          git commit -m "chore: weekly draft shortlist ($ISSUE)"
+          git push --force-with-lease origin "$BRANCH"
+          if gh pr view "$BRANCH" --json number --jq .number >/dev/null 2>&1; then
+            echo 'Review PR already open — pushed updates.'
+            exit 0
+          fi
+          gh pr create --base main --head "$BRANCH" \
+            --title "Weekly draft shortlist ($ISSUE)" \
+            --body "Machine-generated candidates for \`$ISSUE\` — **not published**. New cards are \`status: draft\` with a machine-stub English summary, empty Portuguese text, and empty clinical notes.$(printf '\n\n')### Required work before merge$(printf '\n')Machine stubs must not ship — each keeper needs proper human-written copy:$(printf '\n')- [ ] Plain-language \`summary.en\` rewritten for patients and families (not the abstract excerpt)$(printf '\n')- [ ] \`summary.pt\` translated and completed$(printf '\n')- [ ] \`clinicalNote.en\` and \`clinicalNote.pt\` written for clinicians$(printf '\n')- [ ] Keep / drop / merge candidates (cystic kidney disease scope)$(printf '\n')- [ ] Set \`status: published\`, keep \`placeholder: false\`; delete rejected draft files$(printf '\n')- [ ] CI green — \`validate:content\` fails the build if any *published* card has an empty summary or clinical note in either language$(printf '\n\n')Merging publishes the keepers to GitHub Pages."

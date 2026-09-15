@@ -4,11 +4,19 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
 
 ## Human workflow
 
-1. **Generate a shortlist** (machine draft):
+1. **Generate a shortlist** (machine draft), locally or via CI:
+
+   ```bash
+   bun run curate:shortlist
+   ```
+
+   Or the long form:
 
    ```bash
    python3 scripts/curate-shortlist.py --retmax 8
    ```
+
+   Add `--skip-existing` to drop candidates whose source URL is already curated (what the weekly CI run uses).
 
    Optional public RSS feeds:
 
@@ -54,6 +62,10 @@ placeholder: false
 ```
 
 Human publish flips `status` to `published`, completes EN+PT Dual Framing, and sets `issue` when grouping into a Weekly Issue.
+
+## Scheduled / manual runs (CI)
+
+[`.github/workflows/curate-shortlist.yml`](../.github/workflows/curate-shortlist.yml) runs the same script weekly (Mondays 07:00 UTC) and on manual dispatch: it fetches candidates with `--skip-existing` (already-curated source URLs are not re-proposed), stamps the current ISO week as `issue`, validates the drafts, uploads the indexes as a `draft-shortlist` workflow artifact, and opens (or updates) a review PR with the new `status: draft` cards. It never commits to `main` and never publishes — a human still curates keepers into `published` and merges; merging is what publishes to Pages.
 
 ## Examples
 

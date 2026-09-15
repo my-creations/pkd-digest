@@ -6,12 +6,25 @@
 {% set langPath = page.url | languageHref(switchLocale) %}
 
 <header class="site-header">
-  <div class="site-header__inner">
-    <div class="site-header__brand">
-      <a class="wordmark" href="{{ homePath | url }}">
-        <span class="wordmark__name">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
-        <span class="wordmark__label" aria-hidden="true">{% if locale == 'pt' %}PKD Digest{% else %}Digest DRP{% endif %}</span>
-      </a>
+  <div class="masthead">
+    <a class="wordmark" href="{{ homePath | url }}">
+      <span class="wordmark__name">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
+      <span class="wordmark__tagline">{% if locale == 'pt' %}Doença renal quística · Semanal{% else %}Cystic kidney disease · Weekly{% endif %}</span>
+    </a>
+  </div>
+
+  <div class="topbar">
+    <div class="topbar__inner">
+      <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
+        <ul class="nav__list">
+          <li>
+            <a href="{{ digestPath | url }}" {% if pageType == 'digest' %}aria-current="page"{% endif %}>{{ t.nav.digest }}</a>
+          </li>
+          <li>
+            <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
+          </li>
+        </ul>
+      </nav>
 
       <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
         {% if locale == 'pt' %}
@@ -27,19 +40,5 @@
         {% endif %}
       </div>
     </div>
-
-    <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
-      <ul class="nav__list">
-        <li>
-          <a href="{{ homePath | url }}" {% if pageType == 'home' %}aria-current="page"{% endif %}>{{ t.nav.home }}</a>
-        </li>
-        <li>
-          <a href="{{ digestPath | url }}" {% if pageType == 'digest' %}aria-current="page"{% endif %}>{{ t.nav.digest }}</a>
-        </li>
-        <li>
-          <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
-        </li>
-      </ul>
-    </nav>
   </div>
 </header>
