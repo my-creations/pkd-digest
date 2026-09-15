@@ -30,6 +30,22 @@ test.describe('atom feed', () => {
     expect(ptEntries.length).toBe(enEntries.length);
   });
 
+  test('excludes drafts and placeholders from both feeds', async ({ request }) => {
+    for (const path of ['feed.xml', 'pt/feed.xml']) {
+      const res = await request.get(path);
+      expect(res.ok()).toBeTruthy();
+      const xml = await res.text();
+      expect(xml).not.toContain('sample-placeholder');
+      expect(xml).not.toContain('status: draft');
+    }
+  });
+
+  test('keeps feeds out of the sitemap', async ({ request }) => {
+    const res = await request.get('sitemap.xml');
+    expect(res.ok()).toBeTruthy();
+    expect(await res.text()).not.toContain('feed.xml');
+  });
+
   test('digest pages advertise feed autodiscovery', async ({ page }) => {
     await page.goto('digest/');
     await expect(page.locator('link[type="application/atom+xml"]')).toHaveAttribute(
