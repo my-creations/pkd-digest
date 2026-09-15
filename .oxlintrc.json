@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "ignorePatterns": ["coverage/**", "playwright-report/**", "test-results/**", "_site/**"],
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.{js,mjs}"],
+      "plugins": ["typescript", "unicorn", "oxc", "vitest"],
+      "env": {
+        "browser": true,
+        "node": true,
+        "vitest": true
+      },
+      "rules": {
+        "vitest/no-focused-tests": "error",
+        "vitest/valid-expect": "error"
+      }
+    }
+  ]
+}

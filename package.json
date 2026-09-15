@@ -9,15 +9,26 @@
     "format": "oxfmt \"**/*.{html,css,js,json,md,yml,yaml}\"",
     "format:check": "oxfmt --check \"**/*.{html,css,js,json,md,yml,yaml}\"",
     "validate:content": "bun scripts/validate-content.js",
-    "test": "bun run test:unit && bun run test:e2e",
-    "test:unit": "playwright test --config=playwright.unit.config.js",
-    "test:e2e": "playwright test --config=playwright.e2e.config.js"
+    "curate:shortlist": "python3 scripts/curate-shortlist.py --retmax 8",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "test": "bun run test:unit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:all": "bun run test:unit && bun run test:e2e",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "gray-matter": "^4.0.3",
-    "oxfmt": "^0.65.0"
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.83.0",
+    "vitest": "^5.0.1"
   },
   "packageManager": "bun@1.3.10"
 }

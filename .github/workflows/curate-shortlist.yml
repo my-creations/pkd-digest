@@ -1,0 +1,53 @@
+name: Weekly curation shortlist
+
+on:
+  schedule:
+    # Mondays 07:00 UTC — draft candidates only, never published.
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      retmax:
+        description: 'Max PubMed results'
+        required: false
+        default: '8'
+      issue:
+        description: 'Optional Weekly Issue stamp (YYYY-Www)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  shortlist:
+    name: Draft shortlist (no publish)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate draft shortlist
+        env:
+          RETMAX: ${{ inputs.retmax || '8' }}
+          ISSUE: ${{ inputs.issue || '' }}
+        run: |
+          mkdir -p curation/generated/items
+          if [ -n "$ISSUE" ]; then
+            python3 scripts/curate-shortlist.py --retmax "$RETMAX" --issue "$ISSUE" \
+              --out-dir curation/generated --items-dir curation/generated/items
+          else
+            python3 scripts/curate-shortlist.py --retmax "$RETMAX" \
+              --out-dir curation/generated --items-dir curation/generated/items
+          fi
+
+      - name: Upload draft shortlist
+        uses: actions/upload-artifact@v4
+        with:
+          name: draft-shortlist
+          path: curation/generated/
+          if-no-files-found: error
