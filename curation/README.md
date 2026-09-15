@@ -43,7 +43,9 @@ This folder holds **draft** candidate materials for the weekly PKD Digest. Nothi
 Draft cards emit:
 
 ```yaml
-title: '…'
+title:
+  en: '…'
+  pt: '…'
 date: YYYY-MM-DD
 issue: 'YYYY-Www' # optional Weekly Issue
 source:

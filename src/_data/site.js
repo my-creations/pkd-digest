@@ -6,8 +6,8 @@ module.exports = {
     pt: 'Digest DRP — digest semanal sobre doença renal poliquística',
   },
   description: {
-    en: 'Weekly bilingual EN+PT curated digest on cystic kidney disease for patients, families, and clinicians.',
-    pt: 'Digest semanal bilingue EN+PT sobre doença renal quística para doentes, famílias e clínicos.',
+    en: 'Weekly curated digest in English and Portuguese on cystic kidney disease for patients, families, and clinicians.',
+    pt: 'Digest semanal em inglês e português sobre doença renal quística para doentes, famílias e clínicos.',
   },
   url: 'https://my-creations.github.io',
   pathPrefix: process.env.ELEVENTY_PATH_PREFIX || '/pkd-digest/',

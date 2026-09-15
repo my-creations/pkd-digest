@@ -104,7 +104,7 @@ def efetch_summaries(pmids: list[str]) -> list[dict]:
 
         items.append(
             {
-                "title": title,
+                "title": {"en": title, "pt": ""},
                 "date": pub_date,
                 "source": {
                     "url": url_pubmed,
@@ -237,7 +237,7 @@ def fetch_rss_items(feed_url: str, limit: int) -> list[dict]:
             continue
         items.append(
             {
-                "title": title,
+                "title": {"en": title, "pt": ""},
                 "date": iso,
                 "source": {"url": link, "name": "RSS"},
                 "tags": _guess_tags(f"{title} {desc}"),
@@ -292,9 +292,13 @@ def to_item_markdown(item: dict) -> str:
             return f'"{escaped}"'
         return f'"{s}"'
 
+    raw_title = item.get("title") or ""
+    title = raw_title if isinstance(raw_title, dict) else {"en": raw_title, "pt": ""}
     lines = [
         "---",
-        f"title: {yaml_str(item.get('title') or '')}",
+        "title:",
+        f"  en: {yaml_str(title.get('en') or '')}",
+        f"  pt: {yaml_str(title.get('pt') or '')}",
         f"date: {item.get('date') or date.today().isoformat()}",
     ]
     issue = (item.get("issue") or "").strip()
@@ -368,9 +372,11 @@ def write_outputs(
 
     for i, item in enumerate(items, 1):
         src = item.get("source") or {}
+        title = item.get("title")
+        display_title = title.get("en") if isinstance(title, dict) else title
         md_lines.extend(
             [
-                f"## {i}. {item.get('title') or '(untitled)'}",
+                f"## {i}. {display_title or '(untitled)'}",
                 "",
                 f"- date: `{item.get('date')}`",
                 f"- source: [{src.get('name') or 'source'}]({src.get('url') or '#'})",
@@ -379,7 +385,7 @@ def write_outputs(
                 "",
             ]
         )
-        slug = slugify(item.get("title") or "item", item.get("pmid"))
+        slug = slugify(display_title or "item", item.get("pmid"))
         card_path = items_dir / f"{slug}.md"
         card_path.write_text(to_item_markdown(item), encoding="utf-8")
         md_lines.append(f"- draft card: `{card_path.as_posix()}`")

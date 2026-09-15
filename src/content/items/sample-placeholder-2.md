@@ -1,5 +1,7 @@
 ---
-title: '[Sample] Research round-up — how evidence appears beside the plain blurb'
+title:
+  en: '[Sample] Research round-up — how evidence appears beside the plain blurb'
+  pt: '[Exemplo] Resumo de investigação — como a evidência aparece junto ao texto simples'
 date: 2026-09-03
 issue: '2026-W36'
 source:

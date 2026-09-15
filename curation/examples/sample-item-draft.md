@@ -1,5 +1,7 @@
 ---
-title: 'Sample ADPKD research card (placeholder)'
+title:
+  en: 'Sample ADPKD research card (placeholder)'
+  pt: 'Cartão de investigação ADPKD de exemplo (placeholder)'
 date: 2026-09-12
 # issue: "2026-W37"  # optional Weekly Issue
 source:

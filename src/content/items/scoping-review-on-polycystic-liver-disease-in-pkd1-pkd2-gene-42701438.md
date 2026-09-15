@@ -1,5 +1,7 @@
 ---
-title: 'Scoping Review on Polycystic Liver Disease in PKD1/PKD2 Gene Carriers: Genetic Aspects, Pathophysiology, and Therapeutic Approaches'
+title:
+  en: 'Scoping Review on Polycystic Liver Disease in PKD1/PKD2 Gene Carriers: Genetic Aspects, Pathophysiology, and Therapeutic Approaches'
+  pt: 'Scoping review sobre doença hepática poliquística em portadores de variantes PKD1/PKD2: aspetos genéticos, fisiopatologia e abordagens terapêuticas'
 date: 2026-08-05
 issue: '2026-W37'
 source:

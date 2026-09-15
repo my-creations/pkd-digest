@@ -1,5 +1,7 @@
 ---
-title: '[Sample] Living with cystic kidney disease — what a weekly digest covers'
+title:
+  en: '[Sample] Living with cystic kidney disease — what a weekly digest covers'
+  pt: '[Exemplo] Viver com doença renal quística — o que cobre um digest semanal'
 date: 2026-09-01
 issue: '2026-W36'
 source:

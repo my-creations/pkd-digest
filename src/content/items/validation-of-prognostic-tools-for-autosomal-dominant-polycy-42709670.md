@@ -1,5 +1,7 @@
 ---
-title: 'Validation of Prognostic Tools for Autosomal Dominant Polycystic Kidney Disease Progression in a Multiethnic South African Cohort'
+title:
+  en: 'Validation of Prognostic Tools for Autosomal Dominant Polycystic Kidney Disease Progression in a Multiethnic South African Cohort'
+  pt: 'Validação de ferramentas prognósticas para a progressão da doença renal poliquística autossómica dominante numa coorte sul-africana multiétnica'
 date: 2026-09-08
 issue: '2026-W37'
 source:

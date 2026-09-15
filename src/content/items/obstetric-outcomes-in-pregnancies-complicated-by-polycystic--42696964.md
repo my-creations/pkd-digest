@@ -1,5 +1,7 @@
 ---
-title: 'Obstetric outcomes in pregnancies complicated by polycystic kidney disease'
+title:
+  en: 'Obstetric outcomes in pregnancies complicated by polycystic kidney disease'
+  pt: 'Desfechos obstétricos em gravidezes complicadas por doença renal poliquística'
 date: 2026-08-25
 issue: '2026-W37'
 source:

@@ -1,5 +1,7 @@
 ---
-title: 'KDOQI US Commentary on the KDIGO 2025 Clinical Practice Guideline for Autosomal Dominant Polycystic Kidney Disease'
+title:
+  en: 'KDOQI US Commentary on the KDIGO 2025 Clinical Practice Guideline for Autosomal Dominant Polycystic Kidney Disease'
+  pt: 'Comentário KDOQI (EUA) à guideline de prática clínica KDIGO 2025 para a doença renal poliquística autossómica dominante'
 date: 2026-03-01
 issue: '2026-W37'
 source:
