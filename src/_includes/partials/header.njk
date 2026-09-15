@@ -25,7 +25,6 @@
             <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
           </li>
         </ul>
-      </nav>
 
       <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
         {% if locale == 'pt' %}
@@ -40,5 +39,6 @@
           <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
         {% endif %}
       </div>
+      </nav>
     </div>
   </div>

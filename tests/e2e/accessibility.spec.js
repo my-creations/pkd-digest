@@ -17,7 +17,7 @@ test.describe('digest accessibility', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page.locator('meta[name="viewport"]')).toHaveAttribute('content', /width=device-width/);
     await expect(page.locator('a.skip-link')).toBeAttached();
-    await expect(page.locator('header nav')).toBeVisible();
+    await expect(page.locator('.topbar nav')).toBeVisible();
     await expect(page.locator('main h1').first()).toBeVisible();
     await expect(page.locator('footer')).toBeVisible();
 
