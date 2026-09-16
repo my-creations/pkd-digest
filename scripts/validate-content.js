@@ -6,7 +6,7 @@ const matter = require('gray-matter');
 
 const ITEMS_DIR = path.join(__dirname, '..', 'src', 'content', 'items');
 const GLOSSARY_PATH = path.join(__dirname, '..', 'curation', 'glossary.json');
-const GLOSSARY_FIELDS = ['title', 'summary', 'clinicalNote'];
+const GLOSSARY_FIELDS = ['title', 'summary', 'clinicalNote', 'visitQuestion'];
 const REQUIRED = ['title', 'date', 'source', 'tags', 'audience', 'summary', 'clinicalNote', 'status', 'placeholder'];
 const STATUSES = new Set(['published', 'draft']);
 const LOCKED_TAGS = new Set(['research', 'treatment', 'lifestyle', 'advocacy']);
@@ -106,6 +106,14 @@ function validateDocuments(documents, glossaryRules = []) {
 
     if (!isLocalePair(data.title) || !isLocalePair(data.summary) || !isLocalePair(data.clinicalNote)) {
       errors.push(`${file}: title, summary and clinicalNote must each include en and pt strings`);
+    }
+
+    if ('visitQuestion' in data) {
+      if (!isLocalePair(data.visitQuestion)) {
+        errors.push(`${file}: visitQuestion must include en and pt strings`);
+      } else if (!data.visitQuestion.en.trim() || !data.visitQuestion.pt.trim()) {
+        errors.push(`${file}: visitQuestion must include non-empty en and pt strings`);
+      }
     }
 
     if (data.status === 'published' && data.placeholder !== true) {
