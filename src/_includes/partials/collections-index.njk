@@ -1,0 +1,17 @@
+<section class="page-header">
+  <h1>{{ t.topicBundles.title }}</h1>
+  <p class="lede">{{ t.topicBundles.lede }}</p>
+</section>
+
+<section class="section">
+  <ul class="archive-list">
+    {% for bundle in topicBundles %}
+      <li class="archive-issue">
+        {% set bundlePath = (locale | sectionHref('collections')) + bundle.slug + '/' %}
+        <h2><a href="{{ bundlePath | url }}">{{ bundle.title | localized(locale) }}</a></h2>
+        <p>{{ bundle.lede | localized(locale) }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><a href="{{ locale | sectionHref('archive') | url }}">{{ t.footer.archive }}</a></p>
+</section>

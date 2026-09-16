@@ -5,7 +5,7 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {%- for page in collections.all -%}
-{%- if page.url and page.data.eleventyExcludeFromCollections != true and page.data.pageType != 'card' -%}
+{%- if page.url and page.data.eleventyExcludeFromCollections != true and page.data.pageType != 'card' and page.data.pageType != 'topicBundle' -%}
   <url>
     <loc>{{ site.url }}{{ page.url | url }}</loc>
     {%- if page.data.translationKey -%}
@@ -38,4 +38,20 @@ eleventyExcludeFromCollections: true
     <xhtml:link rel="alternate" hreflang="pt" href="{{ ptCard }}" />
   </url>
 {%- endfor -%}
+{# BEGIN thematic collections: emit every paginated bundle in both locales. #}
+{%- for bundle in topicBundles -%}
+  {%- set enBundle = site.url + (('/collections/' + bundle.slug + '/') | url) -%}
+  {%- set ptBundle = site.url + (('/pt/collections/' + bundle.slug + '/') | url) -%}
+  <url>
+    <loc>{{ enBundle }}</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ enBundle }}" />
+    <xhtml:link rel="alternate" hreflang="pt" href="{{ ptBundle }}" />
+  </url>
+  <url>
+    <loc>{{ ptBundle }}</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ enBundle }}" />
+    <xhtml:link rel="alternate" hreflang="pt" href="{{ ptBundle }}" />
+  </url>
+{%- endfor -%}
+{# END thematic collections #}
 </urlset>

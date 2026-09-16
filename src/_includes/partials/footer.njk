@@ -22,6 +22,10 @@
       <a href="{{ locale | sectionHref('glossary') | url }}">{{ t.glossary.title }}</a>
       <span aria-hidden="true">·</span>
       {# Patient dictionary — end #}
+      {# BEGIN thematic collections #}
+      <a href="{{ locale | sectionHref('collections') | url }}">{{ t.topicBundles.title }}</a>
+      <span aria-hidden="true">·</span>
+      {# END thematic collections #}
       <a href="{{ site.repo }}">GitHub</a>
     </p>
     <p class="site-footer__meta">

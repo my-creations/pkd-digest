@@ -1,0 +1,12 @@
+---
+layout: layouts/base.njk
+permalink: /collections/
+translationKey: collections
+pageType: collections
+eleventyComputed:
+  title: "{{ i18n.en.topicBundles.title }}"
+  description: "{{ i18n.en.topicBundles.lede }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+{% include "partials/collections-index.njk" %}
