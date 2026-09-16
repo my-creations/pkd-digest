@@ -340,3 +340,18 @@ module.exports = {
     // Patient dictionary — end
   },
 };
+
+// BEGIN thematic collections
+module.exports.en.topicBundles = {
+  title: 'Thematic collections',
+  lede: 'Curated reading lists on shared concerns, bringing together published cards across weekly issues.',
+  back: 'All collections',
+  cardsTitle: 'Cards in this collection',
+};
+module.exports.pt.topicBundles = {
+  title: 'Coleções temáticas',
+  lede: 'Listas de leitura sobre preocupações comuns, reunindo cartões publicados em diferentes edições semanais.',
+  back: 'Todas as coleções',
+  cardsTitle: 'Cartões nesta coleção',
+};
+// END thematic collections

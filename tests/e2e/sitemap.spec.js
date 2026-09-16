@@ -21,6 +21,14 @@ const ROUTES = [
   // Patient dictionary
   '/pkd-digest/glossary/',
   '/pkd-digest/pt/glossary/',
+  '/pkd-digest/collections/',
+  '/pkd-digest/pt/collections/',
+  '/pkd-digest/collections/pregnancy/',
+  '/pkd-digest/pt/collections/pregnancy/',
+  '/pkd-digest/collections/vascular-risk/',
+  '/pkd-digest/pt/collections/vascular-risk/',
+  '/pkd-digest/collections/polycystic-liver/',
+  '/pkd-digest/pt/collections/polycystic-liver/',
 ];
 
 test.describe('sitemap', () => {
@@ -61,5 +69,21 @@ test('glossary sitemap entries cross-link their EN/PT pages', async ({ request }
     expect(entry).toBeTruthy();
     expect(entry).toContain(`hreflang="en" href="${ORIGIN}/pkd-digest/glossary/"`);
     expect(entry).toContain(`hreflang="pt" href="${ORIGIN}/pkd-digest/pt/glossary/"`);
+  }
+});
+
+test('collections sitemap entries are unique and have matching EN/PT alternates', async ({ request }) => {
+  const response = await request.get('sitemap.xml');
+  const xml = await response.text();
+  const entries = xml.match(/<url>[\s\S]*?<\/url>/g) || [];
+  for (const slug of ['', 'pregnancy/', 'vascular-risk/', 'polycystic-liver/']) {
+    const en = `${ORIGIN}/pkd-digest/collections/${slug}`;
+    const pt = `${ORIGIN}/pkd-digest/pt/collections/${slug}`;
+    for (const url of [en, pt]) {
+      const matching = entries.filter((entry) => entry.includes(`<loc>${url}</loc>`));
+      expect(matching).toHaveLength(1);
+      expect(matching[0]).toContain(`hreflang="en" href="${en}"`);
+      expect(matching[0]).toContain(`hreflang="pt" href="${pt}"`);
+    }
   }
 });

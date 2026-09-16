@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: topicBundles
+  size: 1
+  alias: bundle
+permalink: /pt/collections/{{ bundle.slug }}/
+pageType: topicBundle
+eleventyComputed:
+  title: "{{ bundle.title.pt }}"
+  description: "{{ bundle.lede.pt }}"
+---
+{% set t = i18n.pt %}
+{% set locale = 'pt' %}
+{% include "partials/collection-page.njk" %}

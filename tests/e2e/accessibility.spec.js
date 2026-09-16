@@ -16,6 +16,14 @@ test.describe('digest accessibility', () => {
     // Patient dictionary
     'glossary/',
     'pt/glossary/',
+    'collections/',
+    'pt/collections/',
+    'collections/pregnancy/',
+    'pt/collections/pregnancy/',
+    'collections/vascular-risk/',
+    'pt/collections/vascular-risk/',
+    'collections/polycystic-liver/',
+    'pt/collections/polycystic-liver/',
   ]) {
     test(`has no axe violations on ${path}`, async ({ page }) => {
       await page.goto(path);

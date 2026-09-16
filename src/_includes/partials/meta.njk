@@ -34,6 +34,13 @@
   {% set ptHref = site.url + ('pt' | cardHref(card.fileSlug) | url) %}
 {% endif %}
 
+{# BEGIN thematic collections #}
+{% if pageType == 'collections' or pageType == 'topicBundle' %}
+  {% set enHref = site.url + (page.url | languageHref('en') | url) %}
+  {% set ptHref = site.url + (page.url | languageHref('pt') | url) %}
+{% endif %}
+{# END thematic collections #}
+
 <title>{{ metaTitle }} · {{ site.name }}</title>
 <meta name="description" content="{{ metaDescription }}" />
 <link rel="canonical" href="{{ canonicalUrl }}" />
