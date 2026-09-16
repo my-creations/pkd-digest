@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Single-center retrospective (Inkosi Albert Luthuli, 2006–2024; n=298, 14 events). Aneurysm prevalence 3% (5 ruptured); supports awareness and screening discussions. Small event count, retrospective — descriptive, not a screening rule.'
   pt: 'Retrospetivo unicêntrico (2006–2024; n=298, 14 eventos). Prevalência de aneurismas 3% (5 rotos); apoia conversas de alerta e rastreio. Poucos eventos, retrospetivo — descritivo, não regra de rastreio.'
+visitQuestion:
+  en: 'Which parts of my personal and family history matter when we discuss the risk of brain blood-vessel problems with ADPKD?'
+  pt: 'Que aspetos da minha história pessoal e familiar são importantes ao discutir o risco de problemas nos vasos sanguíneos do cérebro associados à ADPKD?'
 status: published
 placeholder: false
 ---

@@ -27,7 +27,7 @@ Each card carries EN and PT in the **same** file. Do **not** split into locale-s
 
 `visitQuestion: { en, pt }` adds one plain-language question for patients or families to take to their doctor. When present, both strings must be non-empty, including on drafts and placeholders. Keep it specific to the card, educational rather than a treatment instruction, and complete both translations before adding it. The terminology gate also checks this field on non-placeholder cards.
 
-Questions appear on card pages and in the shared card partial, and are included in each locale’s search index. Omitting the field renders no question block.
+Questions appear on card pages, the weekly digest, and in the shared card partial, and are included in each locale’s search index. Omitting the field renders no question block.
 
 ## Locked vocabularies
 

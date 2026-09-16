@@ -56,6 +56,14 @@ eleventyComputed:
             <p>{{ leadClinical }}</p>
           </div>
         </div>
+        {# Visit question: optional bilingual patient prompt. #}
+        {% if lead.data.visitQuestion %}
+          <section class="item-card__block" data-visit-question>
+            <h3 class="item-card__label">{{ t.digest.visitQuestion }}</h3>
+            <p>{{ lead.data.visitQuestion | localized(locale) | escape }}</p>
+          </section>
+        {% endif %}
+        {# End visit question. #}
         <p class="digest-meta">
           {% if lead.data.source.url %}
             <a href="{{ lead.data.source.url }}" target="_blank" rel="noopener noreferrer">{{ lead.data.source.name or lead.data.source.url }}</a>
@@ -92,6 +100,14 @@ eleventyComputed:
                   <p>{{ clinicalText }}</p>
                 </div>
               </div>
+              {# Visit question: optional bilingual patient prompt. #}
+              {% if item.data.visitQuestion %}
+                <section class="item-card__block" data-visit-question>
+                  <h4 class="item-card__label">{{ t.digest.visitQuestion }}</h4>
+                  <p>{{ item.data.visitQuestion | localized(locale) | escape }}</p>
+                </section>
+              {% endif %}
+              {# End visit question. #}
               <p class="digest-meta">
                 {% if item.data.source.url %}
                   <a href="{{ item.data.source.url }}" target="_blank" rel="noopener noreferrer">{{ item.data.source.name or item.data.source.url }}</a>

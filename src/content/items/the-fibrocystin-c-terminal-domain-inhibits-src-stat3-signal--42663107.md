@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'In vitro ARPKD model (principal-like MDCK monolayers, 2D and 3D): FPC loss raises cAMP and secretion; wild-type FPC tail dampens Src–STAT3. Defines a druggable axis in principle — years from any therapy.'
   pt: 'Modelo in vitro de DRPAR (monocamadas pl-MDCK, 2D e 3D): perda de FPC sobe cAMP e secreção; cauda FPC normal trava Src–STAT3. Define um eixo potencialmente medicável — a anos de qualquer terapêutica.'
+visitQuestion:
+  en: 'For my family member with recessive PKD, what would need to happen before a finding about fibrocystin could become a treatment tested in people?'
+  pt: 'Para o meu familiar com doença renal poliquística recessiva, o que teria de acontecer antes de uma descoberta sobre a fibrocistina poder tornar-se um tratamento estudado em pessoas?'
 status: published
 placeholder: false
 ---

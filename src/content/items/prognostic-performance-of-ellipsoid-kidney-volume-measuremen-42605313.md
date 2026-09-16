@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Retrospective agreement study, Ottawa clinic (107 CT plus 44 MRI). Ellipsoid versus manual height-adjusted TKV for Mayo classification and high-risk (1C–1E) disease. Single center — supports CT-based stratification locally, validate before adopting.'
   pt: 'Estudo retrospetivo de concordância, clínica de Otava (107 TAC mais 44 RM). Elipsoide vs segmentação manual do VRTa para classificação Mayo e alto risco (1C–1E). Unicêntrico — apoia estratificação por TAC localmente, validar antes de adotar.'
+visitQuestion:
+  en: 'How was my kidney size measured, and could uncertainty in that measurement affect discussions about my risk or treatment options?'
+  pt: 'Como foi medido o tamanho dos meus rins e pode a incerteza nessa medição afetar a discussão sobre o meu risco ou opções de tratamento?'
 status: published
 placeholder: false
 ---

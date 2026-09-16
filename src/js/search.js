@@ -17,7 +17,9 @@ function normalize(value) {
 }
 
 function cardText(card) {
-  return normalize([card.title, card.summary, card.clinicalNote, card.visitQuestion, (card.tags || []).join(' ')].join('\n'));
+  return normalize(
+    [card.title, card.summary, card.clinicalNote, card.visitQuestion, (card.tags || []).join(' ')].join('\n')
+  );
 }
 
 function cardUrl(locale, slug) {

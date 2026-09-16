@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Pilot analytical-validity study (Diagnostics; n=16, two configurations). 82.7% of intervals at mean depth ≥20×; PKD1 exon 1 undercovered, duplicated sequence not callable. A lab validation story — do not order clinically on this basis.'
   pt: 'Piloto de validade analítica (n=16, duas configurações). 82,7% dos intervalos com profundidade média ≥20×; exão 1 do PKD1 subcoberto, sequências duplicadas não avaliáveis. História de validação laboratorial — não pedir clinicamente com esta base.'
+visitQuestion:
+  en: 'If I have genetic testing for kidney cysts, what can the test miss and how would an unclear result be explained to me?'
+  pt: 'Se fizer um teste genético por causa dos quistos renais, o que pode o teste não detetar e como me será explicado um resultado incerto?'
 status: published
 placeholder: false
 ---
