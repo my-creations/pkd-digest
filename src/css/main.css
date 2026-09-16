@@ -70,6 +70,23 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keep authorial type scale on small screens: no mobile font boosting. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Never let a wide descendant shift the page sideways on narrow
+   viewports (Fold cover screens et al). `clip` preserves sticky. */
+html,
+body {
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 body {
