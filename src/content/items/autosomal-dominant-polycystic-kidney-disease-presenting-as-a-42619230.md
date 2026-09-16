@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Single case report. Teaching point for the differential diagnosis of upper abdominal masses; the patient was screened for mitral valve prolapse and aneurysms (normal) and followed for blood pressure with nephrology. Anecdote, not guidance.'
   pt: 'Relato de caso único. Lição para o diagnóstico diferencial de massas abdominais altas; a doente foi rastreada para prolapso mitral e aneurismas (normal) e seguida para a tensão arterial com nefrologia. Anedota clínica, não orientação.'
-status: draft
+status: published
 placeholder: false
 ---
 

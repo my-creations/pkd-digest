@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Mechanistic study in Pkd1-null renal epithelial lines: salicylate effects on metabolism, proliferation and inflammation largely AMPK-dependent, plus AMPK-independent mitochondrial uncoupling. Preclinical pharmacology — salsalate is not established ADPKD therapy.'
   pt: 'Estudo mecanístico em linhas epiteliais renais sem Pkd1: efeitos do salicilato no metabolismo, proliferação e inflamação largamente dependentes de AMPK, mais desacoplamento mitocondrial independente. Farmacologia pré-clínica — o salsalato não é terapêutica estabelecida na ADPKD.'
-status: draft
+status: published
 placeholder: false
 ---
 

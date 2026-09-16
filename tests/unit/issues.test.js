@@ -9,11 +9,16 @@ const ITEMS = [
 ];
 
 describe('issue archive grouping', () => {
-  it('groups by issue in first-seen order', () => {
+  it('groups by issue newest-first', () => {
     const groups = groupByIssue(ITEMS);
     expect(groups.map((group) => group.issue)).toEqual(['2026-W37', '2026-W36']);
     expect(groups[0].items.map((item) => item.slug)).toEqual(['a', 'b']);
     expect(groups[1].items.map((item) => item.slug)).toEqual(['c']);
+  });
+
+  it('sorts weeks descending regardless of input order', () => {
+    const groups = groupByIssue([ITEMS[2], ITEMS[0]]);
+    expect(groups.map((group) => group.issue)).toEqual(['2026-W37', '2026-W36']);
   });
 
   it('skips cards without an issue', () => {

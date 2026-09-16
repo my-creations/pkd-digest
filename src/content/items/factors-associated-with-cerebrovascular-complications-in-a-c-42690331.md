@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Single-center retrospective (Inkosi Albert Luthuli, 2006–2024; n=298, 14 events). Aneurysm prevalence 3% (5 ruptured); supports awareness and screening discussions. Small event count, retrospective — descriptive, not a screening rule.'
   pt: 'Retrospetivo unicêntrico (2006–2024; n=298, 14 eventos). Prevalência de aneurismas 3% (5 rotos); apoia conversas de alerta e rastreio. Poucos eventos, retrospetivo — descritivo, não regra de rastreio.'
-status: draft
+status: published
 placeholder: false
 ---
 

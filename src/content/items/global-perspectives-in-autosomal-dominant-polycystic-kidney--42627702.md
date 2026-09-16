@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Kidney360 Global Perspectives piece (no PubMed abstract available). Health-systems overview, not research evidence; read for context on care delivery, not for clinical decisions.'
   pt: 'Artigo da série Global Perspectives (sem resumo no PubMed). Panorama de sistemas de saúde, não evidência; ler pelo contexto da prestação de cuidados, não para decisões clínicas.'
-status: draft
+status: published
 placeholder: false
 ---
 
