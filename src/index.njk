@@ -21,6 +21,31 @@ eleventyComputed:
   </div>
 </section>
 
+{% set latest = collections.latestIssueItems %}
+{% if latest.length %}
+  {% set latestIssue = latest[0].data.issue %}
+  <section class="section section--latest" aria-labelledby="latest-heading">
+    <p class="eyebrow">{{ t.home.latestKicker }}</p>
+    <h2 id="latest-heading">{{ t.home.latestTitle }}</h2>
+    <div class="digest-shell">
+      <aside class="digest-rail" aria-label="{{ t.digest.inThisIssue }}{% if latestIssue %} {{ latestIssue }}{% endif %}">
+        <h2>{{ t.digest.inThisIssue }}{% if latestIssue %} · {{ latestIssue }}{% endif %}</h2>
+        <ol>
+          {% for item in latest %}
+            <li>
+              <a href="{{ '/digest/' | url }}#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) | truncate(48) }}</a>
+            </li>
+          {% endfor %}
+        </ol>
+      </aside>
+      <div class="digest-river">
+        <p class="lede">{{ t.home.latestBody }}</p>
+        <p><a class="button button--primary" href="{{ '/digest/' | url }}">{{ t.home.ctaDigest }}</a></p>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
 <section class="section">
   <h2>{{ t.home.howTitle }}</h2>
   <ul class="feature-list">

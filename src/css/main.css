@@ -517,6 +517,11 @@ h2 {
   list-style: none;
 }
 
+/* Timeline anchors sit below the sticky section bar on jump. */
+.timeline-list > li[id] {
+  scroll-margin-top: 5rem;
+}
+
 .item-card {
   background: var(--card);
   color: var(--card-foreground);
