@@ -19,6 +19,9 @@ summary:
 clinicalNote:
   en: 'Scoping review (PRISMA; 29 studies, 2014–2024) on PLD in PKD1/PKD2 carriers. Maps genotype–phenotype links to hepatic cyst burden. Somatostatin analogues are the mainstay medical therapy for volume/symptoms in selected patients; mTOR inhibitors show modest/variable results. Synthesis/gap map — not a new RCT efficacy claim.'
   pt: 'Scoping review (PRISMA; 29 estudos, 2014–2024) sobre PLD em portadores PKD1/PKD2. Mapeia ligações genótipo–fenótipo à carga quística hepática. Análogos da somatostatina são o mainstay médico para volume/sintomas em casos selecionados; inibidores mTOR com resultados modestos/variáveis. Síntese/mapa de lacunas — sem nova alegação de eficácia de RCT.'
+visitQuestion:
+  en: 'If my liver cysts cause discomfort or fullness, how do we decide whether I need a specialist assessment or treatment?'
+  pt: 'Se os meus quistos no fígado causam desconforto ou sensação de enfartamento, como decidimos se preciso de avaliação especializada ou tratamento?'
 status: published
 placeholder: false
 ---

@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Nationwide registry analysis (2015–2021, n=12,466) with multivariable modeling; aneurysms reached 25.3% in women aged 50 and over. Observational and retrospective — supports risk-stratified screening conversations, not new thresholds.'
   pt: 'Análise de registo nacional (2015–2021, n=12 466) com modelação multivariável; aneurismas 25,3% em mulheres com 50 ou mais anos. Observacional e retrospetivo — apoia rastreio por risco, não novos limiares.'
+visitQuestion:
+  en: 'How do my age, blood pressure and symptoms help you decide which complications of ADPKD to check for?'
+  pt: 'Como ajudam a minha idade, tensão arterial e sintomas a decidir que complicações da ADPKD devem ser investigadas?'
 status: published
 placeholder: false
 ---

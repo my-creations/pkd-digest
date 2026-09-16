@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Narrative review on developmental modeling of ADPKD, ARPKD and nephronophthisis, proposing Drosophila for modifier screens and precision-medicine studies. Conceptual — useful for researchers, nothing actionable clinically.'
   pt: 'Revisão narrativa sobre modelação do desenvolvimento na ADPKD, DRPAR e nefronoftise, propondo Drosophila para rastreios de modificadores e medicina de precisão. Concetual — útil para investigadores, nada acionável clinicamente.'
+visitQuestion:
+  en: 'Why might my kidney disease progress differently from a relative with the same genetic change, and how will we monitor my own course?'
+  pt: 'Porque pode a minha doença renal evoluir de forma diferente da de um familiar com a mesma alteração genética e como vamos acompanhar a minha evolução?'
 status: published
 placeholder: false
 ---

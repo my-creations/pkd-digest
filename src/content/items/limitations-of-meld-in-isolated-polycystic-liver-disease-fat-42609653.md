@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Single case report (isolated PLD). Illustrates MELD blind spots — mass effect, malnutrition, sarcopenia — and fatal traumatic rupture with compartment syndrome. Exception pathways exist: reassess longitudinally and counsel trauma risk in massive PLD.'
   pt: 'Relato de caso único (DHP isolada). Ilustra pontos cegos do MELD — efeito de massa, desnutrição, sarcopenia — e rutura traumática fatal com síndrome compartimental. Há vias de exceção: reavaliar ao longo do tempo e avisar do risco traumático na DHP volumosa.'
+visitQuestion:
+  en: 'If liver cysts affect my eating, weight or daily activities despite normal blood tests, how will you assess their impact?'
+  pt: 'Se os quistos no fígado afetam a minha alimentação, peso ou atividades diárias apesar de análises normais, como será avaliado esse impacto?'
 status: published
 placeholder: false
 ---

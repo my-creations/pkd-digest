@@ -19,6 +19,9 @@ summary:
 clinicalNote:
   en: 'KDOQI society commentary on the KDIGO 2025 ADPKD clinical practice guideline (AJKD). Use as a U.S.-practice bridge to the parent KDIGO CPG (diagnosis, risk stratification, disease-modifying therapy, extra-renal care). Not primary evidence — verify local formulary, imaging access, and payer constraints before changing pathways.'
   pt: 'Comentário societário KDOQI à CPG KDIGO 2025 de ADPKD (AJKD). Serve de ponte prática EUA→CPG KDIGO (diagnóstico, estratificação de risco, terapêutica disease-modifying, cuidados extra-renais). Não é evidência primária — validar formulário, acesso a imagem e restrições de pagamento locais antes de mudar vias.'
+visitQuestion:
+  en: 'Which parts of the international ADPKD care recommendations apply to me, given the tests and treatments available here?'
+  pt: 'Que partes das recomendações internacionais de cuidados para a ADPKD se aplicam a mim, tendo em conta os exames e tratamentos disponíveis aqui?'
 status: published
 placeholder: false
 ---

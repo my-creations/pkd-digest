@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "comment": "PT terminology gate for validate:content. Each rule scans the listed locales of title/summary/clinicalNote on non-placeholder cards (drafts and published). Patterns are JS regex sources compiled case-insensitively unless flags say otherwise. Keep this list tight: only terms with a real incident or a standing policy behind them.",
+  "comment": "PT terminology gate for validate:content. Each rule scans the listed locales of title/summary/clinicalNote/visitQuestion on non-placeholder cards (drafts and published). Patterns are JS regex sources compiled case-insensitively unless flags say otherwise. Keep this list tight: only terms with a real incident or a standing policy behind them.",
   "rules": [
     {
       "id": "enpt-shorthand",

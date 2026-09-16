@@ -24,6 +24,43 @@ describe('content validation', () => {
     expect(validateDocuments([card()])).toEqual([]);
   });
 
+  it('accepts an optional bilingual visit question', () => {
+    expect(
+      validateDocuments([
+        card({
+          visitQuestion: { en: 'What should I ask about my scans?', pt: 'O que devo perguntar sobre os meus exames?' },
+        }),
+      ])
+    ).toEqual([]);
+  });
+
+  it.each([{ en: 'What should I ask?' }, { pt: 'O que devo perguntar?' }, null, 'A question'])(
+    'rejects a visit question without both locale strings: %j',
+    (visitQuestion) => {
+      expect(validateDocuments([card({ visitQuestion })])).toContain(
+        'example.md: visitQuestion must include en and pt strings'
+      );
+    }
+  );
+
+  it.each(['en', 'pt'])('rejects a blank visitQuestion.%s even on a draft', (locale) => {
+    const visitQuestion = { en: 'What should I ask?', pt: 'O que devo perguntar?', [locale]: '   ' };
+    expect(validateDocuments([card({ status: 'draft', visitQuestion })])).toContain(
+      'example.md: visitQuestion must include non-empty en and pt strings'
+    );
+  });
+
+  it('checks visit questions against the terminology gate', () => {
+    const { rules } = loadGlossary();
+    const errors = validateDocuments(
+      [card({ visitQuestion: { en: 'Should we discuss screening?', pt: 'Devo discutir screening?' } })],
+      rules
+    );
+    expect(errors).toEqual(
+      expect.arrayContaining([expect.stringContaining('visitQuestion.pt uses banned term "screening"')])
+    );
+  });
+
   it('accepts placeholder cards with sample tags and an issue stamp', () => {
     const doc = card({ placeholder: true, status: 'draft', tags: ['sample'], issue: '2026-W37' });
     expect(validateDocuments([doc])).toEqual([]);

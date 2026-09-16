@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'PROSPERO-registered systematic review and meta-analysis, six studies, n=451. First-year eGFR-slope attenuation +0.65 mL/min/1.73 m²/yr versus pre-slope (CI 0.05–1.26); no TKV effect and no slope difference versus control. Hypothesis-generating — not a prescribing basis in ADPKD.'
   pt: 'Revisão sistemática e meta-análise registada PROSPERO, seis estudos, n=451. Atenuação do declive da TFG +0,65 mL/min/1,73 m²/ano vs pré-tratamento (IC 0,05–1,26); sem efeito no VRT nem diferença vs controlo. Gera hipóteses — não base para prescrever na ADPKD.'
+visitQuestion:
+  en: 'What do we know and not yet know about the benefits and risks of SGLT2 medicines for someone with my type of kidney disease?'
+  pt: 'O que sabemos e o que ainda não sabemos sobre os benefícios e riscos dos medicamentos SGLT2 para alguém com o meu tipo de doença renal?'
 status: published
 placeholder: false
 ---

@@ -29,6 +29,14 @@
       <h4 class="item-card__label">{{ t.digest.clinicalLabel }}</h4>
       <p>{{ clinicalText }}</p>
     </section>
+    {# Visit question: optional bilingual patient prompt. #}
+    {% if item.data.visitQuestion %}
+      <section class="item-card__block" data-visit-question>
+        <h4 class="item-card__label">{{ t.digest.visitQuestion }}</h4>
+        <p>{{ item.data.visitQuestion | localized(locale) | escape }}</p>
+      </section>
+    {% endif %}
+    {# End visit question. #}
   </div>
 
   <footer class="item-card__footer">

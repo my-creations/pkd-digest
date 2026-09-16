@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'iScience cell-biology study in human kidney cells and knockout models. Defines an ITGB1–BICC1–PC1/FBLIM1 axis controlling F-actin organization and adhesion; blocking F-actin branching directly triggers cysts. Novel mechanism, strictly preclinical.'
   pt: 'Estudo iScience de biologia celular em células renais humanas e modelos knockout. Define um eixo ITGB1–BICC1–PC1/FBLIM1 que controla a actina-F e a adesão; bloquear a ramificação desencadeia quistos. Mecanismo novo, estritamente pré-clínico.'
+visitQuestion:
+  en: 'How can I tell whether a finding about proteins and cysts has been tested in people or is still only laboratory research?'
+  pt: 'Como posso saber se uma descoberta sobre proteínas e quistos já foi estudada em pessoas ou ainda é apenas investigação de laboratório?'
 status: published
 placeholder: false
 ---

@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Retrospective multicenter cohort (n=20, eight Greek centers). 60% copy-number variants (mostly 17q12 microdeletions); cysts 95%, CAKUT 20%, hypomagnesemia 25%; mean eGFR flat over about 5 years with early individual variability. Small and retrospective — monitor magnesium, uric acid and extrarenal features.'
   pt: 'Coorte retrospetiva multicêntrica (n=20, oito centros gregos). 60% variantes de número de cópias (sobretudo microdeleções 17q12); quistos 95%, CAKUT 20%, hipomagnesemia 25%; eGFR média estável em cerca de 5 anos com variabilidade individual precoce. Pequena e retrospetiva — vigiar magnésio, ácido úrico e manifestações extra-renais.'
+visitQuestion:
+  en: 'For my child with HNF1B-related kidney disease, which kidney and blood tests should we review as they grow?'
+  pt: 'Para o meu filho com doença renal associada ao HNF1B, que exames aos rins e análises ao sangue devemos rever ao longo do crescimento?'
 status: published
 placeholder: false
 ---

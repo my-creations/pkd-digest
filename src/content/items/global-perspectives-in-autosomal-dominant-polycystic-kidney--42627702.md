@@ -15,6 +15,9 @@ summary:
 clinicalNote:
   en: 'Kidney360 Global Perspectives piece (no PubMed abstract available). Health-systems overview, not research evidence; read for context on care delivery, not for clinical decisions.'
   pt: 'Artigo da série Global Perspectives (sem resumo no PubMed). Panorama de sistemas de saúde, não evidência; ler pelo contexto da prestação de cuidados, não para decisões clínicas.'
+visitQuestion:
+  en: 'Which ADPKD care options are available locally, and who can help me if access or cost is a barrier?'
+  pt: 'Que opções de cuidados para a ADPKD existem na minha região e quem me pode ajudar se o acesso ou o custo forem uma barreira?'
 status: published
 placeholder: false
 ---

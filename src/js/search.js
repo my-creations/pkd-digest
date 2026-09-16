@@ -3,7 +3,7 @@
 /**
  * Client-side card search (progressive enhancement).
  * Each [data-search] section fetches its locale JSON index once, then matches
- * as-you-type across title, summary, clinical note, and tags. Accent-insensitive.
+ * as-you-type across title, summary, clinical note, visit question, and tags. Accent-insensitive.
  */
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-search]').forEach(initSearch);
@@ -17,7 +17,9 @@ function normalize(value) {
 }
 
 function cardText(card) {
-  return normalize([card.title, card.summary, card.clinicalNote, (card.tags || []).join(' ')].join('\n'));
+  return normalize(
+    [card.title, card.summary, card.clinicalNote, card.visitQuestion, (card.tags || []).join(' ')].join('\n')
+  );
 }
 
 function cardUrl(locale, slug) {

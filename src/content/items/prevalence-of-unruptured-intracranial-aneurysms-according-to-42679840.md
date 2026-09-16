@@ -18,6 +18,9 @@ summary:
 clinicalNote:
   en: 'Lancet Neurol SR/MA (316,131 participants; PROSPERO CRD420261296728). Reference UIA prevalence ~3.9%; ADPKD pooled 12.8% (293/1990), adjusted PR 4.4 (95% CI 1.5–12.6). Also elevated with connective-tissue disorders and family history of aSAH/UIA; smoking RR ~1.4, hypertension RR ~1.6. Authors note rising UIA prevalence over time and call for personalized screening research — ADPKD counseling/policy signal, not a universal screening guideline.'
   pt: 'RS/MA Lancet Neurol (316.131 participantes; PROSPERO CRD420261296728). Prevalência UIA de referência ~3,9%; na ADPKD 12,8% combinada (293/1990), PR ajustado 4,4 (IC 95% 1,5–12,6). Também elevado em doenças do tecido conjuntivo e história familiar de aSAH/UIA; tabaco RR ~1,4, hipertensão RR ~1,6. Autores notam prevalência crescente e pedem investigação de rastreio personalizado — sinal de aconselhamento/política na ADPKD, não orientação de rastreio universal.'
+visitQuestion:
+  en: 'Given my ADPKD and family history, what are the possible benefits and downsides of checking for a brain aneurysm?'
+  pt: 'Tendo em conta a minha ADPKD e história familiar, quais são os possíveis benefícios e inconvenientes de fazer um rastreio de aneurisma cerebral?'
 status: published
 placeholder: false
 ---

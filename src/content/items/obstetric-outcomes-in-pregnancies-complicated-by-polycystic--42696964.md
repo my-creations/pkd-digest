@@ -19,6 +19,9 @@ summary:
 clinicalNote:
   en: 'HCUP-NIS 2016–2021 retrospective cohort; ICD-10 Q61.x (mixes ADPKD and other cystic phenotypes). Age-adjusted analyses: higher odds of cesarean and maternal complications (preeclampsia, GDM, anemia, GU infections, abruption, PPH, sepsis, stones, AKI, death) and neonatal preterm birth/IUGR/congenital anomalies. Administrative severity staging limited — counsel as high-risk with multidisciplinary follow-up; do not over-infer ADPKD-only estimates.'
   pt: 'Coorte retrospetiva HCUP-NIS 2016–2021; ICD-10 Q61.x (mistura ADPKD e outros fenótipos quísticos). Análises ajustadas por idade: mais cesariana e complicações maternas (pré-eclâmpsia, DG, anemia, ITU, descolamento, HPP, sépsis, cálculos, AKI, morte) e desfechos neonatais (pré-termo/RCIU/anomalias). Estadiamento administrativo limitado — aconselhar como alto risco com seguimento multidisciplinar; não inferir em excesso estimativas só de ADPKD.'
+visitQuestion:
+  en: 'If I am planning a pregnancy, how should my kidney team and maternity team coordinate my care?'
+  pt: 'Se estou a planear uma gravidez, como devem a equipa de nefrologia e a equipa de obstetrícia coordenar os meus cuidados?'
 status: published
 placeholder: false
 ---
