@@ -20,6 +20,10 @@
   {% set section = 'search' %}
 {% elif pageType == 'archive' %}
   {% set section = 'archive' %}
+{# Patient dictionary — begin #}
+{% elif pageType == 'glossary' %}
+  {% set section = 'glossary' %}
+{# Patient dictionary — end #}
 {% else %}
   {% set section = 'home' %}
 {% endif %}

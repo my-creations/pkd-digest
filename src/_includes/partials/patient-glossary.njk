@@ -1,0 +1,9 @@
+{# Patient dictionary — visible definitions, reusable with patientGlossary and locale. #}
+<dl class="patient-glossary">
+  {% for entry in patientGlossary %}
+    <div class="patient-glossary__entry" id="glossary-{{ entry.id }}">
+      <dt><dfn>{{ entry.term | localized(locale) }}</dfn></dt>
+      <dd>{{ entry.shortDef | localized(locale) }}</dd>
+    </div>
+  {% endfor %}
+</dl>

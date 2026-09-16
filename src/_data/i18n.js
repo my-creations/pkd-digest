@@ -162,6 +162,12 @@ module.exports = {
         'If we later need privacy-friendly aggregate traffic metrics, Plausible (cookieless) is the preferred candidate — only after an explicit product decision and a separate PR. Until then, “no analytics” remains the documented policy.',
       legalNote: 'Educational curation only — not medical advice. See also the medical disclaimer on the site.',
     },
+    // Patient dictionary — begin
+    glossary: {
+      title: 'Patient dictionary',
+      lede: 'Plain-language definitions of terms you may meet in kidney care and research.',
+    },
+    // Patient dictionary — end
   },
   pt: {
     localeName: 'Português',
@@ -326,5 +332,11 @@ module.exports = {
         'Se mais tarde precisarmos de métricas agregadas privacy-friendly, Plausible (sem cookies) é o candidato preferido — só após decisão explícita de produto e um PR separado. Até lá, a política documentada é “sem analytics”.',
       legalNote: 'Curadoria educativa — não constitui aconselhamento médico. Ver também o aviso médico no site.',
     },
+    // Patient dictionary — begin
+    glossary: {
+      title: 'Dicionário do doente',
+      lede: 'Definições em linguagem simples de termos que pode encontrar nos cuidados renais e na investigação.',
+    },
+    // Patient dictionary — end
   },
 };

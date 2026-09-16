@@ -18,6 +18,9 @@ const ROUTES = [
   '/pkd-digest/pt/archive/',
   '/pkd-digest/start-here/',
   '/pkd-digest/pt/start-here/',
+  // Patient dictionary
+  '/pkd-digest/glossary/',
+  '/pkd-digest/pt/glossary/',
 ];
 
 test.describe('sitemap', () => {
@@ -46,4 +49,17 @@ test.describe('sitemap', () => {
     expect(xml).toContain('hreflang="en"');
     expect(xml).toContain('hreflang="pt"');
   });
+});
+
+// Patient dictionary — verify alternates on each entry, not merely somewhere in the sitemap.
+test('glossary sitemap entries cross-link their EN/PT pages', async ({ request }) => {
+  const res = await request.get('sitemap.xml');
+  expect(res.ok()).toBeTruthy();
+  const entries = (await res.text()).match(/<url>[\s\S]*?<\/url>/g);
+  for (const path of ['/glossary/', '/pt/glossary/']) {
+    const entry = entries.find((entry) => entry.includes(`<loc>${ORIGIN}/pkd-digest${path}</loc>`));
+    expect(entry).toBeTruthy();
+    expect(entry).toContain(`hreflang="en" href="${ORIGIN}/pkd-digest/glossary/"`);
+    expect(entry).toContain(`hreflang="pt" href="${ORIGIN}/pkd-digest/pt/glossary/"`);
+  }
 });
