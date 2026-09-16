@@ -348,6 +348,12 @@ button:focus-visible,
   color: var(--background);
 }
 
+/* ——— Browser surfaces: selection carries the palette ——— */
+::selection {
+  background: var(--ring);
+  color: var(--background);
+}
+
 /* ——— Main / hero ——— */
 
 .main {
@@ -447,7 +453,21 @@ h2 {
   transition:
     background-color 150ms ease,
     border-color 150ms ease,
-    color 150ms ease;
+    color 150ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 2px rgb(18 24 32 / 8%),
+    0 6px 16px rgb(18 24 32 / 10%);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: none;
 }
 
 .button:hover {
