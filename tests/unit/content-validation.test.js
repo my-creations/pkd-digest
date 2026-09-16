@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-const { validateDocuments } = require('../../scripts/validate-content');
+const { validateDocuments, loadGlossary, checkGlossary } = require('../../scripts/validate-content');
 
 function card(overrides = {}) {
   return {
@@ -105,5 +105,72 @@ describe('content validation', () => {
         expect.stringContaining('summary and clinicalNote must each include en and pt strings'),
       ])
     );
+  });
+});
+
+describe('pt glossary gate', () => {
+  it('loads the committed glossary with compiled rules', () => {
+    const { rules, loadError } = loadGlossary();
+    expect(loadError).toBeNull();
+    expect(rules.length).toBeGreaterThan(0);
+    for (const rule of rules) {
+      expect(rule.regex).toBeInstanceOf(RegExp);
+    }
+  });
+
+  it('flags English leftovers in Portuguese fields with suggestions', () => {
+    const { data } = card({ status: 'draft' });
+    data.summary.pt = 'Útil para discutir screening com a equipa.';
+    data.clinicalNote.pt = 'Sem guideline de follow-up definida.';
+    const { rules } = loadGlossary();
+    const errors = checkGlossary(data, rules);
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('summary.pt uses banned term "screening"'),
+        expect.stringContaining('clinicalNote.pt uses banned term "guideline"'),
+        expect.stringContaining('clinicalNote.pt uses banned term "follow-up"'),
+      ])
+    );
+    expect(errors.some((error) => error.includes('Suggestion:'))).toBe(true);
+  });
+
+  it('flags the (EN+PT) shorthand and audience lines in either locale', () => {
+    const { data } = card({ status: 'draft' });
+    data.title.en = 'Finding (EN+PT)';
+    data.summary.pt = 'Público: doentes.';
+    const { rules } = loadGlossary();
+    const errors = checkGlossary(data, rules);
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('title.en uses banned term "(EN+PT)"'),
+        expect.stringContaining('summary.pt uses banned term "Público:"'),
+      ])
+    );
+  });
+
+  it('leaves English text and clean Portuguese alone', () => {
+    const { rules } = loadGlossary();
+    expect(checkGlossary(card().data, rules)).toEqual([]);
+  });
+
+  it('fails validation for cards with banned terms, drafts included', () => {
+    const { rules } = loadGlossary();
+    const { data } = card({ status: 'draft' });
+    data.summary.pt = 'Rastreio Black sem orientação.';
+    const errors = validateDocuments([{ file: 'draft.md', data }], rules);
+    expect(errors).toEqual(expect.arrayContaining([expect.stringContaining('summary.pt uses banned term "Black"')]));
+  });
+
+  it('skips placeholder cards', () => {
+    const { rules } = loadGlossary();
+    const doc = card({ placeholder: true, status: 'draft', tags: ['sample'] });
+    doc.data.summary.pt = 'Exemplo com screening (EN+PT).';
+    expect(validateDocuments([doc], rules)).toEqual([]);
+  });
+
+  it('reports an unreadable glossary instead of silently passing', () => {
+    const { rules, loadError } = loadGlossary('/nonexistent/glossary.json');
+    expect(rules).toEqual([]);
+    expect(loadError).toContain('unreadable');
   });
 });

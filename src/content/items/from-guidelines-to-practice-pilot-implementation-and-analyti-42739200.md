@@ -1,7 +1,7 @@
 ---
 title:
   en: 'From Guidelines to Practice: Pilot Implementation and Analytical Boundaries of a Focused ADPKD-Spectrum Gene Panel.'
-  pt: 'Das guidelines à prática: implementação-piloto e limites analíticos de um painel genético focado no espetro ADPKD.'
+  pt: 'Das orientações à prática: implementação-piloto e limites analíticos de um painel genético focado no espetro ADPKD.'
 date: 2026-08-28
 issue: '2026-W35'
 source:
