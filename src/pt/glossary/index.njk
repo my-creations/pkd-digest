@@ -1,0 +1,18 @@
+---
+layout: layouts/base.njk
+permalink: /pt/glossary/
+translationKey: glossary
+pageType: glossary
+eleventyComputed:
+  title: "{{ i18n.pt.glossary.title }}"
+  description: "{{ i18n.pt.glossary.lede }}"
+---
+{% set t = i18n.pt %}
+{% set locale = 'pt' %}
+
+<section class="section">
+  <h1>{{ t.glossary.title }}</h1>
+  <p class="lede">{{ t.glossary.lede }}</p>
+  <p>{{ t.footer.notMedicalAdvice }}</p>
+  {% include "partials/patient-glossary.njk" %}
+</section>

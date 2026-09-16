@@ -13,6 +13,9 @@ test.describe('digest accessibility', () => {
     'pt/archive/',
     'start-here/',
     'pt/start-here/',
+    // Patient dictionary
+    'glossary/',
+    'pt/glossary/',
   ]) {
     test(`has no axe violations on ${path}`, async ({ page }) => {
       await page.goto(path);

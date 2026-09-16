@@ -1481,3 +1481,28 @@ h2 {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* Patient dictionary — begin (definitions always visible; no motion or hover dependency) */
+.patient-glossary {
+  max-width: 44rem;
+  margin: var(--space-6) 0 0;
+}
+
+.patient-glossary__entry {
+  border-top: 1px solid var(--border);
+  padding: var(--space-4) 0;
+  overflow-wrap: anywhere;
+}
+
+.patient-glossary dt {
+  font-weight: 700;
+}
+
+.patient-glossary dfn {
+  font-style: normal;
+}
+
+.patient-glossary dd {
+  margin: var(--space-2) 0 0;
+}
+/* Patient dictionary — end */
