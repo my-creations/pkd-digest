@@ -54,6 +54,10 @@ module.exports = {
       audiences: 'For patients & families · For clinicians',
       ctaDigest: 'This week’s digest',
       ctaTimeline: 'Browse the timeline',
+      latestKicker: 'Latest issue',
+      latestTitle: 'This week’s issue',
+      latestBody:
+        'The newest cards, indexed as in the digest — open the full issue for both perspectives on each card.',
       howTitle: 'How each card works',
       howPlain: 'Plain-language summary — what it means for patients and families.',
       howClinical: 'Clinical note — concise framing for clinicians.',
@@ -120,6 +124,7 @@ module.exports = {
     timeline: {
       title: 'Timeline',
       lede: 'Cards in chronological order when present.',
+      indexTitle: 'On this timeline',
       empty: 'No published timeline items yet.',
     },
     privacy: {
@@ -195,6 +200,10 @@ module.exports = {
       audiences: 'Para doentes e famílias · Para clínicos',
       ctaDigest: 'Digest desta semana',
       ctaTimeline: 'Ver a cronologia',
+      latestKicker: 'Edição mais recente',
+      latestTitle: 'A edição desta semana',
+      latestBody:
+        'Os cartões mais recentes, indexados como no digest — abre a edição completa para as duas perspetivas de cada cartão.',
       howTitle: 'Como funciona cada cartão',
       howPlain: 'Resumo em linguagem simples — o que significa para doentes e famílias.',
       howClinical: 'Nota clínica — enquadramento conciso para clínicos.',
@@ -261,6 +270,7 @@ module.exports = {
     timeline: {
       title: 'Cronologia',
       lede: 'Cartões publicados, do mais recente para o mais antigo.',
+      indexTitle: 'Nesta cronologia',
       empty: 'Ainda não há itens publicados na cronologia.',
     },
     privacy: {

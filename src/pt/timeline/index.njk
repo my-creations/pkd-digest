@@ -19,14 +19,28 @@ eleventyComputed:
   {% set items = collections.publishedItems %}
   {% if items.length %}
     {% include "partials/filters.njk" %}
-    <ol class="timeline-list">
-      {% for item in items %}
-        <li data-filterable data-tags="{{ item.data.tags | join(' ') }}" data-audience="{{ item.data.audience | join(' ') }}">
-          {% include "partials/item-card.njk" %}
-        </li>
-      {% endfor %}
-    </ol>
-    <p class="empty" data-filters-empty hidden>{{ t.digest.filters.shownNone }}</p>
+    <div class="digest-shell">
+      <aside class="digest-rail" aria-label="{{ t.timeline.indexTitle }}">
+        <h2>{{ t.timeline.indexTitle }}</h2>
+        <ol>
+          {% for item in items %}
+            <li data-rail-item="{{ loop.index }}">
+              <a href="#timeline-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) | truncate(48) }}</a>
+            </li>
+          {% endfor %}
+        </ol>
+      </aside>
+      <div class="digest-river">
+        <ol class="timeline-list">
+          {% for item in items %}
+            <li id="timeline-item-{{ loop.index }}" data-filterable data-filter-index="{{ loop.index }}" data-tags="{{ item.data.tags | join(' ') }}" data-audience="{{ item.data.audience | join(' ') }}">
+              {% include "partials/item-card.njk" %}
+            </li>
+          {% endfor %}
+        </ol>
+        <p class="empty" data-filters-empty hidden>{{ t.digest.filters.shownNone }}</p>
+      </div>
+    </div>
   {% else %}
     <p class="empty">{{ t.timeline.empty }}</p>
   {% endif %}
