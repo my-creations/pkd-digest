@@ -5,6 +5,8 @@ const path = require('node:path');
 const matter = require('gray-matter');
 
 const ITEMS_DIR = path.join(__dirname, '..', 'src', 'content', 'items');
+const GLOSSARY_PATH = path.join(__dirname, '..', 'curation', 'glossary.json');
+const GLOSSARY_FIELDS = ['title', 'summary', 'clinicalNote'];
 const REQUIRED = ['title', 'date', 'source', 'tags', 'audience', 'summary', 'clinicalNote', 'status', 'placeholder'];
 const STATUSES = new Set(['published', 'draft']);
 const LOCKED_TAGS = new Set(['research', 'treatment', 'lifestyle', 'advocacy']);
@@ -12,11 +14,48 @@ const PLACEHOLDER_TAGS = new Set(['sample', 'placeholder']);
 const LOCKED_AUDIENCE = new Set(['patients', 'clinicians']);
 const ISSUE_RE = /^\d{4}-W\d{2}$/;
 
+function loadGlossary(glossaryPath = GLOSSARY_PATH) {
+  let raw;
+  try {
+    raw = JSON.parse(fs.readFileSync(glossaryPath, 'utf8'));
+  } catch (error) {
+    return { rules: [], loadError: `glossary unreadable at ${glossaryPath} (${error.message})` };
+  }
+  const rules = [];
+  for (const rule of raw.rules || []) {
+    try {
+      rules.push({ ...rule, regex: new RegExp(rule.pattern, rule.flags || 'i') });
+    } catch (error) {
+      return { rules: [], loadError: `glossary rule "${rule.id}" has an invalid pattern (${error.message})` };
+    }
+  }
+  return { rules, loadError: null };
+}
+
+function checkGlossary(data, rules) {
+  const errors = [];
+  for (const rule of rules) {
+    for (const field of GLOSSARY_FIELDS) {
+      for (const locale of rule.locales || []) {
+        const text = data[field] && data[field][locale];
+        if (typeof text !== 'string' || !text) continue;
+        const match = text.match(rule.regex);
+        if (match) {
+          errors.push(
+            `${field}.${locale} uses banned term "${match[0]}" (${rule.id}) — ${rule.reason}. Suggestion: ${rule.suggestion}`
+          );
+        }
+      }
+    }
+  }
+  return errors;
+}
+
 function isLocalePair(value) {
   return value && typeof value === 'object' && typeof value.en === 'string' && typeof value.pt === 'string';
 }
 
-function validateDocuments(documents) {
+function validateDocuments(documents, glossaryRules = []) {
   const errors = [];
 
   for (const { file, data } of documents) {
@@ -82,6 +121,11 @@ function validateDocuments(documents) {
         }
       }
     }
+    if (data.placeholder !== true) {
+      for (const error of checkGlossary(data, glossaryRules)) {
+        errors.push(`${file}: ${error}`);
+      }
+    }
   }
 
   return errors;
@@ -114,7 +158,13 @@ function main() {
     return 1;
   }
 
-  const errors = validateDocuments(documents);
+  const { rules, loadError } = loadGlossary();
+  if (loadError) {
+    console.error(`validate:content — ${loadError}`);
+    return 1;
+  }
+
+  const errors = validateDocuments(documents, rules);
   for (const error of errors) {
     console.error(`validate:content — ${error}`);
   }
@@ -130,4 +180,4 @@ if (require.main === module) {
   process.exit(main());
 }
 
-module.exports = { validateDocuments, loadDocuments, isLocalePair };
+module.exports = { validateDocuments, loadDocuments, isLocalePair, loadGlossary, checkGlossary };

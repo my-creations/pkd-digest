@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "comment": "PT terminology gate for validate:content. Each rule scans the listed locales of title/summary/clinicalNote on non-placeholder cards (drafts and published). Patterns are JS regex sources compiled case-insensitively unless flags say otherwise. Keep this list tight: only terms with a real incident or a standing policy behind them.",
+  "rules": [
+    {
+      "id": "enpt-shorthand",
+      "pattern": "\\(EN\\+PT\\)",
+      "locales": ["en", "pt"],
+      "reason": "cards must carry real translations, never the (EN+PT) shorthand",
+      "suggestion": "write the full translated text in each locale"
+    },
+    {
+      "id": "publico-line",
+      "pattern": "^Público:",
+      "flags": "im",
+      "locales": ["en", "pt"],
+      "reason": "no audience line inside card text (audience lives in front matter)",
+      "suggestion": "delete the line; the dual toggle already separates the readings"
+    },
+    {
+      "id": "black-untranslated",
+      "pattern": "\\bBlack\\b",
+      "locales": ["pt"],
+      "reason": "English racial term left untranslated in Portuguese text",
+      "suggestion": "doentes negros / pessoas negras (adapt to context)"
+    },
+    {
+      "id": "screening",
+      "pattern": "\\bscreenings?\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "rastreio"
+    },
+    {
+      "id": "follow-up",
+      "pattern": "\\bfollow[\\s-]?ups?\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "seguimento"
+    },
+    {
+      "id": "guideline",
+      "pattern": "\\bguidelines?\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "orientação / orientações"
+    },
+    {
+      "id": "outcome",
+      "pattern": "\\boutcomes?\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "desfecho / desfechos"
+    },
+    {
+      "id": "pooled",
+      "pattern": "\\bpooled\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "combinada / combinados"
+    },
+    {
+      "id": "baseline",
+      "pattern": "\\bbaseline\\b",
+      "locales": ["pt"],
+      "reason": "English term in Portuguese text",
+      "suggestion": "valor inicial"
+    }
+  ]
+}

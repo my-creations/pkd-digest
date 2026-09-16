@@ -65,6 +65,12 @@ placeholder: false
 
 Human publish flips `status` to `published`, completes EN+PT Dual Framing, and sets `issue` when grouping into a Weekly Issue.
 
+## PT terminology gate (`curation/glossary.json`)
+
+`validate:content` also scans `title`/`summary`/`clinicalNote` on every non-placeholder card (drafts included) for banned terms: English leftovers in Portuguese text (`screening` → `rastreio`, `guideline` → `orientação`, …) and standing policies (`(EN+PT)` shorthand, `Público:` audience lines). A match fails CI with the file, field, rule id, and suggestion.
+
+Add a rule only with a real incident or policy behind it: `id`, JS `pattern` (+ optional `flags`), `locales` (`en`/`pt`), `reason`, `suggestion`. An unreadable glossary fails validation closed — the gate must never silently pass.
+
 ## Scheduled / manual runs (CI)
 
 [`.github/workflows/curate-shortlist.yml`](../.github/workflows/curate-shortlist.yml) runs the same script weekly (Mondays 07:00 UTC) and on manual dispatch: it fetches candidates with `--skip-existing` (already-curated source URLs are not re-proposed), stamps the current ISO week as `issue`, validates the drafts, uploads the indexes as a `draft-shortlist` workflow artifact, and opens (or updates) a review PR with the new `status: draft` cards. It never commits to `main` and never publishes — a human still curates keepers into `published` and merges; merging is what publishes to Pages.
