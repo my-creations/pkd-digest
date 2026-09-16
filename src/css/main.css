@@ -987,6 +987,8 @@ h2 {
 
 .item-card__body > .dual__switch {
   grid-column: 1 / -1;
+  justify-self: start;
+  max-width: 100%;
 }
 
 .item-card__body.is-dual > section {
