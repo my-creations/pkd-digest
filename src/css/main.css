@@ -952,7 +952,9 @@ h2 {
 /* ——— Dual framing toggle ——— */
 .dual__switch {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 2px;
+  row-gap: 2px;
   padding: 2px;
   margin-bottom: var(--space-2);
   border: 1px solid var(--border);
@@ -970,6 +972,8 @@ h2 {
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0.3rem 0.8rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .dual__btn:hover {
