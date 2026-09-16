@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Imaging-informatics study: DenseNet121 triage (Accept/Reject/Rework) of ADPKD MR volumes for TKV workflows; macro F1 0.78–0.86, false accepts 12.7–23.3%. Assistive QC to scale volumetry, not a replacement for human sign-off.'
   pt: 'Estudo de informática de imagem: triagem DenseNet121 (aceitar/rejeitar/repetir) de volumes RM para fluxos de VRT; F1 0,78–0,86, falsos aceites 12,7–23,3%. Controlo assistido para escalar a volumetria, não substitui validação humana.'
-status: draft
+status: published
 placeholder: false
 ---
 

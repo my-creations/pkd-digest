@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Analytical-chemistry study (LC-MS/MS with l-FDLA derivatization) in CKD and ADPKD fluids. Plasma d-serine rises while urinary d-serine falls with dysfunction — biomarker hypothesis only, far from clinical use.'
   pt: 'Estudo de química analítica (LC-MS/MS com derivatização l-FDLA) em fluidos de DRC e ADPKD. A D-serina plasmática sobe e a urinária desce com a disfunção — só hipótese de biomarcador, longe do uso clínico.'
-status: draft
+status: published
 placeholder: false
 ---
 

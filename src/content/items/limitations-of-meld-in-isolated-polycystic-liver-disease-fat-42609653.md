@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'Single case report (isolated PLD). Illustrates MELD blind spots — mass effect, malnutrition, sarcopenia — and fatal traumatic rupture with compartment syndrome. Exception pathways exist: reassess longitudinally and counsel trauma risk in massive PLD.'
   pt: 'Relato de caso único (DHP isolada). Ilustra pontos cegos do MELD — efeito de massa, desnutrição, sarcopenia — e rutura traumática fatal com síndrome compartimental. Há vias de exceção: reavaliar ao longo do tempo e avisar do risco traumático na DHP volumosa.'
-status: draft
+status: published
 placeholder: false
 ---
 

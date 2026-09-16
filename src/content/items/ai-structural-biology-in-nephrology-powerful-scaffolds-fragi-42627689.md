@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'JASN review on AI structural biology in nephrology. Strengths: mapping genetic and biochemical data onto 3D scaffolds, support for experimental design. Limits: modest agreement with mutagenesis data for variant classification or stability prediction; static snapshots of dynamic ensembles. A design aid, not a diagnostic tool.'
   pt: 'Revisão JASN sobre biologia estrutural com IA em nefrologia. Pontos fortes: mapear dados genéticos e bioquímicos em modelos 3D, apoio ao desenho experimental. Limites: concordância modesta com mutagénese na classificação de variantes ou previsão de estabilidade; fotografias estáticas de conjuntos dinâmicos. Ajuda ao desenho, não ferramenta diagnóstica.'
-status: draft
+status: published
 placeholder: false
 ---
 

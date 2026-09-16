@@ -15,7 +15,7 @@ summary:
 clinicalNote:
   en: 'In vitro ARPKD model (principal-like MDCK monolayers, 2D and 3D): FPC loss raises cAMP and secretion; wild-type FPC tail dampens Src–STAT3. Defines a druggable axis in principle — years from any therapy.'
   pt: 'Modelo in vitro de DRPAR (monocamadas pl-MDCK, 2D e 3D): perda de FPC sobe cAMP e secreção; cauda FPC normal trava Src–STAT3. Define um eixo potencialmente medicável — a anos de qualquer terapêutica.'
-status: draft
+status: published
 placeholder: false
 ---
 
