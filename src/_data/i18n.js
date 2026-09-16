@@ -119,6 +119,23 @@ module.exports = {
       cardsOne: '1 card.',
       cardsMany: '{n} cards.',
     },
+    startHere: {
+      title: 'Start here',
+      lede: 'New to cystic kidney disease? A short guide for patients and families to finding your way around PKD Digest.',
+      scopeTitle: 'What is cystic kidney disease?',
+      scopeBody:
+        'Cysts are fluid-filled sacs. Cystic kidney disease covers different conditions involving cysts in the kidneys; their causes and effects vary. Autosomal dominant polycystic kidney disease (ADPKD) is one of them, not the whole picture. This digest covers cystic kidney disease in general, so not every card will apply to your diagnosis.',
+      readingTitle: 'What to keep track of — and how to read a card',
+      trackingBody:
+        'Keep your questions, the name of your diagnosis, and the results and medicines discussed with your care team together for appointments. Ask your team what to monitor and how often; a research update is not a personal care plan.',
+      readingBody:
+        'Each card offers two perspectives: a plain-language summary for patients and families, and a short clinical note for clinicians. Switch between them, check the date and original source, and bring questions about relevance to your care team. Do not change treatment based on a card.',
+      nextTitle: 'Where to go next',
+      nextBody:
+        'Start with the latest weekly digest, browse individual updates on the timeline, or revisit a past issue in the archive. All three lead to published cards in English and Portuguese.',
+      disclaimer:
+        'Educational curation only — not medical advice. This guide does not replace advice from your care team.',
+    },
     card: {
       relatedTitle: 'See also',
     },
@@ -265,6 +282,23 @@ module.exports = {
       empty: 'Ainda não há edições arquivadas.',
       cardsOne: '1 cartão.',
       cardsMany: '{n} cartões.',
+    },
+    startHere: {
+      title: 'Começar aqui',
+      lede: 'Recebeu um diagnóstico de doença renal quística? Um guia breve para doentes e famílias se orientarem no Digest DRP.',
+      scopeTitle: 'O que é a doença renal quística?',
+      scopeBody:
+        'Os quistos são bolsas com líquido. A doença renal quística abrange diferentes condições com quistos nos rins; as causas e os efeitos variam. A doença renal poliquística autossómica dominante (ADPKD) é uma delas, não a única. Este digest cobre a doença renal quística em geral, pelo que nem todos os cartões se aplicam ao seu diagnóstico.',
+      readingTitle: 'O que registar — e como ler um cartão',
+      trackingBody:
+        'Reúna as suas perguntas, o nome do diagnóstico e os resultados e medicamentos discutidos com a equipa de cuidados para levar às consultas. Pergunte à equipa o que deve acompanhar e com que frequência; uma novidade de investigação não é um plano de cuidados individual.',
+      readingBody:
+        'Cada cartão oferece duas perspetivas: um resumo em linguagem simples para doentes e famílias e uma nota clínica breve para clínicos. Alterne entre ambas, consulte a data e a fonte original e leve à equipa de cuidados as dúvidas sobre a relevância para o seu caso. Não altere o tratamento com base num cartão.',
+      nextTitle: 'Por onde continuar',
+      nextBody:
+        'Comece pelo digest semanal mais recente, explore novidades individuais na cronologia ou consulte uma edição anterior no arquivo. Os três caminhos levam a cartões publicados em português e inglês.',
+      disclaimer:
+        'Curadoria educativa — não constitui aconselhamento médico. Este guia não substitui as orientações da sua equipa de cuidados.',
     },
     card: {
       relatedTitle: 'Ver também',
