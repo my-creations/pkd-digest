@@ -52,6 +52,9 @@ eleventyComputed:
     <li>{{ t.home.howPlain }}</li>
     <li>{{ t.home.howClinical }}</li>
   </ul>
+  {# Start-here guide #}
+  <p><a class="button button--secondary" href="{{ locale | sectionHref('start-here') | url }}">{{ t.startHere.title }}</a></p>
+  {# End start-here guide #}
 </section>
 
 <section class="section section--muted">

@@ -1,0 +1,38 @@
+---
+layout: layouts/base.njk
+permalink: /start-here/
+translationKey: start-here
+pageType: start-here
+eleventyComputed:
+  title: "{{ i18n.en.startHere.title }}"
+  description: "{{ i18n.en.startHere.lede }}"
+---
+{% set t = i18n.en %}
+{% set locale = 'en' %}
+
+<section class="page-header">
+  <h1>{{ t.startHere.title }}</h1>
+  <p class="lede">{{ t.startHere.lede }}</p>
+</section>
+
+<section class="section">
+  <h2>{{ t.startHere.scopeTitle }}</h2>
+  <p>{{ t.startHere.scopeBody }}</p>
+</section>
+
+<section class="section">
+  <h2>{{ t.startHere.readingTitle }}</h2>
+  <p>{{ t.startHere.trackingBody }}</p>
+  <p>{{ t.startHere.readingBody }}</p>
+</section>
+
+<section class="section section--muted">
+  <h2>{{ t.startHere.nextTitle }}</h2>
+  <p>{{ t.startHere.nextBody }}</p>
+  <ul class="feature-list">
+    <li><a href="{{ locale | sectionHref('digest') | url }}">{{ t.digest.title }}</a></li>
+    <li><a href="{{ locale | sectionHref('timeline') | url }}">{{ t.timeline.title }}</a></li>
+    <li><a href="{{ locale | sectionHref('archive') | url }}">{{ t.archive.title }}</a></li>
+  </ul>
+  <p>{{ t.startHere.disclaimer }}</p>
+</section>

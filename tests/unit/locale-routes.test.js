@@ -24,6 +24,15 @@ describe('locale routes', () => {
     expect(routes.languageHref('/pt/search/', 'en')).toBe('/search/');
   });
 
+  it('resolves and translates the start-here guide', () => {
+    expect(routes.sectionHref('en', 'start-here')).toBe('/start-here/');
+    expect(routes.sectionHref('pt', 'start-here')).toBe('/pt/start-here/');
+    expect(routes.languageHref('/start-here/', 'pt')).toBe('/pt/start-here/');
+    expect(routes.languageHref('/pt/start-here/', 'en')).toBe('/start-here/');
+    expect(routes.languageHref('/pkd-digest/start-here/', 'pt')).toBe('/pt/start-here/');
+    expect(routes.languageHref('/pkd-digest/pt/start-here/', 'en')).toBe('/start-here/');
+  });
+
   it('resolves standalone card permalinks per locale', () => {
     expect(routes.cardHref('en', 'my-card')).toBe('/digest/my-card/');
     expect(routes.cardHref('pt', 'my-card')).toBe('/pt/digest/my-card/');

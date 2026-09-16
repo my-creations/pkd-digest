@@ -11,6 +11,8 @@ test.describe('digest accessibility', () => {
     'pt/search/',
     'archive/',
     'pt/archive/',
+    'start-here/',
+    'pt/start-here/',
   ]) {
     test(`has no axe violations on ${path}`, async ({ page }) => {
       await page.goto(path);
