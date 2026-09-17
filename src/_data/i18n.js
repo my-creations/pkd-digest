@@ -58,9 +58,21 @@ module.exports = {
       latestTitle: 'This week’s issue',
       latestBody:
         'The newest cards, indexed as in the digest — open the full issue for both perspectives on each card.',
-      howTitle: 'How each card works',
-      howPlain: 'Plain-language summary — what it means for patients and families.',
-      howClinical: 'Clinical note — concise framing for clinicians.',
+      howTitle: 'How to read each card',
+      howIntro:
+        'Each card tells the same update twice — for families and for clinicians — and helps you bring it to your visit.',
+      howPlainLabel: 'Plain summary',
+      howPlainText: 'says in one sentence what changed and who it matters for.',
+      howClinicalLabel: 'Clinical note',
+      howClinicalText: 'gives the technical context for professionals.',
+      howAskLabel: 'Question & source',
+      howAskText: 'suggests a question for your visit and links the original source with its date.',
+      howScope:
+        'Cystic kidney disease covers different conditions involving cysts in the kidneys; ADPKD is only one of them. This digest covers the disease in general, so not every card will apply to your diagnosis.',
+      howUse:
+        'Keep your questions, diagnosis name, results and medicines together for appointments. Check the date and original source, and ask your care team what applies to you.',
+      howSafety: 'Do not change treatment based on a card. Educational curation only — not medical advice.',
+      howGuideLink: 'Learn more about the disease and this project',
       curationTitle: 'How curation works',
       curationBody:
         'Assisted curation: PubMed/RSS shortlist, then human Dual Framing and publish. Educational only — not medical advice.',
@@ -228,9 +240,22 @@ module.exports = {
       latestTitle: 'A edição desta semana',
       latestBody:
         'Os cartões mais recentes, indexados como no digest — abre a edição completa para as duas perspetivas de cada cartão.',
-      howTitle: 'Como funciona cada cartão',
-      howPlain: 'Resumo em linguagem simples — o que significa para doentes e famílias.',
-      howClinical: 'Nota clínica — enquadramento conciso para clínicos.',
+      howTitle: 'Como ler cada cartão',
+      howIntro:
+        'Cada cartão conta a mesma novidade duas vezes — para a família e para o clínico — e ajuda a levá-la à consulta.',
+      howPlainLabel: 'Resumo simples',
+      howPlainText: 'explica numa frase o que mudou e para quem interessa.',
+      howClinicalLabel: 'Nota clínica',
+      howClinicalText: 'resume em linguagem técnica o contexto para profissionais.',
+      howAskLabel: 'Pergunta e fonte',
+      howAskText: 'sugere uma pergunta para a consulta e indica a fonte original com data.',
+      howScope:
+        'A doença renal quística abrange diferentes condições com quistos nos rins; a ADPKD é só uma delas. Este digest cobre a doença em geral, pelo que nem todos os cartões se aplicam a este diagnóstico.',
+      howUse:
+        'Registe as suas perguntas, o nome do diagnóstico e os resultados e medicamentos para levar à consulta. Confirme a data e a fonte original e pergunte à equipa o que se aplica ao seu caso.',
+      howSafety:
+        'Não mude o tratamento com base num cartão. Curadoria educativa — não constitui aconselhamento médico.',
+      howGuideLink: 'Saber mais sobre a doença e este projeto',
       curationTitle: 'Como funciona a curadoria',
       curationBody:
         'Curadoria assistida: lista PubMed/RSS, depois Dual Framing humano e publicação. Apenas educativo — não constitui aconselhamento médico.',
@@ -294,7 +319,7 @@ module.exports = {
       lede: 'Recebeu um diagnóstico de doença renal quística? Um guia breve para doentes e famílias se orientarem no Digest DRP.',
       scopeTitle: 'O que é a doença renal quística?',
       scopeBody:
-        'Os quistos são bolsas com líquido. A doença renal quística abrange diferentes condições com quistos nos rins; as causas e os efeitos variam. A doença renal poliquística autossómica dominante (ADPKD) é uma delas, não a única. Este digest cobre a doença renal quística em geral, pelo que nem todos os cartões se aplicam ao seu diagnóstico.',
+        'Os quistos são bolsas com líquido. A doença renal quística abrange diferentes condições com quistos nos rins; as causas e os efeitos variam. A doença renal poliquística autossómica dominante (ADPKD) é uma delas, não a única. Este digest cobre a doença renal quística em geral, pelo que nem todos os cartões se aplicam a este diagnóstico.',
       readingTitle: 'O que registar — e como ler um cartão',
       trackingBody:
         'Reúna as suas perguntas, o nome do diagnóstico e os resultados e medicamentos discutidos com a equipa de cuidados para levar às consultas. Pergunte à equipa o que deve acompanhar e com que frequência; uma novidade de investigação não é um plano de cuidados individual.',

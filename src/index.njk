@@ -46,15 +46,18 @@ eleventyComputed:
   </section>
 {% endif %}
 
-<section class="section">
-  <h2>{{ t.home.howTitle }}</h2>
+<section class="section" aria-labelledby="how-heading">
+  <h2 id="how-heading">{{ t.home.howTitle }}</h2>
+  <p class="lede">{{ t.home.howIntro }}</p>
   <ul class="feature-list">
-    <li>{{ t.home.howPlain }}</li>
-    <li>{{ t.home.howClinical }}</li>
+    <li><strong>{{ t.home.howPlainLabel }}</strong> — {{ t.home.howPlainText }}</li>
+    <li><strong>{{ t.home.howClinicalLabel }}</strong> — {{ t.home.howClinicalText }}</li>
+    <li><strong>{{ t.home.howAskLabel }}</strong> — {{ t.home.howAskText }}</li>
   </ul>
-  {# Start-here guide #}
-  <p><a class="button button--secondary" href="{{ locale | sectionHref('start-here') | url }}">{{ t.startHere.title }}</a></p>
-  {# End start-here guide #}
+  <p>{{ t.home.howScope }}</p>
+  <p>{{ t.home.howUse }}</p>
+  <p>{{ t.home.howSafety }}</p>
+  <p><a class="button button--primary" href="{{ locale | sectionHref('start-here') | url }}">{{ t.home.howGuideLink }}</a></p>
 </section>
 
 <section class="section section--muted">
