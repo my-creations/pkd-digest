@@ -16,7 +16,6 @@ for (const locale of ['en', 'pt']) {
 
     const external = section.getByRole('button', { name: copy.kidneyViewExternal });
     const crossSection = section.getByRole('button', { name: copy.kidneyViewSection });
-    const cysts = section.getByRole('button', { name: copy.kidneyViewCysts });
     const healthy = section.getByRole('button', { name: copy.kidneyModeHealthy });
     const cystic = section.getByRole('button', { name: copy.kidneyModeCystic });
 
@@ -31,7 +30,6 @@ for (const locale of ['en', 'pt']) {
     await crossSection.click();
     await expect(crossSection).toHaveAttribute('aria-pressed', 'true');
     await expect(external).toHaveAttribute('aria-pressed', 'false');
-    await expect(cysts).toBeVisible();
 
     const slider = section.locator('[data-kidney3d-severity]');
     await expect(slider).toBeVisible();

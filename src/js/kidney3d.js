@@ -38,19 +38,20 @@ function initKidney(mount) {
     if (scene) scene.setView(view);
   };
 
-  const syncSeverity = () => {
-    if (!severity) return;
-    if (severityValue) severityValue.textContent = severity.value;
-    const burdenApplies = state.mode === 'cystic';
-    severity.disabled = !burdenApplies;
-    const group = severity.closest('.kidney3d__group');
-    if (group) group.classList.toggle('is-disabled', !burdenApplies);
+  const syncModeUI = () => {
+    const cystic = state.mode === 'cystic';
+    if (severity) {
+      if (severityValue) severityValue.textContent = severity.value;
+      severity.disabled = !cystic;
+      const group = severity.closest('.kidney3d__group');
+      if (group) group.classList.toggle('is-disabled', !cystic);
+    }
   };
 
   const applyMode = (mode) => {
     state.mode = mode;
     setPressed(modeButtons, mode, 'kidney3dMode');
-    syncSeverity();
+    syncModeUI();
     if (scene) scene.setMode(mode);
   };
 
@@ -63,7 +64,7 @@ function initKidney(mount) {
   if (severity) {
     severity.addEventListener('input', () => {
       state.severity = Number(severity.value);
-      syncSeverity();
+      syncModeUI();
       if (scene) scene.setSeverity(state.severity);
     });
   }
@@ -82,7 +83,7 @@ function initKidney(mount) {
   }
   setPressed(viewButtons, state.view, 'kidney3dView');
   setPressed(modeButtons, state.mode, 'kidney3dMode');
-  syncSeverity();
+  syncModeUI();
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -143,6 +144,48 @@ function beanPoint(x, y, z) {
   return scaled;
 }
 
+function createMedullaStriationTexture(THREE) {
+  if (typeof document === 'undefined') return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+
+  ctx.fillStyle = '#b05238';
+  ctx.fillRect(0, 0, 256, 256);
+
+  // Dense medullary rays / striations running from base (v=1) to papilla (v=0)
+  for (let x = 0; x < 256; x += 1) {
+    const wave1 = Math.sin(x * 0.42);
+    const wave2 = Math.sin(x * 0.95 + 1.2);
+    const wave3 = Math.sin(x * 2.3 + 0.7);
+    const combined = wave1 * 0.5 + wave2 * 0.3 + wave3 * 0.2;
+    if (combined > 0.12) {
+      ctx.fillStyle = `rgba(105, 30, 18, ${0.3 + combined * 0.45})`;
+      ctx.fillRect(x, 0, 1, 256);
+    } else if (combined < -0.15) {
+      ctx.fillStyle = `rgba(225, 140, 110, ${0.25 + Math.abs(combined) * 0.35})`;
+      ctx.fillRect(x, 0, 1, 256);
+    }
+  }
+
+  // Vertical gradient: pale papilla tip at top (v=0), rich corticomedullary zone at base (v=1)
+  const grad = ctx.createLinearGradient(0, 0, 0, 256);
+  grad.addColorStop(0, 'rgba(235, 170, 145, 0.45)');
+  grad.addColorStop(0.18, 'rgba(200, 120, 95, 0.15)');
+  grad.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
+  grad.addColorStop(1, 'rgba(95, 25, 15, 0.35)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 256, 256);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  texture.repeat.set(3, 1);
+  return texture;
+}
+
 function createScene(THREE, canvas, { reduceMotion }) {
   const stage = canvas.parentElement;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -152,7 +195,6 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
   const homePosition = new THREE.Vector3(0.6, 0.3, 6.4);
-  const cystPosition = new THREE.Vector3(2.1, 0.8, 4.4);
   const sectionPosition = new THREE.Vector3(3.3, 0.5, 3.0);
   camera.position.copy(homePosition);
   camera.lookAt(0, -0.1, 0);
@@ -215,20 +257,73 @@ function createScene(THREE, canvas, { reduceMotion }) {
   medullaCap.scale.setScalar(0.86);
   sectionInner.add(medullaCap);
 
-  const medullaMaterial = new THREE.MeshStandardMaterial({ color: 0xbd6f52, roughness: 0.65 });
-  for (let i = 0; i < 5; i += 1) {
-    const cone = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.4, 24), medullaMaterial);
-    const spread = (i - 2) / 2;
-    cone.position.set(0.0 + spread * 0.08, 0.3 + (1 - Math.abs(spread)) * 0.12, spread * 0.3);
-    cone.rotation.z = Math.PI;
-    cone.rotation.x = spread * 0.4;
-    sectionInner.add(cone);
-  }
+  const striationMap = createMedullaStriationTexture(THREE);
+  const medullaMaterial = new THREE.MeshStandardMaterial({
+    color: 0xbd6f52,
+    roughness: 0.65,
+    ...(striationMap ? { map: striationMap } : {}),
+  });
+
   const pelvisMaterial = new THREE.MeshStandardMaterial({ color: 0xead9b8, roughness: 0.6 });
   const pelvis = new THREE.Mesh(new THREE.SphereGeometry(0.26, 32, 24), pelvisMaterial);
-  pelvis.scale.set(0.9, 1.4, 0.8);
+  pelvis.scale.set(0.72, 1.15, 0.72);
   pelvis.position.set(0.08, -0.2, 0);
   sectionInner.add(pelvis);
+
+  /* Medullary pyramids fanning radially around the pelvis, with papillae draining
+     into minor calyces funnels (pelvisMaterial) seated in the renal sinus. */
+  const pyramids = [
+    // [bx, by, bz, px, py, pz, rBase, rTip]
+    [0.06, 0.76, -0.02, 0.07, 0.16, -0.01, 0.15, 0.04],
+    [-0.32, 0.6, -0.08, -0.06, 0.1, -0.05, 0.14, 0.038],
+    [-0.48, 0.44, 0.06, -0.1, 0.02, 0.04, 0.14, 0.038],
+    [-0.66, 0.12, -0.06, -0.16, -0.1, -0.04, 0.14, 0.038],
+    [-0.68, -0.14, 0.06, -0.17, -0.22, 0.04, 0.14, 0.038],
+    [-0.54, -0.46, 0.04, -0.12, -0.36, 0.03, 0.14, 0.038],
+    [-0.34, -0.68, -0.08, -0.06, -0.44, -0.05, 0.14, 0.038],
+    [-0.04, -0.86, -0.02, 0.04, -0.48, -0.01, 0.14, 0.038],
+  ];
+
+  const upVector = new THREE.Vector3(0, 1, 0);
+  for (const [bx, by, bz, px, py, pz, rBase, rTip] of pyramids) {
+    const base = new THREE.Vector3(bx, by, bz);
+    const papilla = new THREE.Vector3(px, py, pz);
+    const delta = new THREE.Vector3().subVectors(papilla, base);
+    const length = delta.length();
+    const dir = delta.clone().normalize();
+
+    // Striated pyramid body tapering from cortex base to papilla
+    const pyrGeom = new THREE.CylinderGeometry(rTip, rBase, length, 14);
+    const pyrMesh = new THREE.Mesh(pyrGeom, medullaMaterial);
+    const center = new THREE.Vector3().addVectors(base, papilla).multiplyScalar(0.5);
+    pyrMesh.position.copy(center);
+    pyrMesh.quaternion.setFromUnitVectors(upVector, dir);
+    sectionInner.add(pyrMesh);
+
+    // Convex arched base cap facing cortex
+    const baseDomeGeom = new THREE.SphereGeometry(rBase, 14, 6, 0, Math.PI * 2, 0, Math.PI / 2);
+    baseDomeGeom.scale(1, 0.35, 1);
+    const baseDomeMesh = new THREE.Mesh(baseDomeGeom, medullaMaterial);
+    baseDomeMesh.position.copy(base);
+    baseDomeMesh.quaternion.setFromUnitVectors(upVector, dir.clone().negate());
+    sectionInner.add(baseDomeMesh);
+
+    // Rounded papilla dome at the apex
+    const domeGeom = new THREE.SphereGeometry(rTip, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2);
+    const domeMesh = new THREE.Mesh(domeGeom, medullaMaterial);
+    domeMesh.position.copy(papilla);
+    domeMesh.quaternion.setFromUnitVectors(upVector, dir);
+    sectionInner.add(domeMesh);
+
+    // Minor calyx funnel cupping the papilla and draining into the pelvis
+    const calyxLength = 0.11;
+    const calyxGeom = new THREE.CylinderGeometry(rTip * 0.85, rTip * 1.35, calyxLength, 10, 1, true);
+    const calyxMesh = new THREE.Mesh(calyxGeom, pelvisMaterial);
+    const calyxCenter = papilla.clone().addScaledVector(dir, calyxLength * 0.5);
+    calyxMesh.position.copy(calyxCenter);
+    calyxMesh.quaternion.setFromUnitVectors(upVector, dir);
+    sectionInner.add(calyxMesh);
+  }
 
   const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xd9a06b, roughness: 0.6 });
   const ureterCurve = new THREE.CatmullRomCurve3([
@@ -333,7 +428,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
     artery.visible = !section;
     vein.visible = !section;
     updateCystVisibility();
-    camera.position.copy(section ? sectionPosition : view === 'cysts' ? cystPosition : homePosition);
+    camera.position.copy(section ? sectionPosition : homePosition);
     camera.lookAt(0, -0.1, 0);
   };
 

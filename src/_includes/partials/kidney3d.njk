@@ -32,9 +32,6 @@
           <button type="button" class="dual__btn" data-kidney3d-view="section" aria-pressed="false">
             {{ t.home.kidneyViewSection }}
           </button>
-          <button type="button" class="dual__btn" data-kidney3d-view="cysts" aria-pressed="false">
-            {{ t.home.kidneyViewCysts }}
-          </button>
         </div>
       </div>
       <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyModeLabel }}">
@@ -47,9 +44,7 @@
             {{ t.home.kidneyModeCystic }}
           </button>
         </div>
-      </div>
-      <div class="kidney3d__group">
-        <label class="kidney3d__group-label" for="kidney3d-severity">{{ t.home.kidneySeverityLabel }}</label>
+        <label class="kidney3d__sublabel" for="kidney3d-severity">{{ t.home.kidneySeverityLabel }}</label>
         <div class="kidney3d__slider-row">
           <input type="range" id="kidney3d-severity" data-kidney3d-severity min="1" max="5" step="1" value="3" />
           <output data-kidney3d-severity-value for="kidney3d-severity">3</output>
