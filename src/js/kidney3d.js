@@ -133,17 +133,20 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
   const homePosition = new THREE.Vector3(0.6, 0.3, 6.4);
   const cystPosition = new THREE.Vector3(2.1, 0.8, 4.4);
-  const sectionPosition = new THREE.Vector3(3.1, 0.6, 4.2);
+  const sectionPosition = new THREE.Vector3(3.3, 0.5, 3.0);
   camera.position.copy(homePosition);
   camera.lookAt(0, -0.1, 0);
 
-  scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8a6f5c, 1.15));
+  scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8a6f5c, 1.25));
   const key = new THREE.DirectionalLight(0xffffff, 1.6);
   key.position.set(3, 4, 5);
   scene.add(key);
   const fill = new THREE.DirectionalLight(0xf6ead0, 0.5);
   fill.position.set(-4, -1, 2);
   scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xfff0dd, 0.6);
+  rim.position.set(-3, 2, -4);
+  scene.add(rim);
 
   const kidney = new THREE.Group();
   scene.add(kidney);
@@ -164,24 +167,48 @@ function createScene(THREE, canvas, { reduceMotion }) {
   });
   kidney.add(new THREE.Mesh(cortexGeometry, cortexMaterial));
 
-  const inner = new THREE.Group();
-  inner.visible = false;
-  kidney.add(inner);
+  /* Curated cutaway shown in section view: layered shells read as solid,
+     with pyramids, pelvis, ureter and vessel stumps seated in the cut plane. */
+  const sectionInner = new THREE.Group();
+  sectionInner.visible = false;
+  kidney.add(sectionInner);
 
-  const medullaMaterial = new THREE.MeshStandardMaterial({ color: 0xcf7f63, roughness: 0.65 });
+  const cortexCap = new THREE.Mesh(
+    cortexGeometry,
+    new THREE.MeshStandardMaterial({
+      color: 0x6e231e,
+      roughness: 0.7,
+      side: THREE.BackSide,
+      clippingPlanes: [clipPlane],
+    })
+  );
+  sectionInner.add(cortexCap);
+  const medullaCap = new THREE.Mesh(
+    cortexGeometry,
+    new THREE.MeshStandardMaterial({
+      color: 0x8a5638,
+      roughness: 0.75,
+      side: THREE.BackSide,
+      clippingPlanes: [clipPlane],
+    })
+  );
+  medullaCap.scale.setScalar(0.86);
+  sectionInner.add(medullaCap);
+
+  const medullaMaterial = new THREE.MeshStandardMaterial({ color: 0xbd6f52, roughness: 0.65 });
   for (let i = 0; i < 5; i += 1) {
-    const cone = new THREE.Mesh(new THREE.ConeGeometry(0.2, 0.45, 24), medullaMaterial);
-    const angle = (i / 5) * Math.PI * 2;
-    cone.position.set(Math.cos(angle) * 0.28 - 0.05, 0.35 + (i % 2) * 0.12, Math.sin(angle) * 0.28);
-    cone.rotation.z = Math.PI + Math.cos(angle) * 0.5;
-    cone.rotation.x = Math.sin(angle) * 0.5;
-    inner.add(cone);
+    const cone = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.4, 24), medullaMaterial);
+    const spread = (i - 2) / 2;
+    cone.position.set(0.0 + spread * 0.08, 0.3 + (1 - Math.abs(spread)) * 0.12, spread * 0.3);
+    cone.rotation.z = Math.PI;
+    cone.rotation.x = spread * 0.4;
+    sectionInner.add(cone);
   }
   const pelvisMaterial = new THREE.MeshStandardMaterial({ color: 0xead9b8, roughness: 0.6 });
   const pelvis = new THREE.Mesh(new THREE.SphereGeometry(0.26, 32, 24), pelvisMaterial);
   pelvis.scale.set(0.9, 1.4, 0.8);
-  pelvis.position.set(0.12, -0.2, 0);
-  inner.add(pelvis);
+  pelvis.position.set(0.08, -0.2, 0);
+  sectionInner.add(pelvis);
 
   const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xd9a06b, roughness: 0.6 });
   const ureterCurve = new THREE.CatmullRomCurve3([
@@ -204,6 +231,23 @@ function createScene(THREE, canvas, { reduceMotion }) {
   vein.position.set(0.62, -0.06, -0.08);
   kidney.add(vein);
 
+  const sectionUreterCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.1, -0.35, 0),
+    new THREE.Vector3(0.12, -0.8, 0.01),
+    new THREE.Vector3(0.12, -1.2, 0),
+    new THREE.Vector3(0.1, -1.55, -0.01),
+  ]);
+  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(sectionUreterCurve, 32, 0.085, 16), ureterMaterial));
+  for (const [material, y, z] of [
+    [arteryMaterial, 0.12, 0.08],
+    [veinMaterial, -0.06, -0.06],
+  ]) {
+    const stump = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.4, 16), material);
+    stump.rotation.z = Math.PI / 2;
+    stump.position.set(0.3, y, z);
+    sectionInner.add(stump);
+  }
+
   const cystMaterial = new THREE.MeshStandardMaterial({
     color: 0xe6c46c,
     roughness: 0.25,
@@ -221,6 +265,16 @@ function createScene(THREE, canvas, { reduceMotion }) {
     pelvis: [pelvisMaterial],
     ureter: [ureterMaterial],
     cyst: [cystMaterial],
+  };
+
+  let currentView = 'external';
+  let currentMode = 'healthy';
+
+  const updateCystVisibility = () => {
+    cysts.visible = currentMode === 'cystic';
+    for (const cyst of cysts.children) {
+      cyst.visible = !(currentView === 'section' && cyst.userData.baseX > 0.2);
+    }
   };
 
   const setSeverity = (level) => {
@@ -243,26 +297,29 @@ function createScene(THREE, canvas, { reduceMotion }) {
       const push = 0.92 + random() * 0.12;
       cyst.position.set(surface.x * push, surface.y * push, surface.z * push);
       cyst.scale.y = 0.85;
+      cyst.userData.baseX = cyst.position.x;
       cysts.add(cyst);
       placed += 1;
     }
+    updateCystVisibility();
   };
 
   const setView = (view) => {
-    if (view === 'section') {
-      cortexMaterial.clippingPlanes = [clipPlane];
-      inner.visible = true;
-      camera.position.copy(sectionPosition);
-    } else {
-      cortexMaterial.clippingPlanes = [];
-      inner.visible = false;
-      camera.position.copy(view === 'cysts' ? cystPosition : homePosition);
-    }
+    currentView = view;
+    const section = view === 'section';
+    cortexMaterial.clippingPlanes = section ? [clipPlane] : [];
+    sectionInner.visible = section;
+    ureter.visible = !section;
+    artery.visible = !section;
+    vein.visible = !section;
+    updateCystVisibility();
+    camera.position.copy(section ? sectionPosition : view === 'cysts' ? cystPosition : homePosition);
     camera.lookAt(0, -0.1, 0);
   };
 
   const setMode = (mode) => {
-    cysts.visible = mode === 'cystic';
+    currentMode = mode;
+    updateCystVisibility();
   };
 
   let flashTimer = 0;
