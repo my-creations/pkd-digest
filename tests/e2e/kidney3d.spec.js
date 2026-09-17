@@ -5,8 +5,8 @@ for (const locale of ['en', 'pt']) {
   const prefix = locale === 'pt' ? 'pt/' : '';
   const copy = i18n[locale].home;
 
-  test(`${locale} home shows the 3D kidney section with working controls`, async ({ page }) => {
-    await page.goto(prefix || './');
+  test(`${locale} start-here shows the 3D kidney section with working controls`, async ({ page }) => {
+    await page.goto(`${prefix}start-here/`);
     await expect(page.locator('html')).toHaveAttribute('lang', locale);
 
     const section = page.locator('[data-kidney3d]');
@@ -37,6 +37,7 @@ for (const locale of ['en', 'pt']) {
     await expect(slider).toBeVisible();
     await slider.fill('5');
     await expect(slider).toHaveValue('5');
+    await expect(section.locator('[data-kidney3d-severity-value]')).toHaveText('5');
 
     await expect(section.locator('.kidney3d__table tbody tr')).toHaveCount(5);
     await section.locator('.kidney3d__alt > summary').click();
@@ -46,6 +47,7 @@ for (const locale of ['en', 'pt']) {
     // Focusing a hidden structure switches to the view where it is visible.
     await external.click();
     await healthy.click();
+    await expect(slider).toBeDisabled();
     await section.getByRole('button', { name: copy.kidneyMedulla }).click();
     await expect(crossSection).toHaveAttribute('aria-pressed', 'true');
     await section.getByRole('button', { name: copy.kidneyCyst }).click();

@@ -11,7 +11,7 @@ test.describe('start-here guide', () => {
       await page.goto(`${prefix}start-here/`);
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
       await expect(page.locator('main h1')).toHaveText(title);
-      await expect(page.locator('main h2')).toHaveCount(3);
+      await expect(page.locator('main h2')).toHaveCount(4);
       await expect(page.locator('main')).toContainText('ADPKD');
       await expect(page.locator('main')).toContainText(disclaimer);
       for (const section of ['digest', 'timeline', 'archive']) {
