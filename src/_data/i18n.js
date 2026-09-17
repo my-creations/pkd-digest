@@ -210,6 +210,30 @@ module.exports = {
       lede: 'Plain-language definitions of terms you may meet in kidney care and research.',
     },
     // Patient dictionary — end
+    // Lifestyle guide — begin
+    lifestyle: {
+      title: 'Care and lifestyle',
+      lede: 'Everyday habits that support kidneys, blood pressure and heart — and what the evidence actually shows about slowing cyst growth.',
+      evidenceTitle: 'What counts as evidence here',
+      evidenceBody:
+        'Some habits have strong support for blood pressure and heart protection. None has high-quality proof of slowing cyst growth itself. Below, consensus advice comes first; research-only ideas are marked as such.',
+      waterTitle: 'Water',
+      waterBody:
+        'Drink enough to avoid dehydration, especially in heat, exercise or on tolvaptan. But a 3-year trial (PREVENT-ADPKD) found prescribed extra water did not slow kidney growth — so high water intake is sensible supportive care, not a proven brake on cysts.',
+      activityTitle: 'Movement',
+      activityBody:
+        'Aim for about 150 minutes a week of moderate activity plus some resistance work, adapted to what you can do. Exercise helps blood pressure, weight, sleep and mood; no trial shows it directly slows cysts. If kidneys are markedly enlarged, ask your team about contact sports and very heavy lifting.',
+      foodTitle: 'Food and salt',
+      foodBody:
+        'Keep salt low (about 5–6 g of salt a day), eat balanced meals, and keep a healthy weight — higher salt and excess weight are linked to faster progression. High-protein eating is discouraged; strict low-protein diets are unproven for ADPKD and risk malnutrition.',
+      ketoTitle: 'Ketogenic diets and fasting',
+      ketoBody:
+        'Research-only for now: animal studies and short human feasibility trials show signals, but KDIGO 2025 advises against routine use to slow ADPKD outside trials — with open questions on cholesterol, kidney stones and nutrition. Only consider inside a supervised trial.',
+      redFlagsTitle: 'Seek care promptly for',
+      redFlagsBody:
+        'Sudden severe flank pain or visible blood in urine, fever with urinary symptoms, signs of kidney stones, very high blood pressure readings, sudden worst headache or vision changes, and any tolvaptan sick-day situation (vomiting, diarrhoea, inability to drink).',
+    },
+    // Lifestyle guide — end
   },
   pt: {
     localeName: 'Português',
@@ -423,6 +447,30 @@ module.exports = {
       lede: 'Definições em linguagem simples de termos que pode encontrar nos cuidados renais e na investigação.',
     },
     // Patient dictionary — end
+    // Lifestyle guide — begin
+    lifestyle: {
+      title: 'Cuidados e estilo de vida',
+      lede: 'Hábitos do dia a dia que protegem rins, tensão arterial e coração — e o que as provas realmente mostram sobre travar os quistos.',
+      evidenceTitle: 'O que conta como prova aqui',
+      evidenceBody:
+        'Alguns hábitos têm forte apoio para a tensão arterial e o coração. Nenhum tem prova sólida de travar os quistos. Abaixo, o consenso vem primeiro; as ideias só de investigação estão marcadas.',
+      waterTitle: 'Água',
+      waterBody:
+        'Beba o suficiente para evitar a desidratação, sobretudo com calor, exercício ou tolvaptan. Mas um ensaio de 3 anos (PREVENT-ADPKD) concluiu que beber mais água por prescrição não travou o crescimento dos rins — por isso é um cuidado de suporte sensato, não um travão comprovado.',
+      activityTitle: 'Movimento',
+      activityBody:
+        'Aponte a cerca de 150 minutos por semana de atividade moderada mais algum reforço muscular, adaptado ao que consegue fazer. O exercício ajuda a tensão, o peso, o sono e o humor; nenhum ensaio mostra efeito direto nos quistos. Com rins muito aumentados, pergunte à equipa sobre desportos de contacto e cargas muito pesadas.',
+      foodTitle: 'Comida e sal',
+      foodBody:
+        'Mantenha o sal baixo (cerca de 5–6 g de sal por dia), coma de forma equilibrada e mantenha peso saudável — mais sal e excesso de peso estão ligados a progressão mais rápida. Evite excesso de proteína; dietas restritivas não têm prova na ADPKD e arriscam malnutrição.',
+      ketoTitle: 'Dietas cetogénicas e jejum',
+      ketoBody:
+        'Só em investigação por agora: estudos em animais e ensaios curtos de exequibilidade mostram sinais, mas a KDIGO 2025 desaconselha o uso de rotina para travar a ADPKD fora de ensaios — com dúvidas sobre colesterol, pedras nos rins e nutrição. Só considerar num ensaio supervisionado.',
+      redFlagsTitle: 'Procure cuidados depressa se tiver',
+      redFlagsBody:
+        'Dor lombar súbita e forte ou sangue visível na urina, febre com sintomas urinários, sinais de pedras nos rins, valores de tensão muito altos, pior dor de cabeça súbita ou alterações da visão, e qualquer situação de dia de doença com tolvaptan (vómitos, diarreia, incapacidade de beber).',
+    },
+    // Lifestyle guide — end
   },
 };
 

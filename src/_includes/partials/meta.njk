@@ -24,6 +24,10 @@
 {% elif pageType == 'glossary' %}
   {% set section = 'glossary' %}
 {# Patient dictionary — end #}
+{# Lifestyle guide — begin #}
+{% elif pageType == 'lifestyle' %}
+  {% set section = 'lifestyle' %}
+{# Lifestyle guide — end #}
 {% else %}
   {% set section = 'home' %}
 {% endif %}

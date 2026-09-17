@@ -23,6 +23,9 @@ const ROUTES = [
   '/pkd-digest/pt/glossary/',
   '/pkd-digest/collections/',
   '/pkd-digest/pt/collections/',
+  // Lifestyle guide
+  '/pkd-digest/lifestyle/',
+  '/pkd-digest/pt/lifestyle/',
   '/pkd-digest/collections/pregnancy/',
   '/pkd-digest/pt/collections/pregnancy/',
   '/pkd-digest/collections/vascular-risk/',
