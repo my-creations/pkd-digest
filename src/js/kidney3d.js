@@ -18,6 +18,7 @@ function initKidney(mount) {
   const viewButtons = Array.from(mount.querySelectorAll('[data-kidney3d-view]'));
   const modeButtons = Array.from(mount.querySelectorAll('[data-kidney3d-mode]'));
   const severity = mount.querySelector('[data-kidney3d-severity]');
+  const severityValue = mount.querySelector('[data-kidney3d-severity-value]');
   const focusButtons = Array.from(mount.querySelectorAll('[data-kidney3d-focus]'));
 
   const state = { view: 'external', mode: 'healthy', severity: 3 };
@@ -37,9 +38,19 @@ function initKidney(mount) {
     if (scene) scene.setView(view);
   };
 
+  const syncSeverity = () => {
+    if (!severity) return;
+    if (severityValue) severityValue.textContent = severity.value;
+    const burdenApplies = state.mode === 'cystic';
+    severity.disabled = !burdenApplies;
+    const group = severity.closest('.kidney3d__group');
+    if (group) group.classList.toggle('is-disabled', !burdenApplies);
+  };
+
   const applyMode = (mode) => {
     state.mode = mode;
     setPressed(modeButtons, mode, 'kidney3dMode');
+    syncSeverity();
     if (scene) scene.setMode(mode);
   };
 
@@ -52,6 +63,7 @@ function initKidney(mount) {
   if (severity) {
     severity.addEventListener('input', () => {
       state.severity = Number(severity.value);
+      syncSeverity();
       if (scene) scene.setSeverity(state.severity);
     });
   }
@@ -70,6 +82,7 @@ function initKidney(mount) {
   }
   setPressed(viewButtons, state.view, 'kidney3dView');
   setPressed(modeButtons, state.mode, 'kidney3dMode');
+  syncSeverity();
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

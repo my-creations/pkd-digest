@@ -25,28 +25,35 @@
     <div class="kidney3d__controls">
       <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyViewLabel }}">
         <span class="kidney3d__group-label" aria-hidden="true">{{ t.home.kidneyViewLabel }}</span>
-        <button type="button" class="button button--secondary" data-kidney3d-view="external" aria-pressed="true">
-          {{ t.home.kidneyViewExternal }}
-        </button>
-        <button type="button" class="button button--secondary" data-kidney3d-view="section" aria-pressed="false">
-          {{ t.home.kidneyViewSection }}
-        </button>
-        <button type="button" class="button button--secondary" data-kidney3d-view="cysts" aria-pressed="false">
-          {{ t.home.kidneyViewCysts }}
-        </button>
+        <div class="dual__switch">
+          <button type="button" class="dual__btn" data-kidney3d-view="external" aria-pressed="true">
+            {{ t.home.kidneyViewExternal }}
+          </button>
+          <button type="button" class="dual__btn" data-kidney3d-view="section" aria-pressed="false">
+            {{ t.home.kidneyViewSection }}
+          </button>
+          <button type="button" class="dual__btn" data-kidney3d-view="cysts" aria-pressed="false">
+            {{ t.home.kidneyViewCysts }}
+          </button>
+        </div>
       </div>
       <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyModeLabel }}">
         <span class="kidney3d__group-label" aria-hidden="true">{{ t.home.kidneyModeLabel }}</span>
-        <button type="button" class="button button--secondary" data-kidney3d-mode="healthy" aria-pressed="true">
-          {{ t.home.kidneyModeHealthy }}
-        </button>
-        <button type="button" class="button button--secondary" data-kidney3d-mode="cystic" aria-pressed="false">
-          {{ t.home.kidneyModeCystic }}
-        </button>
+        <div class="dual__switch">
+          <button type="button" class="dual__btn" data-kidney3d-mode="healthy" aria-pressed="true">
+            {{ t.home.kidneyModeHealthy }}
+          </button>
+          <button type="button" class="dual__btn" data-kidney3d-mode="cystic" aria-pressed="false">
+            {{ t.home.kidneyModeCystic }}
+          </button>
+        </div>
       </div>
       <div class="kidney3d__group">
         <label class="kidney3d__group-label" for="kidney3d-severity">{{ t.home.kidneySeverityLabel }}</label>
-        <input type="range" id="kidney3d-severity" data-kidney3d-severity min="1" max="5" step="1" value="3" />
+        <div class="kidney3d__slider-row">
+          <input type="range" id="kidney3d-severity" data-kidney3d-severity min="1" max="5" step="1" value="3" />
+          <output data-kidney3d-severity-value for="kidney3d-severity">3</output>
+        </div>
       </div>
     </div>
     <p class="kidney3d__status" data-kidney3d-status role="status"></p>
