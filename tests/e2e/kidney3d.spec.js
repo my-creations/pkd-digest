@@ -12,7 +12,7 @@ for (const locale of ['en', 'pt']) {
     const section = page.locator('[data-kidney3d]');
     await expect(section).toBeVisible();
     await expect(page.locator('#kidney3d-heading')).toHaveText(copy.kidneyTitle);
-    await expect(section.locator('.lede, p').first()).toBeVisible();
+    await expect(page.locator('#kidney3d-heading + .lede')).toHaveText(copy.kidneyLede);
 
     const external = section.getByRole('button', { name: copy.kidneyViewExternal });
     const crossSection = section.getByRole('button', { name: copy.kidneyViewSection });

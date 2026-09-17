@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const i18n = require('../../src/_data/i18n');
 
 const guides = [
   { locale: 'en', prefix: '', title: 'Start here', disclaimer: 'not medical advice' },
@@ -31,7 +32,7 @@ test.describe('start-here guide', () => {
 
     test(`links from the ${locale} home and footer`, async ({ page }) => {
       await page.goto(prefix || './');
-      const homeLink = page.locator('main').getByRole('link', { name: title, exact: true });
+      const homeLink = page.locator('main').getByRole('link', { name: i18n[locale].home.howGuideLink, exact: true });
       await expect(homeLink).toHaveClass(/button/);
       await homeLink.click();
       await expect(page.locator('main h1')).toHaveText(title);
