@@ -222,10 +222,12 @@ function createScene(THREE, canvas, { reduceMotion }) {
     positions.setXYZ(i, p.x, p.y, p.z);
   }
   cortexGeometry.computeVertexNormals();
-  const cortexMaterial = new THREE.MeshStandardMaterial({
+  const cortexMaterial = new THREE.MeshPhysicalMaterial({
     color: 0x9c3f36,
     roughness: 0.5,
     metalness: 0.05,
+    clearcoat: 0.55,
+    clearcoatRoughness: 0.5,
   });
   kidney.add(new THREE.Mesh(cortexGeometry, cortexMaterial));
 
@@ -238,7 +240,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const cortexCap = new THREE.Mesh(
     cortexGeometry,
     new THREE.MeshStandardMaterial({
-      color: 0x6e231e,
+      color: 0x5f1f1a,
       roughness: 0.7,
       side: THREE.BackSide,
       clippingPlanes: [clipPlane],
@@ -339,11 +341,11 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const veinMaterial = new THREE.MeshStandardMaterial({ color: 0x3f5f9c, roughness: 0.5 });
   const artery = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.5, 16), arteryMaterial);
   artery.rotation.z = Math.PI / 2;
-  artery.position.set(0.62, 0.12, 0.1);
+  artery.position.set(0.62, 0.12, -0.06);
   kidney.add(artery);
   const vein = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.5, 16), veinMaterial);
   vein.rotation.z = Math.PI / 2;
-  vein.position.set(0.62, -0.06, -0.08);
+  vein.position.set(0.62, -0.06, 0.1);
   kidney.add(vein);
 
   const sectionUreterCurve = new THREE.CatmullRomCurve3([
@@ -354,8 +356,8 @@ function createScene(THREE, canvas, { reduceMotion }) {
   ]);
   sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(sectionUreterCurve, 32, 0.085, 16), ureterMaterial));
   for (const [material, y, z] of [
-    [arteryMaterial, 0.12, 0.08],
-    [veinMaterial, -0.06, -0.06],
+    [arteryMaterial, 0.12, -0.04],
+    [veinMaterial, -0.06, 0.08],
   ]) {
     const stump = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.4, 16), material);
     stump.rotation.z = Math.PI / 2;
