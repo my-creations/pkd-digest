@@ -55,10 +55,17 @@ function initKidney(mount) {
       if (scene) scene.setSeverity(state.severity);
     });
   }
+  // Structures hidden in the current view also switch to the view where
+  // they are visible (interior pieces live in the cross-section; cysts
+  // only exist in polycystic mode).
+  const focusTarget = { medulla: 'section', pelvis: 'section', cyst: 'cystic' };
   for (const button of focusButtons) {
     button.addEventListener('click', () => {
+      const part = button.dataset.kidney3dFocus;
+      if (focusTarget[part] === 'cystic') applyMode('cystic');
+      else if (focusTarget[part]) applyView(focusTarget[part]);
       if (status) status.textContent = button.dataset.name || '';
-      if (scene) scene.flash(button.dataset.kidney3dFocus);
+      if (scene) scene.flash(part);
     });
   }
   setPressed(viewButtons, state.view, 'kidney3dView');

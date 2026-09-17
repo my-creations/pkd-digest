@@ -76,7 +76,7 @@ module.exports = {
       kidneyEyebrow: 'Interactive anatomy',
       kidneyTitle: 'The kidney, in 3D',
       kidneyLede:
-        'Spin the kidney, open a cross-section, and compare a healthy kidney with a polycystic one. A simplified illustration — not a scan of any person.',
+        'Spin the kidney, open a cross-section, and compare a healthy kidney with a polycystic one to see where cysts grow.',
       kidneyViewLabel: 'View',
       kidneyViewExternal: 'Outside',
       kidneyViewSection: 'Cross-section',
@@ -288,7 +288,7 @@ module.exports = {
       kidneyEyebrow: 'Anatomia interativa',
       kidneyTitle: 'O rim, em 3D',
       kidneyLede:
-        'Rode o rim, abra um corte e compare um rim saudável com um rim poliquístico. Ilustração simplificada — não é um exame de nenhuma pessoa.',
+        'Rode o rim, abra o corte e compare um rim saudável com um rim poliquístico para perceber onde crescem os quistos.',
       kidneyViewLabel: 'Vista',
       kidneyViewExternal: 'Exterior',
       kidneyViewSection: 'Corte',

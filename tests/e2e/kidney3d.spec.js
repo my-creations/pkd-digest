@@ -43,6 +43,14 @@ for (const locale of ['en', 'pt']) {
     await section.getByRole('button', { name: copy.kidneyCortex }).click();
     await expect(section.locator('[data-kidney3d-status]')).toHaveText(copy.kidneyCortex);
 
+    // Focusing a hidden structure switches to the view where it is visible.
+    await external.click();
+    await healthy.click();
+    await section.getByRole('button', { name: copy.kidneyMedulla }).click();
+    await expect(crossSection).toHaveAttribute('aria-pressed', 'true');
+    await section.getByRole('button', { name: copy.kidneyCyst }).click();
+    await expect(cystic).toHaveAttribute('aria-pressed', 'true');
+
     await expect(page.locator('script[type="module"][src$="/js/kidney3d.js"]')).toHaveCount(1);
   });
 }
