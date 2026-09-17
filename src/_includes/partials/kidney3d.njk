@@ -1,0 +1,103 @@
+<section class="section" aria-labelledby="kidney3d-heading">
+  <p class="eyebrow">{{ t.home.kidneyEyebrow }}</p>
+  <h2 id="kidney3d-heading">{{ t.home.kidneyTitle }}</h2>
+  <p class="lede">{{ t.home.kidneyLede }}</p>
+  <div
+    class="kidney3d"
+    data-kidney3d
+    data-loading="{{ t.home.kidneyLoading }}"
+    data-ready="{{ t.home.kidneyReady }}"
+    data-no-webgl="{{ t.home.kidneyNoWebgl }}"
+  >
+    <div class="kidney3d__stage">
+      <canvas class="kidney3d__canvas" data-kidney3d-canvas aria-hidden="true" hidden></canvas>
+      <div class="kidney3d__fallback" data-kidney3d-fallback>
+        {% include "partials/kidney-svg.njk" %}
+        <p>{{ t.home.kidneyFallbackCaption }}</p>
+      </div>
+      <noscript>
+        <div class="kidney3d__fallback">
+          {% include "partials/kidney-svg.njk" %}
+          <p>{{ t.home.kidneyFallbackCaption }}</p>
+        </div>
+      </noscript>
+    </div>
+    <div class="kidney3d__controls">
+      <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyViewLabel }}">
+        <span class="kidney3d__group-label" aria-hidden="true">{{ t.home.kidneyViewLabel }}</span>
+        <button type="button" class="button button--secondary" data-kidney3d-view="external" aria-pressed="true">
+          {{ t.home.kidneyViewExternal }}
+        </button>
+        <button type="button" class="button button--secondary" data-kidney3d-view="section" aria-pressed="false">
+          {{ t.home.kidneyViewSection }}
+        </button>
+        <button type="button" class="button button--secondary" data-kidney3d-view="cysts" aria-pressed="false">
+          {{ t.home.kidneyViewCysts }}
+        </button>
+      </div>
+      <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyModeLabel }}">
+        <span class="kidney3d__group-label" aria-hidden="true">{{ t.home.kidneyModeLabel }}</span>
+        <button type="button" class="button button--secondary" data-kidney3d-mode="healthy" aria-pressed="true">
+          {{ t.home.kidneyModeHealthy }}
+        </button>
+        <button type="button" class="button button--secondary" data-kidney3d-mode="cystic" aria-pressed="false">
+          {{ t.home.kidneyModeCystic }}
+        </button>
+      </div>
+      <div class="kidney3d__group">
+        <label class="kidney3d__group-label" for="kidney3d-severity">{{ t.home.kidneySeverityLabel }}</label>
+        <input type="range" id="kidney3d-severity" data-kidney3d-severity min="1" max="5" step="1" value="3" />
+      </div>
+    </div>
+    <p class="kidney3d__status" data-kidney3d-status role="status"></p>
+    <details class="kidney3d__alt">
+      <summary>{{ t.home.kidneyStructuresTitle }}</summary>
+      <table class="kidney3d__table">
+        <tbody>
+          <tr>
+            <th scope="row">
+              <button type="button" data-kidney3d-focus="cortex" data-name="{{ t.home.kidneyCortex }}">
+                {{ t.home.kidneyCortex }}
+              </button>
+            </th>
+            <td>{{ t.home.kidneyCortexText }}</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <button type="button" data-kidney3d-focus="medulla" data-name="{{ t.home.kidneyMedulla }}">
+                {{ t.home.kidneyMedulla }}
+              </button>
+            </th>
+            <td>{{ t.home.kidneyMedullaText }}</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <button type="button" data-kidney3d-focus="pelvis" data-name="{{ t.home.kidneyPelvis }}">
+                {{ t.home.kidneyPelvis }}
+              </button>
+            </th>
+            <td>{{ t.home.kidneyPelvisText }}</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <button type="button" data-kidney3d-focus="ureter" data-name="{{ t.home.kidneyUreter }}">
+                {{ t.home.kidneyUreter }}
+              </button>
+            </th>
+            <td>{{ t.home.kidneyUreterText }}</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <button type="button" data-kidney3d-focus="cyst" data-name="{{ t.home.kidneyCyst }}">
+                {{ t.home.kidneyCyst }}
+              </button>
+            </th>
+            <td>{{ t.home.kidneyCystText }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+  <p>{{ t.home.kidneyDisclaimer }}</p>
+</section>
+<script type="module" src="{{ '/js/kidney3d.js' | url }}"></script>

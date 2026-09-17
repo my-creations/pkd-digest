@@ -1271,6 +1271,9 @@ h2 {
   .dual__switch,
   .card-related,
   .card-back,
+  .kidney3d__canvas,
+  .kidney3d__controls,
+  .kidney3d__status,
   .skip-link {
     display: none !important;
   }
@@ -1286,6 +1289,10 @@ h2 {
   }
 
   [data-dual-panel][hidden] {
+    display: block !important;
+  }
+
+  .kidney3d__fallback[hidden] {
     display: block !important;
   }
 
@@ -1511,3 +1518,116 @@ h2 {
   margin: var(--space-2) 0 0;
 }
 /* Patient dictionary — end */
+
+/* Kidney 3D island (home) — begin */
+.kidney3d {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.kidney3d__stage {
+  position: relative;
+  background: var(--plain-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  aspect-ratio: 4 / 3;
+  max-height: 26rem;
+  overflow: hidden;
+}
+
+.kidney3d__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: pan-y;
+}
+
+.kidney3d__fallback {
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--muted-foreground);
+}
+
+.kidney3d__svg {
+  width: min(100%, 22rem);
+  height: auto;
+}
+
+.kidney3d__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  align-items: end;
+}
+
+.kidney3d__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.kidney3d__group-label {
+  font-weight: 700;
+  margin-right: var(--space-1);
+}
+
+.kidney3d__group input[type='range'] {
+  accent-color: var(--primary);
+  min-width: 10rem;
+}
+
+.kidney3d__group .button.is-active {
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
+}
+
+.kidney3d__status {
+  margin: 0;
+  min-height: 1.5em;
+  color: var(--muted-foreground);
+}
+
+.kidney3d__alt {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+
+.kidney3d__alt summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.kidney3d__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-2);
+}
+
+.kidney3d__table th,
+.kidney3d__table td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-top: 1px solid var(--border);
+}
+
+.kidney3d__table th button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--clinical-label);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.kidney3d__table th button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+/* Kidney 3D island (home) — end */
