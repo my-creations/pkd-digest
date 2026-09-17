@@ -659,9 +659,9 @@ h2 {
 }
 
 .item-card__block--clinical {
-  background: var(--clinical-bg);
-  border-color: var(--clinical-border);
-  border-left-color: var(--primary);
+  background: var(--plain-bg);
+  border-color: var(--plain-border);
+  border-left-color: var(--plain-border);
 }
 
 .item-card__label {
@@ -669,10 +669,6 @@ h2 {
   margin-bottom: var(--space-2);
   color: var(--muted-foreground);
   font-weight: 600;
-}
-
-.item-card__block--clinical .item-card__label {
-  color: var(--clinical-label);
 }
 
 .item-card__block p,
@@ -951,19 +947,28 @@ h2 {
   max-width: 44rem;
 }
 
-.digest-clinical {
-  font-family: var(--font);
-  font-size: 0.88rem;
-  background: color-mix(in srgb, var(--card) 80%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.55rem 0.8rem;
+/* Clinical panel mirrors the plain-language text styling. */
+.digest-lead .digest-clinical {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--foreground);
+  max-width: 44rem;
+  margin: 0.5rem 0;
+  line-height: 1.55;
+}
+
+.digest-item .digest-clinical {
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin: 0 0 0.5rem;
+  line-height: 1.55;
   max-width: 44rem;
 }
 
-.digest-clinical p {
-  margin: 0.5rem 0 0;
-  line-height: 1.6;
+.digest-lead .digest-clinical p,
+.digest-item .digest-clinical p {
+  margin: 0;
 }
 
 /* ——— Dual framing toggle ——— */
