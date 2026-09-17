@@ -103,6 +103,7 @@ function initKidney(mount) {
       if (fallback) fallback.hidden = true;
       if (status && mount.dataset.ready) status.textContent = mount.dataset.ready;
     } catch (_error) {
+      console.error(_error);
       if (status && mount.dataset.noWebgl) status.textContent = mount.dataset.noWebgl;
     }
   };
@@ -240,7 +241,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const cortexCap = new THREE.Mesh(
     cortexGeometry,
     new THREE.MeshStandardMaterial({
-      color: 0x5f1f1a,
+      color: 0x7a3226,
       roughness: 0.7,
       side: THREE.BackSide,
       clippingPlanes: [clipPlane],
@@ -317,6 +318,12 @@ function createScene(THREE, canvas, { reduceMotion }) {
     domeMesh.quaternion.setFromUnitVectors(upVector, dir);
     sectionInner.add(domeMesh);
 
+    // Pale papilla tip where it meets the calyx
+    const tipMesh = new THREE.Mesh(new THREE.SphereGeometry(rTip * 0.75, 10, 8), pelvisMaterial);
+    tipMesh.position.copy(papilla).addScaledVector(dir, 0.015);
+    tipMesh.scale.set(1, 0.8, 1);
+    sectionInner.add(tipMesh);
+
     // Minor calyx funnel cupping the papilla and draining into the pelvis
     const calyxLength = 0.11;
     const calyxGeom = new THREE.CylinderGeometry(rTip * 0.85, rTip * 1.35, calyxLength, 10, 1, true);
@@ -373,11 +380,11 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const veinMaterial = new THREE.MeshStandardMaterial({ color: 0x3f5f9c, roughness: 0.5 });
   const artery = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.5, 16), arteryMaterial);
   artery.rotation.z = Math.PI / 2;
-  artery.position.set(0.62, 0.12, -0.06);
+  artery.position.set(0.56, 0.02, -0.06);
   kidney.add(artery);
   const vein = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.5, 16), veinMaterial);
   vein.rotation.z = Math.PI / 2;
-  vein.position.set(0.62, -0.06, 0.1);
+  vein.position.set(0.56, -0.14, 0.1);
   kidney.add(vein);
 
   /* Tapered section ureter: stacked shrinking tubes exiting below the bean. */
@@ -394,13 +401,48 @@ function createScene(THREE, canvas, { reduceMotion }) {
   ]);
   sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(ureterLowerCurve, 20, 0.06, 14), ureterMaterial));
   for (const [material, y, z] of [
-    [arteryMaterial, 0.12, -0.04],
-    [veinMaterial, -0.06, 0.08],
+    [arteryMaterial, 0.02, -0.04],
+    [veinMaterial, -0.14, 0.08],
   ]) {
     const stump = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.4, 16), material);
     stump.rotation.z = Math.PI / 2;
     stump.position.set(0.3, y, z);
     sectionInner.add(stump);
+  }
+
+  /* Interlobar vessels arcing between pyramid bases (shared vessel materials). */
+  const sinusCenter = new THREE.Vector3(0.08, -0.2, 0);
+  for (let i = 0; i < pyramids.length - 1; i += 1) {
+    const a = pyramids[i];
+    const b = pyramids[i + 1];
+    const baseMid = new THREE.Vector3((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2);
+    const inner = baseMid.clone().lerp(sinusCenter, 0.6);
+    const outer = new THREE.Vector3(baseMid.x * 1.25, baseMid.y * 1.05, baseMid.z);
+    [
+      [arteryMaterial, -0.022],
+      [veinMaterial, 0.022],
+    ].forEach(([material, zOff]) => {
+      const curve = new THREE.CatmullRomCurve3([
+        inner.clone().add(new THREE.Vector3(0, 0, zOff)),
+        baseMid.clone().add(new THREE.Vector3(0, 0, zOff)),
+        outer.clone().add(new THREE.Vector3(0, 0, zOff)),
+      ]);
+      sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 10, 0.018, 5), material));
+    });
+  }
+
+  /* Peripelvic fat nodules in the renal sinus (no legend entry). */
+  const fatMaterial = new THREE.MeshStandardMaterial({ color: 0xd9be7a, roughness: 0.85 });
+  for (const [fx, fy, fz, fr] of [
+    [0.02, 0.3, 0.12, 0.07],
+    [-0.24, -0.28, -0.12, 0.08],
+    [0.12, -0.44, 0.08, 0.06],
+    [-0.3, 0.3, -0.1, 0.06],
+  ]) {
+    const fatMesh = new THREE.Mesh(new THREE.SphereGeometry(fr, 12, 10), fatMaterial);
+    fatMesh.position.set(fx, fy, fz);
+    fatMesh.scale.set(1, 0.7, 1);
+    sectionInner.add(fatMesh);
   }
 
   const cystMaterial = new THREE.MeshStandardMaterial({
