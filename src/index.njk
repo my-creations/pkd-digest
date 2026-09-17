@@ -39,7 +39,10 @@ eleventyComputed:
         </ol>
       </aside>
       <div class="digest-river">
-        <p class="lede">{{ t.home.latestBody }}</p>
+        {% set lead = latest[0] %}
+        <p class="digest-kicker">{{ t.digest.leadStory }} · 1 · <time datetime="{{ lead.date | isoDate }}">{{ lead.date | displayDate(locale) }}</time></p>
+        <h3><a class="digest-link" href="{{ '/digest/' | url }}#digest-item-1">{{ lead.data.title | localized(locale) }}</a></h3>
+        <p>{{ lead.data.summary | localized(locale) }}</p>
         <p><a class="button button--primary" href="{{ '/digest/' | url }}">{{ t.home.ctaDigest }}</a></p>
       </div>
     </div>

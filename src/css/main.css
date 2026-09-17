@@ -529,6 +529,12 @@ h2 {
   align-items: center;
 }
 
+.section--latest .digest-river h3 {
+  font-size: 1.2rem;
+  line-height: 1.35;
+  margin: var(--space-2) 0;
+}
+
 /* Bare variant: groups framed cards/lists without adding another frame. */
 .section--bare {
   padding: var(--space-6) 0;
@@ -1560,33 +1566,73 @@ h2 {
 }
 
 .kidney3d__controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-5);
-  align-items: end;
+  display: grid;
+  grid-template-columns: auto auto minmax(12rem, 20rem);
+  gap: var(--space-4) var(--space-8);
+  align-items: start;
+  justify-content: start;
 }
 
 .kidney3d__group {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--space-2);
-  align-items: center;
+  align-items: start;
+  margin: 0;
+}
+
+.kidney3d__group .dual__switch {
+  margin-bottom: 0;
 }
 
 .kidney3d__group-label {
+  font-family: var(--mono);
   font-weight: 700;
-  margin-right: var(--space-1);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+label.kidney3d__group-label {
+  cursor: pointer;
+}
+
+.kidney3d__slider-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 2.25rem;
 }
 
 .kidney3d__group input[type='range'] {
+  flex: 1;
+  min-width: 8rem;
   accent-color: var(--primary);
-  min-width: 10rem;
 }
 
-.kidney3d__group .button.is-active {
-  background: var(--foreground);
-  border-color: var(--foreground);
-  color: var(--background);
+.kidney3d__slider-row output {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.kidney3d__group.is-disabled .kidney3d__group-label,
+.kidney3d__group.is-disabled .kidney3d__slider-row {
+  opacity: 0.45;
+}
+
+.kidney3d__group.is-disabled input[type='range'] {
+  cursor: not-allowed;
+}
+
+@media (max-width: 639.98px) {
+  .kidney3d__controls {
+    grid-template-columns: 1fr;
+  }
 }
 
 .kidney3d__status {
