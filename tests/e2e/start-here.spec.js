@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const i18n = require('../../src/_data/i18n');
 
 const guides = [
   { locale: 'en', prefix: '', title: 'Start here', disclaimer: 'not medical advice' },
@@ -11,7 +12,7 @@ test.describe('start-here guide', () => {
       await page.goto(`${prefix}start-here/`);
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
       await expect(page.locator('main h1')).toHaveText(title);
-      await expect(page.locator('main h2')).toHaveCount(3);
+      await expect(page.locator('main h2')).toHaveCount(4);
       await expect(page.locator('main')).toContainText('ADPKD');
       await expect(page.locator('main')).toContainText(disclaimer);
       for (const section of ['digest', 'timeline', 'archive']) {
@@ -31,7 +32,7 @@ test.describe('start-here guide', () => {
 
     test(`links from the ${locale} home and footer`, async ({ page }) => {
       await page.goto(prefix || './');
-      const homeLink = page.locator('main').getByRole('link', { name: title, exact: true });
+      const homeLink = page.locator('main').getByRole('link', { name: i18n[locale].home.howGuideLink, exact: true });
       await expect(homeLink).toHaveClass(/button/);
       await homeLink.click();
       await expect(page.locator('main h1')).toHaveText(title);

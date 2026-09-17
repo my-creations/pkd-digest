@@ -8,7 +8,7 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": ["coverage/**", "playwright-report/**", "test-results/**", "_site/**"],
+  "ignorePatterns": ["coverage/**", "playwright-report/**", "test-results/**", "_site/**", "src/js/vendor/**"],
   "rules": {
     "no-unused-vars": [
       "error",
