@@ -5,5 +5,5 @@
   "trailingComma": "es5",
   "printWidth": 120,
   "sortPackageJson": false,
-  "ignorePatterns": ["node_modules", "_site", "coverage"]
+  "ignorePatterns": ["node_modules", "_site", "coverage", "src/js/vendor"]
 }
