@@ -327,6 +327,38 @@ function createScene(THREE, canvas, { reduceMotion }) {
     sectionInner.add(calyxMesh);
   }
 
+  /* Renal columns: thin septa seated in the gaps between pyramids. */
+  const renalColumns = [
+    // [baseX, baseY, baseZ, tipX, tipY, tipZ, rBase, rTip]
+    [-0.4, 0.52, -0.01, -0.08, 0.06, -0.005, 0.045, 0.025],
+    [-0.67, -0.01, 0.0, -0.165, -0.16, 0.0, 0.045, 0.025],
+    [-0.44, -0.57, -0.02, -0.09, -0.4, -0.01, 0.045, 0.025],
+  ];
+  for (const [cbx, cby, cbz, ctx, cty, ctz, crBase, crTip] of renalColumns) {
+    const colBase = new THREE.Vector3(cbx, cby, cbz);
+    const colTip = new THREE.Vector3(ctx, cty, ctz);
+    const colDelta = new THREE.Vector3().subVectors(colTip, colBase);
+    const colDir = colDelta.clone().normalize();
+    const colMesh = new THREE.Mesh(new THREE.CylinderGeometry(crTip, crBase, colDelta.length(), 10), medullaMaterial);
+    colMesh.position.copy(new THREE.Vector3().addVectors(colBase, colTip).multiplyScalar(0.5));
+    colMesh.quaternion.setFromUnitVectors(upVector, colDir);
+    sectionInner.add(colMesh);
+  }
+
+  /* Major calyx stems merging the minor funnels toward the pelvis. */
+  const superiorMajorCalyxCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.06, 0.1, -0.03),
+    new THREE.Vector3(0.0, 0.03, -0.01),
+    new THREE.Vector3(0.06, -0.06, 0.0),
+  ]);
+  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(superiorMajorCalyxCurve, 16, 0.05, 12), pelvisMaterial));
+  const inferiorMajorCalyxCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.12, -0.36, 0.02),
+    new THREE.Vector3(-0.02, -0.33, 0.01),
+    new THREE.Vector3(0.06, -0.3, 0.0),
+  ]);
+  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(inferiorMajorCalyxCurve, 16, 0.055, 12), pelvisMaterial));
+
   const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xd9a06b, roughness: 0.6 });
   const ureterCurve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(0.2, -0.4, 0),
@@ -348,13 +380,19 @@ function createScene(THREE, canvas, { reduceMotion }) {
   vein.position.set(0.62, -0.06, 0.1);
   kidney.add(vein);
 
-  const sectionUreterCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.1, -0.35, 0),
-    new THREE.Vector3(0.12, -0.8, 0.01),
-    new THREE.Vector3(0.12, -1.2, 0),
-    new THREE.Vector3(0.1, -1.55, -0.01),
+  /* Tapered section ureter: stacked shrinking tubes exiting below the bean. */
+  const ureterUpperCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.08, -0.42, 0.0),
+    new THREE.Vector3(0.1, -0.65, 0.01),
+    new THREE.Vector3(0.11, -0.86, 0.0),
   ]);
-  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(sectionUreterCurve, 32, 0.085, 16), ureterMaterial));
+  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(ureterUpperCurve, 20, 0.075, 14), ureterMaterial));
+  const ureterLowerCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.11, -0.86, 0.0),
+    new THREE.Vector3(0.12, -1.15, 0.0),
+    new THREE.Vector3(0.1, -1.5, -0.01),
+  ]);
+  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(ureterLowerCurve, 20, 0.06, 14), ureterMaterial));
   for (const [material, y, z] of [
     [arteryMaterial, 0.12, -0.04],
     [veinMaterial, -0.06, 0.08],
