@@ -71,7 +71,7 @@ function initKidney(mount) {
   // Structures hidden in the current view also switch to the view where
   // they are visible (interior pieces live in the cross-section; cysts
   // only exist in polycystic mode).
-  const focusTarget = { medulla: 'section', pelvis: 'section', cyst: 'cystic' };
+  const focusTarget = { medulla: 'section', pelvis: 'section', cyst: 'cystic', fat: 'section' };
   for (const button of focusButtons) {
     button.addEventListener('click', () => {
       const part = button.dataset.kidney3dFocus;
@@ -431,13 +431,13 @@ function createScene(THREE, canvas, { reduceMotion }) {
     });
   }
 
-  /* Peripelvic fat nodules in the renal sinus (no legend entry). */
-  const fatMaterial = new THREE.MeshStandardMaterial({ color: 0xd9be7a, roughness: 0.85 });
+  /* Peripelvic fat nodules in the renal sinus (legend entry: fat). */
+  const fatMaterial = new THREE.MeshStandardMaterial({ color: 0xe3d3a8, roughness: 0.85 });
   for (const [fx, fy, fz, fr] of [
-    [0.02, 0.3, 0.12, 0.07],
-    [-0.24, -0.28, -0.12, 0.08],
-    [0.12, -0.44, 0.08, 0.06],
-    [-0.3, 0.3, -0.1, 0.06],
+    [0.02, 0.3, 0.12, 0.06],
+    [-0.24, -0.28, -0.12, 0.07],
+    [0.12, -0.44, 0.08, 0.05],
+    [-0.3, 0.3, -0.1, 0.05],
   ]) {
     const fatMesh = new THREE.Mesh(new THREE.SphereGeometry(fr, 12, 10), fatMaterial);
     fatMesh.position.set(fx, fy, fz);
@@ -462,6 +462,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
     pelvis: [pelvisMaterial],
     ureter: [ureterMaterial],
     cyst: [cystMaterial],
+    fat: [fatMaterial],
   };
 
   let currentView = 'external';
