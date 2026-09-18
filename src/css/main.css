@@ -1657,9 +1657,9 @@ label.kidney3d__group-label {
   padding-top: var(--space-3);
 }
 
-.kidney3d__alt summary {
-  cursor: pointer;
-  font-weight: 700;
+.kidney3d__alt h3 {
+  font-size: 1rem;
+  margin: 0 0 var(--space-2);
 }
 
 .kidney3d__table {

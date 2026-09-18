@@ -49,7 +49,7 @@ module.exports = {
     },
     home: {
       eyebrow: 'Weekly curated digest',
-      headline: 'Cystic kidney disease, explained twice.',
+      headline: 'Cystic kidney disease, week by week.',
       lede: 'PKD Digest (Digest DRP) is a weekly digest in English and Portuguese on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries a plain-language summary and a short clinical note.',
       audiences: 'For patients & families · For clinicians',
       ctaDigest: 'This week’s digest',
@@ -285,7 +285,7 @@ module.exports = {
     },
     home: {
       eyebrow: 'Digest semanal curado',
-      headline: 'Doença renal quística, explicada duas vezes.',
+      headline: 'A doença renal quística, semana a semana.',
       lede: 'O Digest DRP (PKD Digest) é um digest semanal em inglês e português sobre doença renal quística — em geral, não só ADPKD. Cada item tem um resumo em linguagem simples e uma nota clínica breve.',
       audiences: 'Para doentes e famílias · Para clínicos',
       ctaDigest: 'Digest desta semana',

@@ -2,6 +2,7 @@
 {% set homePath = locale | homeHref %}
 {% set digestPath = locale | sectionHref('digest') %}
 {% set timelinePath = locale | sectionHref('timeline') %}
+{% set startHerePath = locale | sectionHref('start-here') %}
 {% set switchLocale = locale | otherLocale %}
 {% set langPath = page.url | languageHref(switchLocale) %}
 
@@ -23,6 +24,9 @@
           </li>
           <li>
             <a href="{{ timelinePath | url }}" {% if pageType == 'timeline' %}aria-current="page"{% endif %}>{{ t.nav.timeline }}</a>
+          </li>
+          <li>
+            <a href="{{ startHerePath | url }}" {% if pageType == 'start-here' %}aria-current="page"{% endif %}>{{ t.startHere.title }}</a>
           </li>
         </ul>
 

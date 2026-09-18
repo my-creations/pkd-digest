@@ -12,7 +12,8 @@ test.describe('start-here guide', () => {
       await page.goto(`${prefix}start-here/`);
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
       await expect(page.locator('main h1')).toHaveText(title);
-      await expect(page.locator('main h2')).toHaveCount(4);
+      await expect(page.locator('main h2')).toHaveCount(10);
+      await expect(page.locator('main')).toContainText(i18n[locale].lifestyle.waterTitle);
       await expect(page.locator('main')).toContainText('ADPKD');
       await expect(page.locator('main')).toContainText(disclaimer);
       for (const section of ['digest', 'timeline', 'archive']) {
@@ -23,6 +24,8 @@ test.describe('start-here guide', () => {
         await expect(page.locator('main h1')).toBeVisible();
         await page.goto(`${prefix}start-here/`);
       }
+      const navTab = page.locator('.nav__list').getByRole('link', { name: title, exact: true });
+      await expect(navTab).toHaveAttribute('aria-current', 'page');
       const otherPrefix = locale === 'en' ? 'pt/' : '';
       const switcher = page.locator('.locale-switcher a');
       await expect(switcher).toHaveAttribute('href', `/pkd-digest/${otherPrefix}start-here/`);

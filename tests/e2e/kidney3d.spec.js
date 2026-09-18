@@ -38,7 +38,6 @@ for (const locale of ['en', 'pt']) {
     await expect(section.locator('[data-kidney3d-severity-value]')).toHaveText('5');
 
     await expect(section.locator('.kidney3d__table tbody tr')).toHaveCount(6);
-    await section.locator('.kidney3d__alt > summary').click();
     await section.getByRole('button', { name: copy.kidneyCortex }).click();
     await expect(section.locator('[data-kidney3d-status]')).toHaveText(copy.kidneyCortex);
 

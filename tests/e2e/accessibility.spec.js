@@ -16,9 +16,6 @@ test.describe('digest accessibility', () => {
     // Patient dictionary
     'glossary/',
     'pt/glossary/',
-    // Lifestyle guide
-    'lifestyle/',
-    'pt/lifestyle/',
     'collections/',
     'pt/collections/',
     'collections/pregnancy/',
