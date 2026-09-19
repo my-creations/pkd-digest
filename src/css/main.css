@@ -1373,11 +1373,6 @@ h2 {
     color: var(--muted-foreground);
   }
 
-  .nav {
-    flex-wrap: wrap;
-    row-gap: 0.15rem;
-  }
-
   .locale-switcher {
     order: 2;
   }
@@ -1393,8 +1388,11 @@ h2 {
 
   .nav {
     min-width: 0;
+    flex-wrap: wrap;
+    row-gap: 0.15rem;
   }
 
+  /* Force the links onto their own row under the brand + pill. */
   .nav__list {
     flex: 1 1 100%;
     order: 3;

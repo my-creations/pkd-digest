@@ -25,12 +25,12 @@ test.describe('mobile two-row topbar at 344px', () => {
         expect(box.x + box.width, `topbar target ${index} right edge`).toBeLessThanOrEqual(viewport.width + 1);
       }
 
-      // Two rows: the nav sits below the brand/locale row.
+      // Two rows: the link list sits below the brand/pill row.
       const brand = await page.locator('.topbar__brand').boundingBox();
-      const nav = await page.locator('.topbar .nav').boundingBox();
+      const list = await page.locator('.topbar .nav__list').boundingBox();
       expect(brand).not.toBeNull();
-      expect(nav).not.toBeNull();
-      expect(nav.y).toBeGreaterThanOrEqual(brand.y + brand.height - 1);
+      expect(list).not.toBeNull();
+      expect(list.y).toBeGreaterThanOrEqual(brand.y + brand.height - 1);
     });
   }
 
