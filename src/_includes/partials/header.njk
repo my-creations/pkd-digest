@@ -17,8 +17,8 @@
 
 <div class="topbar">
     <div class="topbar__inner">
-      <span class="topbar__brand" aria-hidden="true">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
       <nav class="nav" aria-label="{{ t.nav.primaryLabel }}">
+        <span class="topbar__brand" aria-hidden="true">{% if locale == 'pt' %}{{ site.namePt }}{% else %}{{ site.name }}{% endif %}</span>
         <ul class="nav__list">
           <li>
             <a href="{{ digestPath | url }}" {% if pageType == 'digest' %}aria-current="page"{% endif %}>{{ t.nav.digest }}</a>
@@ -30,7 +30,6 @@
             <a href="{{ startHerePath | url }}" {% if pageType == 'start-here' %}aria-current="page"{% endif %}>{{ t.startHere.title }}</a>
           </li>
         </ul>
-      </nav>
 
       <div class="locale-switcher" role="group" aria-label="{{ t.nav.language }}">
         {% if locale == 'pt' %}
@@ -45,5 +44,6 @@
           <a class="locale-option" href="{{ langPath | url }}" hreflang="pt" lang="pt">PT</a>
         {% endif %}
       </div>
+      </nav>
     </div>
   </div>
