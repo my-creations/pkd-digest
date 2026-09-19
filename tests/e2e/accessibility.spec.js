@@ -3,6 +3,8 @@ const AxeBuilder = require('@axe-core/playwright').default;
 
 test.describe('digest accessibility', () => {
   for (const path of [
+    './',
+    'pt/',
     'digest/',
     'pt/digest/',
     'digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/',
