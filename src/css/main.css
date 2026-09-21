@@ -462,6 +462,11 @@ h2 {
   margin-top: var(--space-6);
 }
 
+.hero__link {
+  align-self: center;
+  font-weight: 600;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
