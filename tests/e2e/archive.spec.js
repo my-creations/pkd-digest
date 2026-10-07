@@ -9,11 +9,11 @@ test.describe('issue archive', () => {
 
     const issues = page.locator('.archive-issue');
     expect(await issues.count()).toBeGreaterThanOrEqual(1);
-    await expect(issues.first()).toContainText('2026-W37');
-    await expect(issues.first()).toContainText('6 cards.');
+    await expect(issues.first()).toContainText('2026-W41');
+    await expect(issues.first()).toContainText('4 cards.');
 
     const links = issues.first().locator('a');
-    expect(await links.count()).toBe(6);
+    expect(await links.count()).toBe(4);
     await expect(links.first()).toHaveAttribute('href', /\/digest\/.+\/$/);
 
     await links.first().click();
@@ -25,8 +25,8 @@ test.describe('issue archive', () => {
 
     await expect(page.locator('html')).toHaveAttribute('lang', 'pt');
     await expect(page.locator('main h1')).toContainText('Arquivo de edições');
-    await expect(page.locator('.archive-issue').first()).toContainText('2026-W37');
-    await expect(page.locator('.archive-issue').first()).toContainText('6 cartões.');
+    await expect(page.locator('.archive-issue').first()).toContainText('2026-W41');
+    await expect(page.locator('.archive-issue').first()).toContainText('4 cartões.');
 
     const href = await page.locator('.archive-issue').first().locator('a').first().getAttribute('href');
     expect(href).toMatch(/^\/pkd-digest\/pt\/digest\/.+\/$/);
