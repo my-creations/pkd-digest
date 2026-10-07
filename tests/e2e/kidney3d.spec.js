@@ -37,7 +37,8 @@ for (const locale of ['en', 'pt']) {
     await expect(slider).toHaveValue('5');
     await expect(section.locator('[data-kidney3d-severity-value]')).toHaveText('5');
 
-    await expect(section.locator('.kidney3d__table tbody tr')).toHaveCount(6);
+    await expect(section.locator('.kidney3d__table tbody tr')).toHaveCount(8);
+    await expect(section.locator('.kidney3d__table .kidney3d__swatch')).toHaveCount(8);
     await section.getByRole('button', { name: copy.kidneyCortex }).click();
     await expect(section.locator('[data-kidney3d-status]')).toHaveText(copy.kidneyCortex);
 
@@ -47,9 +48,25 @@ for (const locale of ['en', 'pt']) {
     await expect(slider).toBeDisabled();
     await section.getByRole('button', { name: copy.kidneyMedulla }).click();
     await expect(crossSection).toHaveAttribute('aria-pressed', 'true');
+    await external.click();
+    await section.getByRole('button', { name: copy.kidneyCalyx }).click();
+    await expect(crossSection).toHaveAttribute('aria-pressed', 'true');
+    await expect(section.locator('[data-kidney3d-status]')).toHaveText(copy.kidneyCalyx);
     await section.getByRole('button', { name: copy.kidneyCyst }).click();
     await expect(cystic).toHaveAttribute('aria-pressed', 'true');
 
     await expect(page.locator('script[type="module"][src$="/js/kidney3d.js"]')).toHaveCount(1);
   });
 }
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('start-here shows a single static kidney illustration', async ({ page }) => {
+    await page.goto('start-here/');
+    const section = page.locator('[data-kidney3d]');
+    await expect(section.locator('.kidney3d__svg')).toHaveCount(1);
+    await expect(section.locator('.kidney3d__svg')).toBeVisible();
+    await expect(section.locator('[data-kidney3d-hint]')).toBeHidden();
+  });
+});

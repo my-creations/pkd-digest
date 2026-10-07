@@ -20,6 +20,7 @@ function initKidney(mount) {
   const severity = mount.querySelector('[data-kidney3d-severity]');
   const severityValue = mount.querySelector('[data-kidney3d-severity-value]');
   const focusButtons = Array.from(mount.querySelectorAll('[data-kidney3d-focus]'));
+  const hint = mount.querySelector('[data-kidney3d-hint]');
 
   const state = { view: 'external', mode: 'healthy', severity: 3 };
   let scene = null;
@@ -71,7 +72,7 @@ function initKidney(mount) {
   // Structures hidden in the current view also switch to the view where
   // they are visible (interior pieces live in the cross-section; cysts
   // only exist in polycystic mode).
-  const focusTarget = { medulla: 'section', pelvis: 'section', cyst: 'cystic', fat: 'section' };
+  const focusTarget = { medulla: 'section', calyx: 'section', pelvis: 'section', cyst: 'cystic', fat: 'section' };
   for (const button of focusButtons) {
     button.addEventListener('click', () => {
       const part = button.dataset.kidney3dFocus;
@@ -100,8 +101,12 @@ function initKidney(mount) {
       scene.setMode(state.mode);
       scene.setSeverity(state.severity);
       canvas.hidden = false;
+      if (hint) hint.hidden = false;
       if (fallback) fallback.hidden = true;
-      if (status && mount.dataset.ready) status.textContent = mount.dataset.ready;
+      // Do not overwrite a structure name the reader picked while the model loaded.
+      if (status && mount.dataset.ready && status.textContent === mount.dataset.loading) {
+        status.textContent = mount.dataset.ready;
+      }
     } catch (_error) {
       console.error(_error);
       if (status && mount.dataset.noWebgl) status.textContent = mount.dataset.noWebgl;
@@ -136,55 +141,321 @@ function mulberry32(seed) {
   };
 }
 
-/* Shared bean transform: unit-sphere point -> kidney surface point. */
-function beanPoint(x, y, z) {
-  const scaled = { x, y: y * 1.32, z: z * 0.78 };
-  const dent = Math.exp(-((scaled.y / 0.5) ** 2 + (scaled.z / 0.55) ** 2));
-  if (scaled.x > 0) scaled.x -= 0.65 * dent;
-  scaled.x += 0.18 * Math.sin(scaled.y * 1.1);
-  return scaled;
+/* Kidney-local frame: +y superior pole, +x medial (hilum), +z anterior.
+   Proportions follow an adult kidney (~11 x 6 x 3 cm). The outer surface is
+   a "lens" swept over a 2D coronal outline, so the coronal cut at z = 0 is
+   exactly that outline and the section caps can be drawn as flat layers. */
+const SHAPE = { a: 0.7, b: 1.3, dent: 0.36, dentWidth: 0.42, cx: -0.06 };
+const SINUS = { x: 0.14, y: -0.02, a: 0.3, b: 0.62 };
+const CORTEX_THICKNESS = 0.15;
+const HILUM_GAP = 0.62;
+
+function wrapAngle(theta) {
+  return Math.atan2(Math.sin(theta), Math.cos(theta));
 }
 
-function createMedullaStriationTexture(THREE) {
-  if (typeof document === 'undefined') return null;
-  const canvas = document.createElement('canvas');
-  canvas.width = 256;
-  canvas.height = 256;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return null;
+function outlinePoint(theta) {
+  const dent = SHAPE.dent * Math.exp(-((wrapAngle(theta) / SHAPE.dentWidth) ** 2));
+  const widen = 1 + 0.06 * Math.sin(theta); // upper pole a little broader
+  return { x: SHAPE.a * Math.cos(theta) * widen - dent, y: SHAPE.b * Math.sin(theta) };
+}
 
-  ctx.fillStyle = '#b05238';
-  ctx.fillRect(0, 0, 256, 256);
+function halfThickness(theta) {
+  return 0.4 * (0.84 + 0.16 * Math.cos(theta) ** 2);
+}
 
-  // Dense medullary rays / striations running from base (v=1) to papilla (v=0)
-  for (let x = 0; x < 256; x += 1) {
-    const wave1 = Math.sin(x * 0.42);
-    const wave2 = Math.sin(x * 0.95 + 1.2);
-    const wave3 = Math.sin(x * 2.3 + 0.7);
-    const combined = wave1 * 0.5 + wave2 * 0.3 + wave3 * 0.2;
-    if (combined > 0.12) {
-      ctx.fillStyle = `rgba(105, 30, 18, ${0.3 + combined * 0.45})`;
-      ctx.fillRect(x, 0, 1, 256);
-    } else if (combined < -0.15) {
-      ctx.fillStyle = `rgba(225, 140, 110, ${0.25 + Math.abs(combined) * 0.35})`;
-      ctx.fillRect(x, 0, 1, 256);
+function lensPoint(theta, phi, s = 1) {
+  const o = outlinePoint(theta);
+  const g = Math.max(0, Math.cos(phi)) ** 0.72;
+  // Thickness converges to one value at the face centre so the pole closes cleanly.
+  const thickness = 0.38 + (halfThickness(theta) - 0.38) * g;
+  return {
+    x: SHAPE.cx + (o.x - SHAPE.cx) * g * s,
+    y: o.y * g * s,
+    z: thickness * Math.sin(phi) * s,
+  };
+}
+
+function lensNormal(theta, phi) {
+  const e = 1e-3;
+  const p = lensPoint(theta, phi);
+  const du = lensPoint(theta + e, phi);
+  const dv = lensPoint(theta, Math.min(phi + e, Math.PI / 2));
+  const ax = du.x - p.x;
+  const ay = du.y - p.y;
+  const az = du.z - p.z;
+  const bx = dv.x - p.x;
+  const by = dv.y - p.y;
+  const bz = dv.z - p.z;
+  const nx = ay * bz - az * by;
+  const ny = az * bx - ax * bz;
+  const nz = ax * by - ay * bx;
+  const len = Math.hypot(nx, ny, nz) || 1;
+  return { x: nx / len, y: ny / len, z: nz / len };
+}
+
+/* Corticomedullary junction: outline pulled toward the sinus by the cortex thickness. */
+function junctionPoint(theta) {
+  const o = outlinePoint(theta);
+  const dx = o.x - SINUS.x;
+  const dy = o.y - SINUS.y;
+  const k = 1 - CORTEX_THICKNESS / Math.hypot(dx, dy);
+  return { x: SINUS.x + dx * k, y: SINUS.y + dy * k };
+}
+
+function sinusPoint(towards, scale = 1) {
+  const dx = towards.x - SINUS.x;
+  const dy = towards.y - SINUS.y;
+  const angle = Math.atan2(dy / SINUS.b, dx / SINUS.a);
+  return { x: SINUS.x + SINUS.a * Math.cos(angle) * scale, y: SINUS.y + SINUS.b * Math.sin(angle) * scale };
+}
+
+function sampleProfile(profile, t) {
+  for (let i = 1; i < profile.length; i += 1) {
+    const [t1, v1] = profile[i];
+    const [t0, v0] = profile[i - 1];
+    if (t <= t1) {
+      const k = (t - t0) / (t1 - t0 || 1);
+      return v0 + (v1 - v0) * k * k * (3 - 2 * k);
     }
   }
+  return profile[profile.length - 1][1];
+}
 
-  // Vertical gradient: pale papilla tip at top (v=0), rich corticomedullary zone at base (v=1)
-  const grad = ctx.createLinearGradient(0, 0, 0, 256);
-  grad.addColorStop(0, 'rgba(235, 170, 145, 0.45)');
-  grad.addColorStop(0.18, 'rgba(200, 120, 95, 0.15)');
-  grad.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
-  grad.addColorStop(1, 'rgba(95, 25, 15, 0.35)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, 256, 256);
-
+function canvasTexture(THREE, size, draw, { color = true, repeat = 1 } = {}) {
+  if (typeof document === 'undefined') return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return null;
+  draw(ctx, size);
   const texture = new THREE.CanvasTexture(canvas);
   texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-  texture.repeat.set(3, 1);
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(repeat, repeat);
+  if (color) texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
+}
+
+function speckle(ctx, size, count, colors, minR, maxR, random) {
+  for (let i = 0; i < count; i += 1) {
+    const x = random() * size;
+    const y = random() * size;
+    const r = minR + random() * (maxR - minR);
+    ctx.fillStyle = colors[Math.floor(random() * colors.length)];
+    for (const ox of [-size, 0, size]) {
+      for (const oy of [-size, 0, size]) {
+        ctx.beginPath();
+        ctx.arc(x + ox, y + oy, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+}
+
+function buildTextures(THREE) {
+  const random = mulberry32(11042026);
+  return {
+    // Capsule surface: soft mottling (color) and fine relief (bump).
+    capsule: canvasTexture(THREE, 256, (ctx, size) => {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+      ctx.globalAlpha = 0.12;
+      speckle(ctx, size, 220, ['#c79a8f', '#ffffff', '#e8cfc6'], 4, 18, random);
+    }),
+    bump: canvasTexture(
+      THREE,
+      256,
+      (ctx, size) => {
+        ctx.fillStyle = '#808080';
+        ctx.fillRect(0, 0, size, size);
+        ctx.globalAlpha = 0.18;
+        speckle(ctx, size, 900, ['#000000', '#ffffff'], 1, 5, random);
+      },
+      { color: false }
+    ),
+    // Cut cortex is granular (glomeruli); cut fat is lobulated.
+    cortexCut: canvasTexture(
+      THREE,
+      256,
+      (ctx, size) => {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        ctx.globalAlpha = 0.35;
+        speckle(ctx, size, 1400, ['#d9a99a', '#f6e2da', '#b97c6c'], 0.6, 2.2, random);
+      },
+      { repeat: 2.5 }
+    ),
+    fatCut: canvasTexture(
+      THREE,
+      256,
+      (ctx, size) => {
+        ctx.fillStyle = '#f4e3b0';
+        ctx.fillRect(0, 0, size, size);
+        ctx.globalAlpha = 0.55;
+        speckle(ctx, size, 160, ['#ffffff', '#fff3cf', '#ead18a'], 6, 16, random);
+        ctx.globalAlpha = 0.25;
+        ctx.strokeStyle = '#c9a75a';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 90; i += 1) {
+          ctx.beginPath();
+          ctx.arc(random() * size, random() * size, 6 + random() * 12, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      },
+      { repeat: 3 }
+    ),
+    // Pyramid striations run from the papilla (v = 0) to the base (v = 1).
+    pyramid: canvasTexture(THREE, 256, (ctx, size) => {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+      for (let x = 0; x < size; x += 1) {
+        const wave = Math.sin(x * 0.45) * 0.55 + Math.sin(x * 1.3 + 1.1) * 0.3 + Math.sin(x * 3.1) * 0.15;
+        ctx.fillStyle = wave > 0 ? `rgba(70, 15, 10, ${0.12 + wave * 0.3})` : `rgba(255, 220, 205, ${-wave * 0.22})`;
+        ctx.fillRect(x, 0, 1, size);
+      }
+      const grad = ctx.createLinearGradient(0, size, 0, 0);
+      grad.addColorStop(0, 'rgba(255, 225, 205, 0.55)');
+      grad.addColorStop(0.3, 'rgba(255, 220, 200, 0.1)');
+      grad.addColorStop(0.75, 'rgba(0, 0, 0, 0)');
+      grad.addColorStop(1, 'rgba(60, 10, 5, 0.3)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+    }),
+    // Cut cyst: thin pale wall, fluid with a soft highlight.
+    cystCut: canvasTexture(THREE, 128, (ctx, size) => {
+      const c = size / 2;
+      const grad = ctx.createRadialGradient(c * 0.8, c * 0.75, size * 0.04, c, c, c);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.55, '#e4e4e4');
+      grad.addColorStop(0.88, '#b4b4b4');
+      grad.addColorStop(0.93, '#f2f2f2');
+      grad.addColorStop(1, '#d0d0d0');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+    }),
+  };
+}
+
+/* Vertex normals with the lens poles pointing straight out and the lateral
+   seam averaged, so neither shows as a crease. */
+function computeKidneyNormals(geometry) {
+  const { segU, segV } = geometry.userData.grid;
+  const row = segU + 1;
+  geometry.computeVertexNormals();
+  const normals = geometry.attributes.normal;
+  for (let j = 0; j <= segV; j += 1) {
+    const first = j * row;
+    const last = first + segU;
+    if (j === 0 || j === segV) {
+      for (let i = 0; i <= segU; i += 1) normals.setXYZ(first + i, 0, 0, j === 0 ? -1 : 1);
+      continue;
+    }
+    const nx = normals.getX(first) + normals.getX(last);
+    const ny = normals.getY(first) + normals.getY(last);
+    const nz = normals.getZ(first) + normals.getZ(last);
+    const len = Math.hypot(nx, ny, nz) || 1;
+    normals.setXYZ(first, nx / len, ny / len, nz / len);
+    normals.setXYZ(last, nx / len, ny / len, nz / len);
+  }
+}
+
+function buildKidneyGeometry(THREE, segU = 144, segV = 60) {
+  const positions = [];
+  const uvs = [];
+  const indices = [];
+  for (let j = 0; j <= segV; j += 1) {
+    const phi = -Math.PI / 2 + (Math.PI * j) / segV;
+    for (let i = 0; i <= segU; i += 1) {
+      const theta = Math.PI + (Math.PI * 2 * i) / segU; // seam on the lateral border
+      const p = lensPoint(theta, phi);
+      positions.push(p.x, p.y, p.z);
+      uvs.push(p.x * 1.3, p.y * 1.3);
+    }
+  }
+  const row = segU + 1;
+  for (let j = 0; j < segV; j += 1) {
+    for (let i = 0; i < segU; i += 1) {
+      const a = j * row + i;
+      const b = a + 1;
+      const c = a + row;
+      const d = c + 1;
+      indices.push(a, b, c, b, d, c);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.userData.grid = { segU, segV };
+  computeKidneyNormals(geometry);
+  geometry.userData.basePositions = geometry.attributes.position.array.slice();
+  geometry.userData.baseNormals = geometry.attributes.normal.array.slice();
+  return geometry;
+}
+
+function taperedTube(THREE, points, profile, { segments = 48, radial = 16 } = {}) {
+  const curve = new THREE.CatmullRomCurve3(points.map(([x, y, z]) => new THREE.Vector3(x, y, z)));
+  const geometry = new THREE.TubeGeometry(curve, segments, 1, radial, false);
+  const position = geometry.attributes.position;
+  const center = new THREE.Vector3();
+  for (let i = 0; i <= segments; i += 1) {
+    const t = i / segments;
+    curve.getPointAt(t, center);
+    const r = sampleProfile(profile, t);
+    for (let k = 0; k <= radial; k += 1) {
+      const index = i * (radial + 1) + k;
+      position.setXYZ(
+        index,
+        center.x + (position.getX(index) - center.x) * r,
+        center.y + (position.getY(index) - center.y) * r,
+        center.z + (position.getZ(index) - center.z) * r
+      );
+    }
+  }
+  return geometry;
+}
+
+/* Flat ribbon along a smooth 2D path, for drawing on the section cap. */
+function ribbon(THREE, points, profile, { segments = 32, closed = false } = {}) {
+  const curve = new THREE.CatmullRomCurve3(
+    points.map(([x, y]) => new THREE.Vector3(x, y, 0)),
+    closed
+  );
+  const positions = [];
+  const indices = [];
+  const p = new THREE.Vector3();
+  const tangent = new THREE.Vector3();
+  for (let i = 0; i <= segments; i += 1) {
+    const t = i / segments;
+    curve.getPointAt(t, p);
+    curve.getTangentAt(t, tangent);
+    const half = sampleProfile(profile, t) / 2;
+    positions.push(
+      p.x - tangent.y * half,
+      p.y + tangent.x * half,
+      0,
+      p.x + tangent.y * half,
+      p.y - tangent.x * half,
+      0
+    );
+    if (i < segments) {
+      const a = i * 2;
+      indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setIndex(indices);
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute(
+    'normal',
+    new THREE.Float32BufferAttribute(
+      positions.map((_, i) => (i % 3 === 2 ? 1 : 0)),
+      3
+    )
+  );
+  return geometry;
 }
 
 function createScene(THREE, canvas, { reduceMotion }) {
@@ -192,345 +463,648 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.localClippingEnabled = true;
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.toneMappingExposure = 1.05;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  const homePosition = new THREE.Vector3(0.6, 0.3, 6.4);
-  const sectionPosition = new THREE.Vector3(3.3, 0.5, 3.0);
-  camera.position.copy(homePosition);
-  camera.lookAt(0, -0.1, 0);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+  const target = new THREE.Vector3(0.1, -0.3, 0);
+  const lookAt = target.clone();
+  const homePosition = new THREE.Vector3(0.5, 0.35, 7.2);
+  const sectionPosition = new THREE.Vector3(0.25, 0.2, 6.6);
 
-  scene.add(new THREE.HemisphereLight(0xfff6e8, 0x8a6f5c, 1.25));
-  const key = new THREE.DirectionalLight(0xffffff, 1.6);
+  scene.add(new THREE.HemisphereLight(0xfff4e6, 0x6b5446, 1.5));
+  const key = new THREE.DirectionalLight(0xffffff, 2.3);
   key.position.set(3, 4, 5);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xf6ead0, 0.5);
-  fill.position.set(-4, -1, 2);
+  const fill = new THREE.DirectionalLight(0xf3e3cc, 0.7);
+  fill.position.set(-4, -1, 3);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xfff0dd, 0.6);
-  rim.position.set(-3, 2, -4);
+  const rim = new THREE.DirectionalLight(0xffeedd, 1.1);
+  rim.position.set(-2, 3, -5);
   scene.add(rim);
 
+  /* kidney: user/auto rotation. anatomy: fixed tilt (upper pole medial) and
+     PKD enlargement; everything anatomical lives in its local frame. */
   const kidney = new THREE.Group();
   scene.add(kidney);
+  const anatomy = new THREE.Group();
+  anatomy.rotation.z = -0.14;
+  kidney.add(anatomy);
 
-  const clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0.15);
+  const textures = buildTextures(THREE);
+  const localClip = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0); // keep the posterior half
+  const clipPlane = localClip.clone();
 
-  const cortexGeometry = new THREE.SphereGeometry(1, 64, 48);
-  const positions = cortexGeometry.attributes.position;
-  for (let i = 0; i < positions.count; i += 1) {
-    const p = beanPoint(positions.getX(i), positions.getY(i), positions.getZ(i));
-    positions.setXYZ(i, p.x, p.y, p.z);
-  }
-  cortexGeometry.computeVertexNormals();
+  /* Outer surface (capsule over cortex). */
   const cortexMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x9c3f36,
-    roughness: 0.5,
-    metalness: 0.05,
-    clearcoat: 0.55,
-    clearcoatRoughness: 0.5,
+    color: 0x93402f,
+    roughness: 0.42,
+    metalness: 0,
+    clearcoat: 0.6,
+    clearcoatRoughness: 0.3,
+    ...(textures.capsule ? { map: textures.capsule } : {}),
+    ...(textures.bump ? { bumpMap: textures.bump, bumpScale: 0.6 } : {}),
   });
-  kidney.add(new THREE.Mesh(cortexGeometry, cortexMaterial));
+  const kidneyGeometry = buildKidneyGeometry(THREE);
+  anatomy.add(new THREE.Mesh(kidneyGeometry, cortexMaterial));
 
-  /* Curated cutaway shown in section view: layered shells read as solid,
-     with pyramids, pelvis, ureter and vessel stumps seated in the cut plane. */
-  const sectionInner = new THREE.Group();
-  sectionInner.visible = false;
-  kidney.add(sectionInner);
-
-  const cortexCap = new THREE.Mesh(
-    cortexGeometry,
-    new THREE.MeshStandardMaterial({
-      color: 0x7a3226,
-      roughness: 0.7,
-      side: THREE.BackSide,
-      clippingPlanes: [clipPlane],
-    })
+  /* Hilum: renal vein (anterior), artery, pelvis/ureter (posterior), hilar fat. */
+  const arteryMaterial = new THREE.MeshStandardMaterial({ color: 0xb3262a, roughness: 0.38, side: THREE.DoubleSide });
+  const veinMaterial = new THREE.MeshStandardMaterial({ color: 0x3e5c9e, roughness: 0.42, side: THREE.DoubleSide });
+  const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xe0b58a, roughness: 0.5, side: THREE.DoubleSide });
+  const hilarFatMaterial = new THREE.MeshStandardMaterial({ color: 0xe2b752, roughness: 0.8 });
+  const hilum = new THREE.Group();
+  anatomy.add(hilum);
+  const hilarFat = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 18), hilarFatMaterial);
+  hilarFat.scale.set(0.14, 0.4, 0.22);
+  hilarFat.position.set(0.32, -0.04, -0.01);
+  hilum.add(hilarFat);
+  hilum.add(
+    new THREE.Mesh(
+      taperedTube(
+        THREE,
+        [
+          [0.18, 0.06, -0.02],
+          [0.42, 0.1, 0.02],
+          [0.78, 0.13, 0.02],
+          [1.3, 0.2, -0.02],
+        ],
+        [
+          [0, 0.05],
+          [0.35, 0.06],
+          [1, 0.072],
+        ]
+      ),
+      arteryMaterial
+    )
   );
-  sectionInner.add(cortexCap);
-  const medullaCap = new THREE.Mesh(
-    cortexGeometry,
-    new THREE.MeshStandardMaterial({
-      color: 0x8a5638,
-      roughness: 0.75,
-      side: THREE.BackSide,
-      clippingPlanes: [clipPlane],
-    })
+  hilum.add(
+    new THREE.Mesh(
+      taperedTube(
+        THREE,
+        [
+          [0.5, 0.11, 0.02],
+          [0.4, 0.26, 0.03],
+          [0.26, 0.36, 0.0],
+        ],
+        [
+          [0, 0.034],
+          [1, 0.024],
+        ],
+        { segments: 16, radial: 10 }
+      ),
+      arteryMaterial
+    )
   );
-  medullaCap.scale.setScalar(0.86);
-  sectionInner.add(medullaCap);
+  hilum.add(
+    new THREE.Mesh(
+      taperedTube(
+        THREE,
+        [
+          [0.18, -0.09, 0.01],
+          [0.42, -0.08, 0.02],
+          [0.78, -0.05, 0.02],
+          [1.3, 0.01, 0.02],
+        ],
+        [
+          [0, 0.06],
+          [0.35, 0.08],
+          [1, 0.092],
+        ]
+      ),
+      veinMaterial
+    )
+  );
+  hilum.add(
+    new THREE.Mesh(
+      taperedTube(
+        THREE,
+        [
+          [0.52, -0.07, 0.02],
+          [0.42, -0.2, 0.02],
+          [0.28, -0.3, 0.01],
+        ],
+        [
+          [0, 0.04],
+          [1, 0.03],
+        ],
+        { segments: 16, radial: 10 }
+      ),
+      veinMaterial
+    )
+  );
+  hilum.add(
+    new THREE.Mesh(
+      taperedTube(
+        THREE,
+        [
+          [0.2, -0.18, -0.04],
+          [0.46, -0.32, -0.06],
+          [0.64, -0.6, -0.07],
+          [0.69, -1.0, -0.07],
+          [0.63, -1.5, -0.06],
+          [0.55, -2.05, -0.05],
+        ],
+        [
+          [0, 0.13],
+          [0.12, 0.1],
+          [0.3, 0.062],
+          [1, 0.05],
+        ],
+        { segments: 80 }
+      ),
+      ureterMaterial
+    )
+  );
 
-  const striationMap = createMedullaStriationTexture(THREE);
-  const medullaMaterial = new THREE.MeshStandardMaterial({
-    color: 0xbd6f52,
-    roughness: 0.65,
-    ...(striationMap ? { map: striationMap } : {}),
-  });
-
-  const pelvisMaterial = new THREE.MeshStandardMaterial({ color: 0xead9b8, roughness: 0.6 });
-  const pelvis = new THREE.Mesh(new THREE.SphereGeometry(0.26, 32, 24), pelvisMaterial);
-  pelvis.scale.set(0.72, 1.15, 0.72);
-  pelvis.position.set(0.08, -0.2, 0);
-  sectionInner.add(pelvis);
-
-  /* Medullary pyramids fanning radially around the pelvis, with papillae draining
-     into minor calyces funnels (pelvisMaterial) seated in the renal sinus. */
-  const pyramids = [
-    // [bx, by, bz, px, py, pz, rBase, rTip]
-    [0.06, 0.76, -0.02, 0.07, 0.16, -0.01, 0.15, 0.04],
-    [-0.32, 0.6, -0.08, -0.06, 0.1, -0.05, 0.14, 0.038],
-    [-0.48, 0.44, 0.06, -0.1, 0.02, 0.04, 0.14, 0.038],
-    [-0.66, 0.12, -0.06, -0.16, -0.1, -0.04, 0.14, 0.038],
-    [-0.68, -0.14, 0.06, -0.17, -0.22, 0.04, 0.14, 0.038],
-    [-0.54, -0.46, 0.04, -0.12, -0.36, 0.03, 0.14, 0.038],
-    [-0.34, -0.68, -0.08, -0.06, -0.44, -0.05, 0.14, 0.038],
-    [-0.04, -0.86, -0.02, 0.04, -0.48, -0.01, 0.14, 0.038],
-  ];
-
-  const upVector = new THREE.Vector3(0, 1, 0);
-  for (const [bx, by, bz, px, py, pz, rBase, rTip] of pyramids) {
-    const base = new THREE.Vector3(bx, by, bz);
-    const papilla = new THREE.Vector3(px, py, pz);
-    const delta = new THREE.Vector3().subVectors(papilla, base);
-    const length = delta.length();
-    const dir = delta.clone().normalize();
-
-    // Striated pyramid body tapering from cortex base to papilla
-    const pyrGeom = new THREE.CylinderGeometry(rTip, rBase, length, 14);
-    const pyrMesh = new THREE.Mesh(pyrGeom, medullaMaterial);
-    const center = new THREE.Vector3().addVectors(base, papilla).multiplyScalar(0.5);
-    pyrMesh.position.copy(center);
-    pyrMesh.quaternion.setFromUnitVectors(upVector, dir);
-    sectionInner.add(pyrMesh);
-
-    // Convex arched base cap facing cortex
-    const baseDomeGeom = new THREE.SphereGeometry(rBase, 14, 6, 0, Math.PI * 2, 0, Math.PI / 2);
-    baseDomeGeom.scale(1, 0.35, 1);
-    const baseDomeMesh = new THREE.Mesh(baseDomeGeom, medullaMaterial);
-    baseDomeMesh.position.copy(base);
-    baseDomeMesh.quaternion.setFromUnitVectors(upVector, dir.clone().negate());
-    sectionInner.add(baseDomeMesh);
-
-    // Rounded papilla dome at the apex
-    const domeGeom = new THREE.SphereGeometry(rTip, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2);
-    const domeMesh = new THREE.Mesh(domeGeom, medullaMaterial);
-    domeMesh.position.copy(papilla);
-    domeMesh.quaternion.setFromUnitVectors(upVector, dir);
-    sectionInner.add(domeMesh);
-
-    // Pale papilla tip where it meets the calyx
-    const tipMesh = new THREE.Mesh(new THREE.SphereGeometry(rTip * 0.75, 10, 8), pelvisMaterial);
-    tipMesh.position.copy(papilla).addScaledVector(dir, 0.015);
-    tipMesh.scale.set(1, 0.8, 1);
-    sectionInner.add(tipMesh);
-
-    // Minor calyx funnel cupping the papilla and draining into the pelvis
-    const calyxLength = 0.11;
-    const calyxGeom = new THREE.CylinderGeometry(rTip * 0.85, rTip * 1.35, calyxLength, 10, 1, true);
-    const calyxMesh = new THREE.Mesh(calyxGeom, pelvisMaterial);
-    const calyxCenter = papilla.clone().addScaledVector(dir, calyxLength * 0.5);
-    calyxMesh.position.copy(calyxCenter);
-    calyxMesh.quaternion.setFromUnitVectors(upVector, dir);
-    sectionInner.add(calyxMesh);
-  }
-
-  /* Renal columns: thin septa seated in the gaps between pyramids. */
-  const renalColumns = [
-    // [baseX, baseY, baseZ, tipX, tipY, tipZ, rBase, rTip]
-    [-0.4, 0.52, -0.01, -0.08, 0.06, -0.005, 0.045, 0.025],
-    [-0.67, -0.01, 0.0, -0.165, -0.16, 0.0, 0.045, 0.025],
-    [-0.44, -0.57, -0.02, -0.09, -0.4, -0.01, 0.045, 0.025],
-  ];
-  for (const [cbx, cby, cbz, ctx, cty, ctz, crBase, crTip] of renalColumns) {
-    const colBase = new THREE.Vector3(cbx, cby, cbz);
-    const colTip = new THREE.Vector3(ctx, cty, ctz);
-    const colDelta = new THREE.Vector3().subVectors(colTip, colBase);
-    const colDir = colDelta.clone().normalize();
-    const colMesh = new THREE.Mesh(new THREE.CylinderGeometry(crTip, crBase, colDelta.length(), 10), medullaMaterial);
-    colMesh.position.copy(new THREE.Vector3().addVectors(colBase, colTip).multiplyScalar(0.5));
-    colMesh.quaternion.setFromUnitVectors(upVector, colDir);
-    sectionInner.add(colMesh);
-  }
-
-  /* Major calyx stems merging the minor funnels toward the pelvis. */
-  const superiorMajorCalyxCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.06, 0.1, -0.03),
-    new THREE.Vector3(0.0, 0.03, -0.01),
-    new THREE.Vector3(0.06, -0.06, 0.0),
-  ]);
-  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(superiorMajorCalyxCurve, 16, 0.05, 12), pelvisMaterial));
-  const inferiorMajorCalyxCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.12, -0.36, 0.02),
-    new THREE.Vector3(-0.02, -0.33, 0.01),
-    new THREE.Vector3(0.06, -0.3, 0.0),
-  ]);
-  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(inferiorMajorCalyxCurve, 16, 0.055, 12), pelvisMaterial));
-
-  const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xd9a06b, roughness: 0.6 });
-  const ureterCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.2, -0.4, 0),
-    new THREE.Vector3(0.28, -0.8, 0.02),
-    new THREE.Vector3(0.3, -1.2, 0),
-    new THREE.Vector3(0.26, -1.6, -0.02),
-  ]);
-  const ureter = new THREE.Mesh(new THREE.TubeGeometry(ureterCurve, 32, 0.09, 16), ureterMaterial);
-  kidney.add(ureter);
-
-  const arteryMaterial = new THREE.MeshStandardMaterial({ color: 0xb03028, roughness: 0.5 });
-  const veinMaterial = new THREE.MeshStandardMaterial({ color: 0x3f5f9c, roughness: 0.5 });
-  const artery = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.5, 16), arteryMaterial);
-  artery.rotation.z = Math.PI / 2;
-  artery.position.set(0.56, 0.02, -0.06);
-  kidney.add(artery);
-  const vein = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.5, 16), veinMaterial);
-  vein.rotation.z = Math.PI / 2;
-  vein.position.set(0.56, -0.14, 0.1);
-  kidney.add(vein);
-
-  /* Tapered section ureter: stacked shrinking tubes exiting below the bean. */
-  const ureterUpperCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.08, -0.42, 0.0),
-    new THREE.Vector3(0.1, -0.65, 0.01),
-    new THREE.Vector3(0.11, -0.86, 0.0),
-  ]);
-  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(ureterUpperCurve, 20, 0.075, 14), ureterMaterial));
-  const ureterLowerCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.11, -0.86, 0.0),
-    new THREE.Vector3(0.12, -1.15, 0.0),
-    new THREE.Vector3(0.1, -1.5, -0.01),
-  ]);
-  sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(ureterLowerCurve, 20, 0.06, 14), ureterMaterial));
-  for (const [material, y, z] of [
-    [arteryMaterial, 0.02, -0.04],
-    [veinMaterial, -0.14, 0.08],
-  ]) {
-    const stump = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.4, 16), material);
-    stump.rotation.z = Math.PI / 2;
-    stump.position.set(0.3, y, z);
-    sectionInner.add(stump);
-  }
-
-  /* Interlobar vessels arcing between pyramid bases (shared vessel materials). */
-  const sinusCenter = new THREE.Vector3(0.08, -0.2, 0);
-  for (let i = 0; i < pyramids.length - 1; i += 1) {
-    const a = pyramids[i];
-    const b = pyramids[i + 1];
-    const baseMid = new THREE.Vector3((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2);
-    const inner = baseMid.clone().lerp(sinusCenter, 0.6);
-    const outer = new THREE.Vector3(baseMid.x * 1.25, baseMid.y * 1.05, baseMid.z);
-    [
-      [arteryMaterial, -0.022],
-      [veinMaterial, 0.022],
-    ].forEach(([material, zOff]) => {
-      const curve = new THREE.CatmullRomCurve3([
-        inner.clone().add(new THREE.Vector3(0, 0, zOff)),
-        baseMid.clone().add(new THREE.Vector3(0, 0, zOff)),
-        outer.clone().add(new THREE.Vector3(0, 0, zOff)),
-      ]);
-      sectionInner.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 10, 0.018, 5), material));
+  /* Coronal section cap: flat layers at z = 0 painted back to front. */
+  const section = new THREE.Group();
+  section.visible = false;
+  anatomy.add(section);
+  const addLayer = (geometry, material, layer) => {
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.z = 0.0012 * layer;
+    mesh.renderOrder = layer;
+    section.add(mesh);
+    return mesh;
+  };
+  const flatMaterial = (color, map, extra = {}) =>
+    new THREE.MeshStandardMaterial({
+      color,
+      roughness: 0.62,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      ...(map ? { map } : {}),
+      ...extra,
     });
+
+  const outline = [];
+  for (let k = 0; k < 240; k += 1) {
+    const o = outlinePoint((Math.PI * 2 * k) / 240);
+    outline.push(new THREE.Vector2(o.x, o.y));
+  }
+  const cortexCapMaterial = flatMaterial(0xb85a45, textures.cortexCut);
+  addLayer(new THREE.ShapeGeometry(new THREE.Shape(outline), 1), cortexCapMaterial, 0);
+
+  const fatMaterial = flatMaterial(0xe6bb55, textures.fatCut, { roughness: 0.8 });
+  const sinusShape = new THREE.Shape();
+  sinusShape.absellipse(SINUS.x, SINUS.y, SINUS.a, SINUS.b, 0, Math.PI * 2, false, 0);
+  addLayer(new THREE.ShapeGeometry(sinusShape, 32), fatMaterial, 1);
+
+  // Pyramids fan around the sinus; the cortex shows between them as renal columns.
+  const pyramidCount = 9;
+  const pyramids = [];
+  for (let i = 0; i < pyramidCount; i += 1) {
+    const theta = HILUM_GAP + 0.12 + ((Math.PI * 2 - 2 * (HILUM_GAP + 0.12)) * i) / (pyramidCount - 1);
+    const half = 0.22 - 0.04 * Math.abs(Math.cos(theta));
+    const base = junctionPoint(theta);
+    const papilla = sinusPoint(base, 0.84);
+    pyramids.push({ theta, half, base, papilla });
+  }
+  const pyramidMaterial = flatMaterial(0x8f2e25, textures.pyramid, { roughness: 0.55 });
+  const calyxMaterial = flatMaterial(0xf6ecd9, null, { roughness: 0.5 });
+  const calyxEdgeMaterial = flatMaterial(0xcfae86, null);
+  const pelvisMaterial = calyxMaterial.clone();
+  const pelvisEdgeMaterial = calyxEdgeMaterial.clone();
+  // Urothelium edge drawn under each lumen so the collecting system reads as one tree.
+  const addCalyx = (points, profile, segments = 32, [fill, edge] = [calyxMaterial, calyxEdgeMaterial]) => {
+    addLayer(
+      ribbon(
+        THREE,
+        points,
+        profile.map(([t, w]) => [t, w + 0.022]),
+        { segments }
+      ),
+      edge,
+      3
+    );
+    addLayer(ribbon(THREE, points, profile, { segments }), fill, 3.5);
+  };
+  const papillaMaterial = flatMaterial(0xc4705c, null);
+
+  // Collecting system: pelvis -> major calyces -> minor calyx cups under each papilla.
+  const calyxRibbons = [
+    [
+      [
+        [0.0, 0.08],
+        [0.18, -0.1],
+        [0.36, -0.24],
+        [0.5, -0.33],
+      ],
+      [
+        [0, 0.2],
+        [0.6, 0.13],
+        [1, 0.095],
+      ],
+    ],
+    [
+      [
+        [0.04, 0.0],
+        [-0.02, 0.26],
+        [0.02, 0.46],
+      ],
+      [
+        [0, 0.11],
+        [1, 0.07],
+      ],
+    ],
+    [
+      [
+        [0.06, -0.08],
+        [-0.02, -0.32],
+        [0.04, -0.5],
+      ],
+      [
+        [0, 0.11],
+        [1, 0.07],
+      ],
+    ],
+  ];
+  calyxRibbons.forEach(([points, profile], index) =>
+    addCalyx(points, profile, 32, index === 0 ? [pelvisMaterial, pelvisEdgeMaterial] : undefined)
+  );
+  const calyxAnchors = [
+    { x: 0.02, y: 0.44 },
+    { x: -0.06, y: 0.02 },
+    { x: 0.04, y: -0.48 },
+  ];
+  const vesselCapArtery = flatMaterial(0xb3262a, null, { roughness: 0.45 });
+  const vesselCapVein = flatMaterial(0x3e5c9e, null, { roughness: 0.45 });
+
+  const axis = new THREE.Vector2();
+  const rel = new THREE.Vector2();
+  for (const { theta, half, base, papilla } of pyramids) {
+    axis.set(base.x - papilla.x, base.y - papilla.y);
+    const length = axis.length();
+    axis.normalize();
+    const perp = { x: -axis.y, y: axis.x };
+
+    // Minor calyx funnel cupping the papilla (drawn under the pyramid).
+    const anchor = calyxAnchors.reduce((best, a) =>
+      Math.hypot(a.x - papilla.x, a.y - papilla.y) < Math.hypot(best.x - papilla.x, best.y - papilla.y) ? a : best
+    );
+    const cupEnd = { x: papilla.x + axis.x * 0.05, y: papilla.y + axis.y * 0.05 };
+    addCalyx(
+      [
+        [anchor.x, anchor.y],
+        [(anchor.x + papilla.x) / 2, (anchor.y + papilla.y) / 2],
+        [cupEnd.x, cupEnd.y],
+      ],
+      [
+        [0, 0.05],
+        [0.6, 0.042],
+        [0.86, 0.09],
+        [1, 0.12],
+      ],
+      20
+    );
+
+    const shape = new THREE.Shape();
+    const tipL = { x: papilla.x + perp.x * 0.035 + axis.x * 0.04, y: papilla.y + perp.y * 0.035 + axis.y * 0.04 };
+    const tipR = { x: papilla.x - perp.x * 0.035 + axis.x * 0.04, y: papilla.y - perp.y * 0.035 + axis.y * 0.04 };
+    const cornerL = junctionPoint(theta + half);
+    const cornerR = junctionPoint(theta - half);
+    shape.moveTo(tipR.x, tipR.y);
+    shape.quadraticCurveTo(papilla.x - axis.x * 0.01, papilla.y - axis.y * 0.01, tipL.x, tipL.y);
+    const bulge = 0.02;
+    shape.quadraticCurveTo(
+      (tipL.x + cornerL.x) / 2 + perp.x * bulge,
+      (tipL.y + cornerL.y) / 2 + perp.y * bulge,
+      cornerL.x,
+      cornerL.y
+    );
+    for (let k = 1; k <= 12; k += 1) {
+      const p = junctionPoint(theta + half - (2 * half * k) / 12);
+      shape.lineTo(p.x, p.y);
+    }
+    shape.quadraticCurveTo(
+      (tipR.x + cornerR.x) / 2 - perp.x * bulge,
+      (tipR.y + cornerR.y) / 2 - perp.y * bulge,
+      tipR.x,
+      tipR.y
+    );
+    const geometry = new THREE.ShapeGeometry(shape, 12);
+    const position = geometry.attributes.position;
+    const uv = geometry.attributes.uv;
+    for (let k = 0; k < position.count; k += 1) {
+      rel.set(position.getX(k) - papilla.x, position.getY(k) - papilla.y);
+      const angle = Math.atan2(axis.x * rel.y - axis.y * rel.x, axis.dot(rel));
+      uv.setXY(k, angle * 2.2 + 0.5, rel.length() / length);
+    }
+    addLayer(geometry, pyramidMaterial, 4);
+    const tip = new THREE.Mesh(new THREE.CircleGeometry(0.032, 16), papillaMaterial);
+    tip.position.set(papilla.x + axis.x * 0.035, papilla.y + axis.y * 0.035, 0.0012 * 5);
+    tip.renderOrder = 5;
+    section.add(tip);
+
+    // Arcuate vessels along the base, cortical radiate branches toward the capsule.
+    const arc = [];
+    for (let k = 0; k <= 8; k += 1) {
+      const p = junctionPoint(theta + (half + 0.05) * (1 - (2 * k) / 8));
+      arc.push([p.x, p.y]);
+    }
+    addLayer(
+      ribbon(THREE, arc, [
+        [0, 0.012],
+        [1, 0.012],
+      ]),
+      vesselCapArtery,
+      6
+    );
+    for (const offset of [-0.6, 0, 0.6]) {
+      const from = junctionPoint(theta + half * offset);
+      const to = outlinePoint(theta + half * offset);
+      addLayer(
+        ribbon(
+          THREE,
+          [
+            [from.x, from.y],
+            [from.x + (to.x - from.x) * 0.75, from.y + (to.y - from.y) * 0.75],
+          ],
+          [
+            [0, 0.007],
+            [1, 0.003],
+          ],
+          { segments: 4 }
+        ),
+        vesselCapArtery,
+        6
+      );
+    }
   }
 
-  /* Peripelvic fat nodules in the renal sinus (legend entry: fat). */
-  const fatMaterial = new THREE.MeshStandardMaterial({ color: 0xe3d3a8, roughness: 0.85 });
-  for (const [fx, fy, fz, fr] of [
-    [0.02, 0.3, 0.12, 0.06],
-    [-0.24, -0.28, -0.12, 0.07],
-    [0.12, -0.44, 0.08, 0.05],
-    [-0.3, 0.3, -0.1, 0.05],
-  ]) {
-    const fatMesh = new THREE.Mesh(new THREE.SphereGeometry(fr, 12, 10), fatMaterial);
-    fatMesh.position.set(fx, fy, fz);
-    fatMesh.scale.set(1, 0.7, 1);
-    sectionInner.add(fatMesh);
+  // Interlobar vessels in the renal columns; segmental branches through the sinus fat.
+  for (let i = 0; i < pyramids.length - 1; i += 1) {
+    const theta = (pyramids[i].theta + pyramids[i + 1].theta) / 2;
+    const top = junctionPoint(theta);
+    const bottom = sinusPoint(top, 0.97);
+    // Hilar entry points fan out (artery above, vein below) so branches do not stack.
+    const spread = i / (pyramids.length - 2) - 0.5;
+    for (const [material, shift, width, layer, hilumPoint] of [
+      [vesselCapVein, 0.012, 0.016, 2, [0.44, -0.08 + spread * 0.1]],
+      [vesselCapArtery, -0.012, 0.013, 2.3, [0.44, 0.1 + spread * 0.1]],
+    ]) {
+      const n = { x: -(top.y - bottom.y), y: top.x - bottom.x };
+      const len = Math.hypot(n.x, n.y) || 1;
+      const ox = (n.x / len) * shift;
+      const oy = (n.y / len) * shift;
+      addLayer(
+        ribbon(
+          THREE,
+          [
+            [bottom.x + ox, bottom.y + oy],
+            [top.x + ox, top.y + oy],
+          ],
+          [
+            [0, width],
+            [1, width * 0.8],
+          ],
+          { segments: 4 }
+        ),
+        material,
+        6
+      );
+      addLayer(
+        ribbon(
+          THREE,
+          [
+            hilumPoint,
+            [(hilumPoint[0] + bottom.x) / 2 + 0.06, (hilumPoint[1] + bottom.y) / 2],
+            [bottom.x + ox, bottom.y + oy],
+          ],
+          [
+            [0, width * 1.6],
+            [1, width],
+          ],
+          { segments: 20 }
+        ),
+        material,
+        layer
+      );
+    }
   }
 
-  const cystMaterial = new THREE.MeshStandardMaterial({
-    color: 0xe6c46c,
-    roughness: 0.25,
-    metalness: 0.05,
-    transparent: true,
-    opacity: 0.92,
-  });
+  // Fibrous capsule: thin pale rim around the cut.
+  addLayer(
+    ribbon(
+      THREE,
+      outline.map((v) => [v.x, v.y]),
+      [
+        [0, 0.016],
+        [1, 0.016],
+      ],
+      { segments: 480, closed: true }
+    ),
+    flatMaterial(0xe6c0b0, null, { roughness: 0.4 }),
+    7
+  );
+
+  /* Cysts: one set of spheres inside the parenchyma. Those near the surface
+     bulge out (external view); those crossing z = 0 are drawn on the cap. */
+  const cystPalette = [
+    [0xf6e8b8, 0.6],
+    [0xdcb35a, 0.22],
+    [0xb5703a, 0.12],
+    [0x6e3226, 0.06],
+  ];
+  const cystMaterials = cystPalette.map(
+    ([color]) =>
+      new THREE.MeshPhysicalMaterial({
+        color,
+        roughness: 0.14,
+        metalness: 0,
+        clearcoat: 1,
+        clearcoatRoughness: 0.08,
+        transparent: true,
+        opacity: 0.9,
+        side: THREE.DoubleSide,
+      })
+  );
+  const cystCapMaterials = cystPalette.map(([color]) => flatMaterial(color, textures.cystCut, { roughness: 0.2 }));
   const cysts = new THREE.Group();
   cysts.visible = false;
-  kidney.add(cysts);
+  anatomy.add(cysts);
+  const cystCaps = new THREE.Group();
+  section.add(cystCaps);
+  const cystSphere = new THREE.SphereGeometry(1, 28, 20);
+  const cystDisc = new THREE.CircleGeometry(1, 40);
 
+  const clippedMaterials = [
+    cortexMaterial,
+    arteryMaterial,
+    veinMaterial,
+    ureterMaterial,
+    hilarFatMaterial,
+    ...cystMaterials,
+  ];
   const parts = {
-    cortex: [cortexMaterial],
-    medulla: [medullaMaterial],
-    pelvis: [pelvisMaterial],
+    cortex: [cortexMaterial, cortexCapMaterial],
+    medulla: [pyramidMaterial, papillaMaterial],
+    calyx: [calyxMaterial, calyxEdgeMaterial],
+    pelvis: [pelvisMaterial, pelvisEdgeMaterial],
     ureter: [ureterMaterial],
-    cyst: [cystMaterial],
-    fat: [fatMaterial],
+    vessels: [arteryMaterial, veinMaterial, vesselCapArtery, vesselCapVein],
+    cyst: [...cystMaterials, ...cystCapMaterials],
+    fat: [fatMaterial, hilarFatMaterial],
   };
 
+  let dirty = true;
+  const invalidate = () => {
+    dirty = true;
+  };
   let currentView = 'external';
   let currentMode = 'healthy';
+  let currentLevel = 3;
 
-  const updateCystVisibility = () => {
-    cysts.visible = currentMode === 'cystic';
-    for (const cyst of cysts.children) {
-      cyst.visible = !(currentView === 'section' && cyst.userData.baseX > 0.2);
+  const pickPalette = (value) => {
+    let acc = 0;
+    for (let i = 0; i < cystPalette.length; i += 1) {
+      acc += cystPalette[i][1];
+      if (value < acc) return i;
     }
+    return 0;
+  };
+
+  /* Lift the capsule around bulging cysts so domes blend into a lumpy
+     surface instead of sitting on it like beads. */
+  const deformCapsule = (bulges) => {
+    const { basePositions, baseNormals } = kidneyGeometry.userData;
+    const position = kidneyGeometry.attributes.position;
+    const out = position.array;
+    out.set(basePositions);
+    for (let i = 0; i < out.length; i += 3) {
+      const x = basePositions[i];
+      const y = basePositions[i + 1];
+      const z = basePositions[i + 2];
+      let lift = 0;
+      for (const c of bulges) {
+        if (!c.surface) continue;
+        const reach = c.r * 1.6;
+        const dx = x - c.x;
+        const dy = y - c.y;
+        const dz = z - c.z;
+        const d2 = dx * dx + dy * dy + dz * dz;
+        if (d2 > reach * reach) continue;
+        const k = 1 - Math.sqrt(d2) / reach;
+        lift = Math.max(lift, c.r * 0.6 * k * k);
+      }
+      if (lift > 0) {
+        out[i] += baseNormals[i] * lift;
+        out[i + 1] += baseNormals[i + 1] * lift;
+        out[i + 2] += baseNormals[i + 2] * lift;
+      }
+    }
+    position.needsUpdate = true;
+    computeKidneyNormals(kidneyGeometry);
+    kidneyGeometry.computeBoundingSphere();
   };
 
   const setSeverity = (level) => {
-    while (cysts.children.length > 0) {
-      const child = cysts.children.pop();
-      child.geometry.dispose();
-      cysts.remove(child);
-    }
+    currentLevel = level;
+    cysts.clear();
+    cystCaps.clear();
     const random = mulberry32(20260917);
-    const count = level * 4;
-    let placed = 0;
-    for (let attempts = 0; placed < count && attempts < count * 12; attempts += 1) {
+    const count = [0, 10, 18, 28, 40, 56][level] || 28;
+    const sizeScale = 0.7 + 0.12 * level;
+    const placed = [];
+    const surfaceShare = 0.65;
+    for (let attempts = 0; placed.length < count && attempts < count * 40; attempts += 1) {
+      const surface = placed.length < count * surfaceShare;
       const theta = random() * Math.PI * 2;
-      const z = random() * 2 - 1;
-      const radius = Math.sqrt(Math.max(0, 1 - z * z));
-      const surface = beanPoint(radius * Math.cos(theta), z * 0.9, radius * Math.sin(theta));
-      if (surface.x > 0.2 && Math.abs(surface.y) < 0.55) continue; // keep the hilum clear
-      const size = (0.1 + random() * 0.16) * (0.7 + level * 0.12);
-      const cyst = new THREE.Mesh(new THREE.SphereGeometry(size, 24, 18), cystMaterial);
-      const push = 0.92 + random() * 0.12;
-      cyst.position.set(surface.x * push, surface.y * push, surface.z * push);
-      cyst.scale.y = 0.85;
-      cyst.userData.baseX = cyst.position.x;
-      cysts.add(cyst);
-      placed += 1;
+      // Surface cysts: area-uniform over both faces and the rim; deep ones near the cut.
+      const side = random() < 0.5 ? -1 : 1;
+      const phi = surface ? side * Math.acos(Math.min(1, Math.sqrt(random()) ** (1 / 0.72))) : (random() * 2 - 1) * 0.6;
+      const radius = (0.06 + 0.26 * random() ** 2) * sizeScale;
+      const depth = 0.05 + 0.4 * random();
+      const s = 0.4 + 0.45 * random();
+      const tone = random();
+      if (Math.abs(wrapAngle(theta)) < HILUM_GAP - 0.1) continue; // keep the hilum clear
+      let p;
+      if (surface) {
+        // Centre sits just under the capsule so only a dome bulges out.
+        const q = lensPoint(theta, phi);
+        const n = lensNormal(theta, phi);
+        p = { x: q.x - n.x * radius * depth, y: q.y - n.y * radius * depth, z: q.z - n.z * radius * depth };
+      } else {
+        p = lensPoint(theta, phi, s);
+      }
+      const sx = (p.x - SINUS.x) / (SINUS.a + radius * 0.4);
+      const sy = (p.y - SINUS.y) / (SINUS.b + radius * 0.4);
+      if (sx * sx + sy * sy < 1) continue; // cysts are parenchymal, not in the sinus
+      if (placed.some((q) => Math.hypot(q.x - p.x, q.y - p.y, q.z - p.z) < (q.r + radius) * 0.72)) continue;
+      placed.push({ ...p, r: radius, tone: pickPalette(tone), surface });
     }
-    updateCystVisibility();
+    cystLayout = placed;
+    for (const c of placed) {
+      const sphere = new THREE.Mesh(cystSphere, cystMaterials[c.tone]);
+      sphere.position.set(c.x, c.y, c.z);
+      sphere.scale.set(c.r, c.r * 0.94, c.r * 0.9);
+      cysts.add(sphere);
+      if (Math.abs(c.z) < c.r * 0.9) {
+        const r = c.r * Math.sqrt(1 - (c.z / (c.r * 0.9)) ** 2);
+        const disc = new THREE.Mesh(cystDisc, cystCapMaterials[c.tone]);
+        disc.position.set(c.x, c.y, 0.0012 * 8);
+        disc.scale.set(r, r * 0.94, 1);
+        disc.renderOrder = 8;
+        cystCaps.add(disc);
+      }
+    }
+    applyMode();
   };
+
+  const frame = () => {
+    const scale = currentMode === 'cystic' ? 1 + 0.11 * (currentLevel - 1) : 1;
+    anatomy.scale.setScalar(scale);
+    const base = currentView === 'section' ? sectionPosition : homePosition;
+    // Pull back less than the PKD enlargement: the kidney visibly grows but stays framed.
+    lookAt.copy(target).multiplyScalar(scale);
+    camera.position
+      .copy(base)
+      .sub(target)
+      .multiplyScalar(0.5 + 0.5 * scale)
+      .add(lookAt);
+    camera.lookAt(lookAt);
+    invalidate();
+  };
+
+  let cystLayout = [];
+  function applyMode() {
+    const cystic = currentMode === 'cystic';
+    deformCapsule(cystic ? cystLayout : []);
+    cysts.visible = cystic;
+    cystCaps.visible = cystic;
+    frame();
+  }
 
   const setView = (view) => {
     currentView = view;
-    const section = view === 'section';
-    cortexMaterial.clippingPlanes = section ? [clipPlane] : [];
-    sectionInner.visible = section;
-    ureter.visible = !section;
-    artery.visible = !section;
-    vein.visible = !section;
-    updateCystVisibility();
-    camera.position.copy(section ? sectionPosition : homePosition);
-    camera.lookAt(0, -0.1, 0);
+    const cut = view === 'section';
+    for (const material of clippedMaterials) material.clippingPlanes = cut ? [clipPlane] : [];
+    section.visible = cut;
+    kidney.rotation.set(0, cut ? -0.32 : 0, 0);
+    frame();
   };
 
   const setMode = (mode) => {
     currentMode = mode;
-    updateCystVisibility();
+    applyMode();
   };
 
   let flashTimer = 0;
-  const flash = (part) => {
+  const clearFlash = () => {
     for (const materials of Object.values(parts)) {
       for (const material of materials) material.emissive.setHex(0x000000);
     }
+  };
+  const flash = (part) => {
+    clearFlash();
     window.clearTimeout(flashTimer);
     for (const material of parts[part] || []) material.emissive.setHex(0x7a2d00);
+    invalidate();
     flashTimer = window.setTimeout(() => {
-      for (const materials of Object.values(parts)) {
-        for (const material of materials) material.emissive.setHex(0x000000);
-      }
+      clearFlash();
+      invalidate();
     }, 1200);
   };
 
@@ -540,6 +1114,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    invalidate();
   };
   resize();
   if ('ResizeObserver' in window) {
@@ -552,6 +1127,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
       visible = entries.some((entry) => entry.isIntersecting);
+      invalidate();
     }).observe(stage);
   }
 
@@ -572,6 +1148,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
     kidney.rotation.x = Math.max(-0.6, Math.min(0.6, kidney.rotation.x + (event.clientY - lastY) * 0.005));
     lastX = event.clientX;
     lastY = event.clientY;
+    invalidate();
   });
   const stopDrag = () => {
     dragging = false;
@@ -580,10 +1157,19 @@ function createScene(THREE, canvas, { reduceMotion }) {
   canvas.addEventListener('pointerup', stopDrag);
   canvas.addEventListener('pointercancel', stopDrag);
 
+  // Render on demand: only the spinning outside view needs every frame.
   const tick = () => {
     requestAnimationFrame(tick);
     if (!visible || document.hidden) return;
-    if (!reduceMotion && !dragging) kidney.rotation.y += 0.0025;
+    // The cut face stays put so it can be read; only the outside view spins.
+    const spinning = !reduceMotion && !dragging && currentView === 'external';
+    if (spinning) kidney.rotation.y += 0.0025;
+    else if (!dirty) return;
+    dirty = false;
+    // Clip in the kidney's own frame so the cut follows rotation. Update from the
+    // scene root: the parent group's rotation may have changed since the last frame.
+    scene.updateMatrixWorld();
+    clipPlane.copy(localClip).applyMatrix4(anatomy.matrixWorld);
     renderer.render(scene, camera);
   };
   tick();

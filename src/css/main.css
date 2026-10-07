@@ -1294,6 +1294,7 @@ h2 {
   .kidney3d__canvas,
   .kidney3d__controls,
   .kidney3d__status,
+  .kidney3d__hint,
   .skip-link {
     display: none !important;
   }
@@ -1587,6 +1588,34 @@ h2 {
   touch-action: pan-y;
 }
 
+.kidney3d__hint {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  margin: 0;
+  padding: var(--space-1) var(--space-2);
+  max-width: calc(100% - 2 * var(--space-3));
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: rgb(250 248 243 / 88%);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.kidney3d__hint[hidden] {
+  display: none;
+}
+
+@media (max-width: 639.98px) {
+  .kidney3d__hint-more {
+    display: none;
+  }
+}
+
 .kidney3d__fallback {
   padding: var(--space-4);
   text-align: center;
@@ -1679,6 +1708,32 @@ label.kidney3d__group-label {
   }
 }
 
+/* Wide screens: controls sit beside the model instead of leaving the right half empty. */
+@media (min-width: 960px) {
+  .kidney3d {
+    grid-template-columns: minmax(0, 36rem) minmax(15rem, 1fr);
+    column-gap: var(--space-8);
+  }
+
+  .kidney3d__stage {
+    grid-row: span 2;
+  }
+
+  .kidney3d__controls {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding-top: var(--space-2);
+  }
+
+  .kidney3d__status {
+    align-self: end;
+  }
+
+  .kidney3d__alt {
+    grid-column: 1 / -1;
+  }
+}
+
 .kidney3d__status {
   margin: 0;
   min-height: 1.5em;
@@ -1709,7 +1764,58 @@ label.kidney3d__group-label {
   border-top: 1px solid var(--border);
 }
 
+.kidney3d__part {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.kidney3d__swatch {
+  flex: none;
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  transform: translateY(0.1rem);
+  border-radius: 50%;
+  border: 1px solid rgb(26 26 26 / 18%);
+  background: var(--swatch, var(--muted));
+}
+
+.kidney3d__swatch--cortex {
+  --swatch: #b85a45;
+}
+
+.kidney3d__swatch--medulla {
+  --swatch: #8f2e25;
+}
+
+.kidney3d__swatch--calyx,
+.kidney3d__swatch--pelvis {
+  --swatch: #f6ecd9;
+
+  border-color: #cfae86;
+}
+
+.kidney3d__swatch--ureter {
+  --swatch: #e0b58a;
+}
+
+.kidney3d__swatch--vessels {
+  --swatch: linear-gradient(90deg, #b3262a 50%, #3e5c9e 50%);
+}
+
+.kidney3d__swatch--cyst {
+  --swatch: radial-gradient(circle at 38% 35%, #fffaf0 0 18%, #f6e8b8 45%);
+
+  border: 2px solid #c9a75a;
+}
+
+.kidney3d__swatch--fat {
+  --swatch: #e6bb55;
+}
+
 .kidney3d__table th button {
+  text-align: left;
   background: none;
   border: 0;
   padding: 0;
