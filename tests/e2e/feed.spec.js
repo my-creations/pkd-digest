@@ -1,19 +1,23 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('atom feed', () => {
-  test('serves an EN feed with one entry per latest-issue card', async ({ request }) => {
+  test('serves an EN feed with one entry per latest-issue card', async ({ request, page }) => {
     const res = await request.get('feed.xml');
     expect(res.ok()).toBeTruthy();
     const xml = await res.text();
 
     expect(xml).toContain('<feed xmlns="http://www.w3.org/2005/Atom">');
     expect(xml).toContain('<link href="https://my-creations.github.io/pkd-digest/digest/" />');
-    expect(xml).toContain('KDOQI US Commentary');
-    expect(xml).toContain('/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/');
     expect(xml).toMatch(/<updated>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
 
+    // Entries mirror the digest's latest issue, linking to EN card permalinks.
+    await page.goto('digest/');
+    const cardCount = await page.locator('.digest-river article').count();
     const entries = xml.match(/<entry>/g) || [];
-    expect(entries.length).toBeGreaterThan(0);
+    expect(cardCount).toBeGreaterThan(0);
+    expect(entries.length).toBe(cardCount);
+    const entryLinks = xml.match(/<link href="[^"]+\/pkd-digest\/digest\/[^"]+\/" \/>/g) || [];
+    expect(entryLinks.length).toBe(cardCount);
   });
 
   test('serves a PT feed with translated titles', async ({ request }) => {
@@ -22,12 +26,20 @@ test.describe('atom feed', () => {
     const xml = await res.text();
 
     expect(xml).toContain('<link href="https://my-creations.github.io/pkd-digest/pt/digest/" />');
-    expect(xml).toContain('Comentário KDOQI');
+    expect(xml).toContain('/pkd-digest/pt/digest/');
 
     const enRes = await request.get('feed.xml');
-    const enEntries = (await enRes.text()).match(/<entry>/g) || [];
+    const enXml = await enRes.text();
+    const enEntries = enXml.match(/<entry>/g) || [];
     const ptEntries = xml.match(/<entry>/g) || [];
     expect(ptEntries.length).toBe(enEntries.length);
+
+    // Every entry title is a real translation, not a copy of the EN title.
+    const titles = (feed) => [...feed.matchAll(/<entry>\s*<title>([^<]*)<\/title>/g)].map((match) => match[1]);
+    const enTitles = titles(enXml);
+    const ptTitles = titles(xml);
+    expect(ptTitles.length).toBe(enTitles.length);
+    ptTitles.forEach((title, index) => expect(title).not.toBe(enTitles[index]));
   });
 
   test('excludes drafts and placeholders from both feeds', async ({ request }) => {

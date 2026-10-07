@@ -4,6 +4,20 @@ async function visibleCards(page, scope = '.digest-river') {
   return page.locator(`${scope} [data-filterable]:not([hidden])`).count();
 }
 
+// A topic tag carried by some, but not all, cards in the current issue — so filtering narrows the list
+// whatever the latest issue happens to contain.
+async function partialTag(page, scope = '.digest-river') {
+  const cardTags = await page
+    .locator(`${scope} [data-filterable]`)
+    .evaluateAll((nodes) => nodes.map((node) => node.dataset.tags.split(' ')));
+  const tag = ['advocacy', 'treatment', 'lifestyle', 'research'].find((value) => {
+    const count = cardTags.filter((tags) => tags.includes(value)).length;
+    return count > 0 && count < cardTags.length;
+  });
+  expect(tag, 'latest issue needs a tag that only some cards carry').toBeTruthy();
+  return tag;
+}
+
 test.describe('card filters', () => {
   test('narrows digest cards by topic and syncs the rail', async ({ page }) => {
     await page.goto('digest/');
@@ -12,7 +26,8 @@ test.describe('card filters', () => {
     expect(total).toBeGreaterThan(0);
     await expect(page.locator('[data-filters-count]')).toContainText(`Showing ${total} cards.`);
 
-    await page.locator('[data-filter-group="tag"] [data-filter-value="advocacy"]').click();
+    const tag = await partialTag(page);
+    await page.locator(`[data-filter-group="tag"] [data-filter-value="${tag}"]`).click();
 
     const shown = await visibleCards(page);
     expect(shown).toBeGreaterThan(0);
@@ -23,11 +38,11 @@ test.describe('card filters', () => {
     const tags = await page
       .locator('.digest-river [data-filterable]:not([hidden])')
       .evaluateAll((nodes) => nodes.map((node) => node.dataset.tags));
-    expect(tags.every((value) => value.split(' ').includes('advocacy'))).toBe(true);
+    expect(tags.every((value) => value.split(' ').includes(tag))).toBe(true);
     expect(await page.locator('.digest-rail li:not([hidden])').count()).toBe(shown);
 
     // Toggle state is exposed to assistive tech.
-    await expect(page.locator('[data-filter-group="tag"] [data-filter-value="advocacy"]')).toHaveAttribute(
+    await expect(page.locator(`[data-filter-group="tag"] [data-filter-value="${tag}"]`)).toHaveAttribute(
       'aria-pressed',
       'true'
     );
@@ -87,7 +102,8 @@ test.describe('card filters', () => {
     await expect(page.locator('[data-filter-group="tag"]')).toContainText('Tema');
     await expect(page.locator('[data-filters-count]')).toContainText(`A mostrar ${total} cartões.`);
 
-    await page.locator('[data-filter-group="tag"] [data-filter-value="advocacy"]').click();
+    const tag = await partialTag(page);
+    await page.locator(`[data-filter-group="tag"] [data-filter-value="${tag}"]`).click();
     const shown = await visibleCards(page);
     expect(shown).toBeLessThan(total);
     await expect(page.locator('[data-filters-count]')).toContainText('A mostrar');
