@@ -65,6 +65,53 @@ stop reason`); retry com pedido mais curto passou e devolveu labels PT/EN
    fallback estático; testes Playwright/axe + budget Lighthouse.
 3. Registar resultado do teste Union Alpha e decidir uso (labels/Q&A) no PR.
 
+## v2 do modelo procedural (2026-10-07)
+
+Pergunta: dá para fazer um rim 3D melhor? Sim, sem assets novos (continua
+100 % procedural em `src/js/kidney3d.js`, 0 KB extra de rede; o GLB
+BodyParts3D/Z-Anatomy fica como opção futura com atribuição CC-BY-SA).
+
+Problemas da v1 (screenshots com SwiftShader):
+
+- Forma = esfera deformada: "feijão" largo demais (proporção ~2,6 × 2 × 1,6),
+  hilo como mossa genérica.
+- Corte = casca oca (`BackSide`) cortada em x: lia-se como uma tigela vazia;
+  pirâmides eram cilindros num leque, sem colunas renais legíveis.
+- Plano de corte fixo no mundo: ao rodar, o corte "deslizava" pelo rim.
+- Quistos = esferas pousadas por fora; no corte não apareciam como cavidades.
+
+O que a v2 faz:
+
+- **Forma anatómica**: superfície "lente" varrida sobre um contorno coronal 2D
+  (11 × 6 × 3 cm), polo superior mais largo, eixo inclinado (polo superior
+  medial), hilo com seio renal, gordura hilar, veia anterior / artéria /
+  pelve-ureter posterior, ureter afunilado a descer medial ao polo inferior.
+- **Corte coronal sólido**: como a secção em z = 0 é exatamente o contorno, a
+  face de corte é desenhada em camadas planas — córtex granular, colunas
+  renais, 9 pirâmides estriadas com papilas, cálices menores → maiores →
+  pelve, gordura do seio lobulada, artérias/veias segmentares, interlobares,
+  arqueadas e radiadas corticais, cápsula fibrosa. Ureter e vasos cortados
+  mostram o lúmen.
+- **Plano de corte no referencial do rim**: o corte acompanha a rotação; a
+  vista de corte não auto-roda (para se conseguir ler).
+- **Quistos PKD**: um único conjunto de esferas dentro do parênquima; os
+  superficiais levantam a cápsula (deformação suave da malha → superfície
+  bosselada), os que atravessam o plano aparecem no corte como cavidades com
+  parede fina; paleta inclui quistos hemorrágicos/proteináceos. A carga
+  (1–5) aumenta número, tamanho e o volume renal (até ~1,45×), com a câmara a
+  recuar menos do que o crescimento para o aumento ser visível.
+- Desempenho: render on-demand (só a vista exterior a rodar desenha todos os
+  frames; corte, reduced-motion e rato parado não gastam GPU). Um mapa de
+  ambiente PMREM foi testado e retirado: duplicava o custo por pixel
+  (SwiftShader 7 → 14 fps sem ele) com pouco ganho visual. Malha da cápsula
+  144 × 60. Init ~1,1 s em SwiftShader (v1: ~1,0 s).
+
+![v1 vs v2](kidney-3d-v1-vs-v2.png)
+
+Próximos passos possíveis: etiquetas HTML ancoradas a pontos 3D (cálices,
+papila, coluna renal); fallback SVG redesenhado a partir do mesmo contorno;
+comparar com GLB BodyParts3D decimado se se quiser ainda mais fidelidade.
+
 ## Fontes
 
 - three.js: [Loading 3D Models](https://threejs.org/manual/en/loading-3d-models.html),
