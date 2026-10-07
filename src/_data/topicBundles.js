@@ -20,6 +20,7 @@ module.exports = [
       'prevalence-of-unruptured-intracranial-aneurysms-according-to-42679840',
       'factors-associated-with-cerebrovascular-complications-in-a-c-42690331',
       'kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026',
+      'development-of-a-prediction-model-for-aneurysmal-events-to-g-42826403',
     ],
   },
   {
