@@ -1,0 +1,12 @@
+name: Scratch PubMed fetch (temporary, read-only)
+on:
+  push:
+    branches: [scratch/pubmed-fetch]
+permissions:
+  contents: read
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 fetch.py
