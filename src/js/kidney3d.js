@@ -20,6 +20,7 @@ function initKidney(mount) {
   const severity = mount.querySelector('[data-kidney3d-severity]');
   const severityValue = mount.querySelector('[data-kidney3d-severity-value]');
   const focusButtons = Array.from(mount.querySelectorAll('[data-kidney3d-focus]'));
+  const hint = mount.querySelector('[data-kidney3d-hint]');
 
   const state = { view: 'external', mode: 'healthy', severity: 3 };
   let scene = null;
@@ -71,7 +72,7 @@ function initKidney(mount) {
   // Structures hidden in the current view also switch to the view where
   // they are visible (interior pieces live in the cross-section; cysts
   // only exist in polycystic mode).
-  const focusTarget = { medulla: 'section', pelvis: 'section', cyst: 'cystic', fat: 'section' };
+  const focusTarget = { medulla: 'section', calyx: 'section', pelvis: 'section', cyst: 'cystic', fat: 'section' };
   for (const button of focusButtons) {
     button.addEventListener('click', () => {
       const part = button.dataset.kidney3dFocus;
@@ -100,6 +101,7 @@ function initKidney(mount) {
       scene.setMode(state.mode);
       scene.setSeverity(state.severity);
       canvas.hidden = false;
+      if (hint) hint.hidden = false;
       if (fallback) fallback.hidden = true;
       // Do not overwrite a structure name the reader picked while the model loaded.
       if (status && mount.dataset.ready && status.textContent === mount.dataset.loading) {
@@ -511,7 +513,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const arteryMaterial = new THREE.MeshStandardMaterial({ color: 0xb3262a, roughness: 0.38, side: THREE.DoubleSide });
   const veinMaterial = new THREE.MeshStandardMaterial({ color: 0x3e5c9e, roughness: 0.42, side: THREE.DoubleSide });
   const ureterMaterial = new THREE.MeshStandardMaterial({ color: 0xe0b58a, roughness: 0.5, side: THREE.DoubleSide });
-  const hilarFatMaterial = new THREE.MeshStandardMaterial({ color: 0xe9cf86, roughness: 0.75 });
+  const hilarFatMaterial = new THREE.MeshStandardMaterial({ color: 0xe2b752, roughness: 0.8 });
   const hilum = new THREE.Group();
   anatomy.add(hilum);
   const hilarFat = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 18), hilarFatMaterial);
@@ -645,7 +647,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const cortexCapMaterial = flatMaterial(0xb85a45, textures.cortexCut);
   addLayer(new THREE.ShapeGeometry(new THREE.Shape(outline), 1), cortexCapMaterial, 0);
 
-  const fatMaterial = flatMaterial(0xf0d690, textures.fatCut, { roughness: 0.8 });
+  const fatMaterial = flatMaterial(0xe6bb55, textures.fatCut, { roughness: 0.8 });
   const sinusShape = new THREE.Shape();
   sinusShape.absellipse(SINUS.x, SINUS.y, SINUS.a, SINUS.b, 0, Math.PI * 2, false, 0);
   addLayer(new THREE.ShapeGeometry(sinusShape, 32), fatMaterial, 1);
@@ -663,8 +665,10 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const pyramidMaterial = flatMaterial(0x8f2e25, textures.pyramid, { roughness: 0.55 });
   const calyxMaterial = flatMaterial(0xf6ecd9, null, { roughness: 0.5 });
   const calyxEdgeMaterial = flatMaterial(0xcfae86, null);
+  const pelvisMaterial = calyxMaterial.clone();
+  const pelvisEdgeMaterial = calyxEdgeMaterial.clone();
   // Urothelium edge drawn under each lumen so the collecting system reads as one tree.
-  const addCalyx = (points, profile, segments = 32) => {
+  const addCalyx = (points, profile, segments = 32, [fill, edge] = [calyxMaterial, calyxEdgeMaterial]) => {
     addLayer(
       ribbon(
         THREE,
@@ -672,10 +676,10 @@ function createScene(THREE, canvas, { reduceMotion }) {
         profile.map(([t, w]) => [t, w + 0.022]),
         { segments }
       ),
-      calyxEdgeMaterial,
+      edge,
       3
     );
-    addLayer(ribbon(THREE, points, profile, { segments }), calyxMaterial, 3.5);
+    addLayer(ribbon(THREE, points, profile, { segments }), fill, 3.5);
   };
   const papillaMaterial = flatMaterial(0xc4705c, null);
 
@@ -717,7 +721,9 @@ function createScene(THREE, canvas, { reduceMotion }) {
       ],
     ],
   ];
-  for (const [points, profile] of calyxRibbons) addCalyx(points, profile);
+  calyxRibbons.forEach(([points, profile], index) =>
+    addCalyx(points, profile, 32, index === 0 ? [pelvisMaterial, pelvisEdgeMaterial] : undefined)
+  );
   const calyxAnchors = [
     { x: 0.02, y: 0.44 },
     { x: -0.06, y: 0.02 },
@@ -897,7 +903,7 @@ function createScene(THREE, canvas, { reduceMotion }) {
   /* Cysts: one set of spheres inside the parenchyma. Those near the surface
      bulge out (external view); those crossing z = 0 are drawn on the cap. */
   const cystPalette = [
-    [0xf2dc94, 0.6],
+    [0xf6e8b8, 0.6],
     [0xdcb35a, 0.22],
     [0xb5703a, 0.12],
     [0x6e3226, 0.06],
@@ -935,8 +941,10 @@ function createScene(THREE, canvas, { reduceMotion }) {
   const parts = {
     cortex: [cortexMaterial, cortexCapMaterial],
     medulla: [pyramidMaterial, papillaMaterial],
-    pelvis: [calyxMaterial, calyxEdgeMaterial],
+    calyx: [calyxMaterial, calyxEdgeMaterial],
+    pelvis: [pelvisMaterial, pelvisEdgeMaterial],
     ureter: [ureterMaterial],
+    vessels: [arteryMaterial, veinMaterial, vesselCapArtery, vesselCapVein],
     cyst: [...cystMaterials, ...cystCapMaterials],
     fat: [fatMaterial, hilarFatMaterial],
   };
@@ -1158,8 +1166,9 @@ function createScene(THREE, canvas, { reduceMotion }) {
     if (spinning) kidney.rotation.y += 0.0025;
     else if (!dirty) return;
     dirty = false;
-    // Clip in the kidney's own frame so the cut follows rotation.
-    anatomy.updateMatrixWorld();
+    // Clip in the kidney's own frame so the cut follows rotation. Update from the
+    // scene root: the parent group's rotation may have changed since the last frame.
+    scene.updateMatrixWorld();
     clipPlane.copy(localClip).applyMatrix4(anatomy.matrixWorld);
     renderer.render(scene, camera);
   };

@@ -11,16 +11,13 @@
   >
     <div class="kidney3d__stage">
       <canvas class="kidney3d__canvas" data-kidney3d-canvas aria-hidden="true" hidden></canvas>
+      <p class="kidney3d__hint" data-kidney3d-hint hidden>
+        {{ t.home.kidneyDragHint }}<span class="kidney3d__hint-more"> · {{ t.home.kidneyPickHint }}</span>
+      </p>
       <div class="kidney3d__fallback" data-kidney3d-fallback>
         {% include "partials/kidney-svg.njk" %}
         <p>{{ t.home.kidneyFallbackCaption }}</p>
       </div>
-      <noscript>
-        <div class="kidney3d__fallback">
-          {% include "partials/kidney-svg.njk" %}
-          <p>{{ t.home.kidneyFallbackCaption }}</p>
-        </div>
-      </noscript>
     </div>
     <div class="kidney3d__controls">
       <div class="kidney3d__group" role="group" aria-label="{{ t.home.kidneyViewLabel }}">
@@ -56,54 +53,27 @@
       <h3>{{ t.home.kidneyStructuresTitle }}</h3>
       <table class="kidney3d__table">
         <tbody>
+          {%- for part in [
+            ["cortex", "Cortex"],
+            ["medulla", "Medulla"],
+            ["calyx", "Calyx"],
+            ["pelvis", "Pelvis"],
+            ["ureter", "Ureter"],
+            ["vessels", "Vessels"],
+            ["cyst", "Cyst"],
+            ["fat", "Fat"]
+          ] %}
+          {%- set name = t.home["kidney" + part[1]] %}
           <tr>
             <th scope="row">
-              <button type="button" data-kidney3d-focus="cortex" data-name="{{ t.home.kidneyCortex }}">
-                {{ t.home.kidneyCortex }}
-              </button>
+              <span class="kidney3d__part">
+                <span class="kidney3d__swatch kidney3d__swatch--{{ part[0] }}" aria-hidden="true"></span>
+                <button type="button" data-kidney3d-focus="{{ part[0] }}" data-name="{{ name }}">{{ name }}</button>
+              </span>
             </th>
-            <td>{{ t.home.kidneyCortexText }}</td>
+            <td>{{ t.home["kidney" + part[1] + "Text"] }}</td>
           </tr>
-          <tr>
-            <th scope="row">
-              <button type="button" data-kidney3d-focus="medulla" data-name="{{ t.home.kidneyMedulla }}">
-                {{ t.home.kidneyMedulla }}
-              </button>
-            </th>
-            <td>{{ t.home.kidneyMedullaText }}</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <button type="button" data-kidney3d-focus="pelvis" data-name="{{ t.home.kidneyPelvis }}">
-                {{ t.home.kidneyPelvis }}
-              </button>
-            </th>
-            <td>{{ t.home.kidneyPelvisText }}</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <button type="button" data-kidney3d-focus="ureter" data-name="{{ t.home.kidneyUreter }}">
-                {{ t.home.kidneyUreter }}
-              </button>
-            </th>
-            <td>{{ t.home.kidneyUreterText }}</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <button type="button" data-kidney3d-focus="cyst" data-name="{{ t.home.kidneyCyst }}">
-                {{ t.home.kidneyCyst }}
-              </button>
-            </th>
-            <td>{{ t.home.kidneyCystText }}</td>
-          </tr>
-          <tr>
-            <th scope="row">
-              <button type="button" data-kidney3d-focus="fat" data-name="{{ t.home.kidneyFat }}">
-                {{ t.home.kidneyFat }}
-              </button>
-            </th>
-            <td>{{ t.home.kidneyFatText }}</td>
-          </tr>
+          {%- endfor %}
         </tbody>
       </table>
     </div>

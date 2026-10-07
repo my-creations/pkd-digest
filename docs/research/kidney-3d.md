@@ -108,6 +108,19 @@ O que a v2 faz:
 
 ![v1 vs v2](kidney-3d-v1-vs-v2.png)
 
+Integração na página (start-here), mantendo a estética existente:
+
+- Desktop (≥ 960px): controlos ao lado do modelo em vez de por baixo.
+- Tabela de estruturas com amostra de cor igual à do modelo e duas linhas
+  novas (cálices; artéria e veia renais), cada uma destacável no 3D.
+- Dica "arrastar para rodar" sobre o modelo (versão curta no telemóvel).
+- Ilustração estática (sem JS / sem WebGL / impressão) redesenhada a partir
+  do mesmo contorno do modelo 3D; corrigida a ilustração duplicada sem JS.
+- Gordura do seio (dourada, lobulada) e quistos (palha pálida, vítreos) com
+  cores claramente distintas.
+
+![Secção na página](kidney-3d-page.png)
+
 Próximos passos possíveis: etiquetas HTML ancoradas a pontos 3D (cálices,
 papila, coluna renal); fallback SVG redesenhado a partir do mesmo contorno;
 comparar com GLB BodyParts3D decimado se se quiser ainda mais fidelidade.
