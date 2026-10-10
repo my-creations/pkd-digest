@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { openDisclosures } = require('./disclosures');
 
 test.describe('timeline broadsheet rail', () => {
   test('renders the rail index and river from the same published items', async ({ page }) => {
@@ -47,6 +48,7 @@ test.describe('timeline broadsheet rail', () => {
 
   test('rail syncs with filters card for card', async ({ page }) => {
     await page.goto('timeline/');
+    await openDisclosures(page);
 
     const total = await page.locator('.digest-river .timeline-list > li').count();
     expect(total).toBeGreaterThan(0);

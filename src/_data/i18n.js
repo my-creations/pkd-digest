@@ -114,6 +114,7 @@ module.exports = {
       cardBack: 'All cards',
       dualLabel: 'Reading view',
       filters: {
+        toggle: 'Filter cards',
         topicLabel: 'Topic',
         audienceLabel: 'Audience',
         all: 'All',
@@ -354,6 +355,7 @@ module.exports = {
       cardBack: 'Todos os cartões',
       dualLabel: 'Vista de leitura',
       filters: {
+        toggle: 'Filtrar cartões',
         topicLabel: 'Tema',
         audienceLabel: 'Público',
         all: 'Todos',

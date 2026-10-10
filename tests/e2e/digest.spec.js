@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { openDisclosures } = require('./disclosures');
 
 test.describe('digest broadsheet rail', () => {
   test('renders the masthead, section nav, and language toggle', async ({ page }) => {
@@ -39,6 +40,7 @@ test.describe('digest broadsheet rail', () => {
 
   test('rail anchors jump to the matching numbered article', async ({ page }) => {
     await page.goto('digest/');
+    await openDisclosures(page);
 
     await page.locator('.digest-rail ol a').first().click();
     await expect(page).toHaveURL(/#digest-item-1$/);
@@ -85,4 +87,29 @@ test.describe('digest broadsheet rail', () => {
 
     expect(overflow.pageWidth).toBeLessThanOrEqual(overflow.viewportWidth + 1);
   });
+
+  for (const { name, width, open } of [
+    { name: 'phone', width: 390, open: false },
+    { name: 'desktop', width: 1280, open: true },
+  ]) {
+    test(`${name}: filters and issue rail start ${open ? 'open' : 'closed'}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      for (const path of ['digest/', 'pt/digest/']) {
+        await page.goto(path);
+        await expect(page.locator('[data-filters]')).toBeVisible({
+          visible: open,
+        });
+        await expect(page.locator('.digest-rail ol')).toBeVisible({
+          visible: open,
+        });
+      }
+      if (open) return;
+
+      // Closed, the lead headline lands in the first screen.
+      const headline = await page.locator('.digest-lead h2').boundingBox();
+      expect(headline.y + headline.height).toBeLessThanOrEqual(844);
+      await page.locator('.disclosure__summary', { hasText: 'Filtrar cartões' }).click();
+      await expect(page.locator('[data-filters]')).toBeVisible();
+    });
+  }
 });
