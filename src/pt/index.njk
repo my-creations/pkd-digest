@@ -33,7 +33,7 @@ eleventyComputed:
         <ol>
           {% for item in latest %}
             <li>
-              <a href="{{ '/pt/digest/' | url }}#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) | truncate(48) }}</a>
+              <a href="{{ '/pt/digest/' | url }}#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) }}</a>
             </li>
           {% endfor %}
         </ol>

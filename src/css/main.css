@@ -555,9 +555,26 @@ h2 {
 }
 
 .section--latest .digest-river h3 {
-  font-size: 1.2rem;
-  line-height: 1.35;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.25;
   margin: var(--space-2) 0;
+}
+
+.section--latest .digest-river p {
+  max-width: 68ch;
+}
+
+/* Inside the issue card the rail is a ruled index, not a second card. */
+.section--latest .digest-rail {
+  position: static;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 /* Bare variant: groups framed cards/lists without adding another frame. */
@@ -886,7 +903,11 @@ h2 {
 }
 
 .digest-rail a {
-  display: block;
+  /* Full title stays in the DOM for screen readers and search; show 3 lines. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
   color: var(--foreground);
   text-decoration: none;
 }

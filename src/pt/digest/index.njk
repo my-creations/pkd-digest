@@ -36,7 +36,7 @@ eleventyComputed:
       <ol>
         {% for item in items %}
           <li data-rail-item="{{ loop.index }}">
-            <a href="#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) | truncate(48) }}</a>
+            <a href="#digest-item-{{ loop.index }}"><b>{{ loop.index }}.</b> {{ item.data.title | localized(locale) }}</a>
           </li>
         {% endfor %}
       </ol>
