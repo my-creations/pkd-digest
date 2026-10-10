@@ -60,6 +60,8 @@
   --placeholder: #5b4a8a;
   --shadow: var(--shadow-card);
   --max: 46rem;
+
+  color-scheme: light;
 }
 
 *,
@@ -69,7 +71,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   /* Keep authorial type scale on small screens: no mobile font boosting. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -152,18 +153,28 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* CSS motion is anchor scrolling and the button lift (colour fades are not
+   motion); kidney3d.js reads the same preference for its spin. */
+@media (prefers-reduced-motion: no-preference) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@media (prefers-reduced-motion: reduce) {
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}
+
+/* Glass surfaces turn solid for readers who ask for less transparency. */
+@media (prefers-reduced-transparency: reduce) {
+  .topbar,
+  .digest-rail {
+    background: var(--background);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 

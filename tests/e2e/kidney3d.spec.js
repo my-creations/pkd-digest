@@ -70,3 +70,29 @@ test.describe('without JavaScript', () => {
     await expect(section.locator('[data-kidney3d-hint]')).toBeHidden();
   });
 });
+
+test('the 3D kidney auto-spin stops after a few seconds', async ({ page }) => {
+  // Paused fake clock: rAF and performance.now advance only on runFor, so
+  // load time on a busy machine cannot eat into the 5 s window.
+  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
+  await page.clock.pauseAt(new Date('2026-01-01T00:00:01Z'));
+  await page.goto('start-here/');
+  const canvas = page.locator('[data-kidney3d-canvas]');
+  await canvas.scrollIntoViewIfNeeded();
+  const ready = await canvas
+    .waitFor({ state: 'visible', timeout: 15000 })
+    .then(() => true)
+    .catch(() => false);
+  test.skip(!ready, 'WebGL unavailable in this browser; the static fallback is covered above');
+
+  // fastForward jumps time, then a short runFor lets a few frames tick, so the
+  // software WebGL renderer draws a handful of frames instead of hundreds.
+  await page.clock.runFor(100);
+  await expect(canvas).toHaveAttribute('data-spinning', 'true');
+  await page.clock.fastForward(4000);
+  await page.clock.runFor(50);
+  await expect(canvas).toHaveAttribute('data-spinning', 'true');
+  await page.clock.fastForward(1500);
+  await page.clock.runFor(50);
+  await expect(canvas).toHaveAttribute('data-spinning', 'false');
+});
