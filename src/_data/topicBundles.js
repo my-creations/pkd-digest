@@ -27,12 +27,13 @@ module.exports = [
     slug: 'polycystic-liver',
     title: { en: 'Polycystic liver', pt: 'Fígado poliquístico' },
     lede: {
-      en: 'Explore liver cysts in PKD1/PKD2 carriers and isolated polycystic liver disease. A review and a single case offer different kinds of evidence; neither replaces an individual assessment.',
-      pt: 'Explore os quistos hepáticos em portadores de variantes PKD1/PKD2 e a doença hepática poliquística isolada. Uma revisão e um caso único oferecem tipos de evidência diferentes; nenhum substitui uma avaliação individual.',
+      en: 'Explore liver cysts in PKD1/PKD2 carriers and isolated polycystic liver disease. A review, a nationwide survey and a single case offer different kinds of evidence; none replaces an individual assessment.',
+      pt: 'Explore os quistos hepáticos em portadores de variantes PKD1/PKD2 e a doença hepática poliquística isolada. Uma revisão, um inquérito nacional e um caso único oferecem tipos de evidência diferentes; nenhum substitui uma avaliação individual.',
     },
     cardSlugs: [
       'scoping-review-on-polycystic-liver-disease-in-pkd1-pkd2-gene-42701438',
       'limitations-of-meld-in-isolated-polycystic-liver-disease-fat-42609653',
+      'healthcare-burden-and-clinical-spectrum-of-symptomatic-polyc-42832063',
     ],
   },
 ];
