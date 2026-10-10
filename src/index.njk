@@ -43,7 +43,7 @@ eleventyComputed:
         <p class="digest-kicker">{{ t.digest.leadStory }} · 1 · <time datetime="{{ lead.date | isoDate }}">{{ lead.date | displayDate(locale) }}</time></p>
         <h3><a class="digest-link" href="{{ '/digest/' | url }}#digest-item-1">{{ lead.data.title | localized(locale) }}</a></h3>
         <p>{{ lead.data.summary | localized(locale) }}</p>
-        <p><a class="button button--primary" href="{{ '/digest/' | url }}">{{ t.home.ctaDigest }}</a></p>
+        <p><a class="button button--secondary" href="{{ '/digest/' | url }}">{{ t.home.ctaDigest }}</a></p>
       </div>
     </div>
   </section>
@@ -60,7 +60,7 @@ eleventyComputed:
   <p>{{ t.home.howScope }}</p>
   <p>{{ t.home.howUse }}</p>
   <p>{{ t.home.howSafety }}</p>
-  <p><a class="button button--primary" href="{{ locale | sectionHref('start-here') | url }}">{{ t.home.howGuideLink }}</a></p>
+  <p><a class="button button--secondary" href="{{ locale | sectionHref('start-here') | url }}">{{ t.home.howGuideLink }}</a></p>
 </section>
 
 <section class="section section--muted">
