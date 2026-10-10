@@ -3,7 +3,7 @@ module.exports = {
   namePt: 'Digest DRP',
   title: {
     en: 'PKD Digest — weekly cystic kidney disease digest',
-    pt: 'Digest DRP — digest semanal sobre doença renal poliquística',
+    pt: 'Digest DRP — digest semanal sobre doença renal quística',
   },
   description: {
     en: 'Weekly curated digest in English and Portuguese on cystic kidney disease for patients, families, and clinicians.',
