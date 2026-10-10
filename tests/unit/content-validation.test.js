@@ -121,6 +121,15 @@ describe('content validation', () => {
     );
   });
 
+  it.each(['javascript:alert(1)', 'data:text/html,hi', '//example.invalid/x', 'ftp://example.invalid/x'])(
+    'rejects a source.url that is not http(s): %s',
+    (url) => {
+      expect(validateDocuments([card({ source: { url, name: 'Example Journal' } })])).toContain(
+        'example.md: source.url must start with http:// or https://'
+      );
+    }
+  );
+
   it('requires source identity, issue shape, and dual framing', () => {
     const errors = validateDocuments([
       {
