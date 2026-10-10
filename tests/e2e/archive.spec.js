@@ -1,4 +1,15 @@
 const { test, expect } = require('@playwright/test');
+const { loadDocuments } = require('../../scripts/validate-content');
+
+// The newest issue moves every week, so read it from the cards instead of pinning it.
+const published = loadDocuments().documents.filter(
+  ({ data }) => data.status === 'published' && !data.placeholder && data.issue
+);
+const latestIssue = published
+  .map(({ data }) => data.issue)
+  .sort()
+  .at(-1);
+const latestCount = published.filter(({ data }) => data.issue === latestIssue).length;
 
 test.describe('issue archive', () => {
   test('lists past issues newest-first with card links', async ({ page }) => {
@@ -9,11 +20,11 @@ test.describe('issue archive', () => {
 
     const issues = page.locator('.archive-issue');
     expect(await issues.count()).toBeGreaterThanOrEqual(1);
-    await expect(issues.first()).toContainText('2026-W41');
-    await expect(issues.first()).toContainText('4 cards.');
+    await expect(issues.first()).toContainText(latestIssue);
+    await expect(issues.first()).toContainText(`${latestCount} cards.`);
 
     const links = issues.first().locator('a');
-    expect(await links.count()).toBe(4);
+    expect(await links.count()).toBe(latestCount);
     await expect(links.first()).toHaveAttribute('href', /\/digest\/.+\/$/);
 
     await links.first().click();
@@ -25,8 +36,8 @@ test.describe('issue archive', () => {
 
     await expect(page.locator('html')).toHaveAttribute('lang', 'pt');
     await expect(page.locator('main h1')).toContainText('Arquivo de edições');
-    await expect(page.locator('.archive-issue').first()).toContainText('2026-W41');
-    await expect(page.locator('.archive-issue').first()).toContainText('4 cartões.');
+    await expect(page.locator('.archive-issue').first()).toContainText(latestIssue);
+    await expect(page.locator('.archive-issue').first()).toContainText(`${latestCount} cartões.`);
 
     const href = await page.locator('.archive-issue').first().locator('a').first().getAttribute('href');
     expect(href).toMatch(/^\/pkd-digest\/pt\/digest\/.+\/$/);
