@@ -73,6 +73,10 @@ v1 curation is **assisted**, not automatic:
 
 **v1 decision: no analytics.** The site does not load Plausible, GA, or other tracking scripts. Policy for visitors: [`/privacy/`](https://my-creations.github.io/pkd-digest/privacy/) (PT: [`/pt/privacy/`](https://my-creations.github.io/pkd-digest/pt/privacy/)). Maintainer note: [`docs/privacy.md`](docs/privacy.md). Plausible remains the preferred _future_ option only if product explicitly revisits metrics.
 
+## Vendored code
+
+`src/js/vendor/three.module.min.js` is three.js r170, byte-identical to `build/three.module.min.js` in the npm package `three@0.170.0` (MIT). SHA-256: `08fd7545d13d2c7fb65ab691530a802dafefd638596501854f267d0fb13c39e7`. It is excluded from oxfmt and oxlint, so it ships exactly as published. To upgrade, copy the same file from the new npm version and update this hash.
+
 ## License / medical disclaimer
 
 Educational curation scaffold only — **not medical advice**.
