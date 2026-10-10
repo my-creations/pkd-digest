@@ -1,6 +1,6 @@
 # Polish report: `feat/pkd-polish`
 
-Branch `feat/pkd-polish`, 14 commits on top of `main` plus this report. Nothing has been pushed, opened as a PR, merged or deployed. Everything is ready for Pedro to review.
+Branch `feat/pkd-polish`, 17 commits on top of `main` plus this report. Nothing has been pushed, opened as a PR, merged or deployed. Everything is ready for Pedro to review.
 
 ## Summary
 
@@ -16,11 +16,12 @@ Branch `feat/pkd-polish`, 14 commits on top of `main` plus this report. Nothing 
   - The 3D kidney spun forever, which fails WCAG 2.2.2. It now stops after 5 seconds.
 - **Security.**
   - All three workflows use least-privilege tokens.
-  - Third-party actions are pinned to a SHA.
+  - Every action is pinned to a commit SHA, and Dependabot bumps the pins weekly.
   - The validator rejects non-http(s) card links.
   - The curation script validates PubMed input before it reaches a file path or YAML.
   - Every page has a same-origin Content-Security-Policy.
 - **Performance.** The 3D page ships 260 KB less JavaScript. three.js is now the exact published npm file.
+- **Privacy and terms pages** are rewritten in plain language, EN and PT in sync. The policy is unchanged.
 - **Medical content.** Nothing under `curation/` or `src/content/items/` changed, and no medical claims were added.
 
 ## Commits
@@ -41,6 +42,9 @@ Branch `feat/pkd-polish`, 14 commits on top of `main` plus this report. Nothing 
 | `a6e8a62` | Interface copy, EN and PT kept in sync. See [Copy changes](#copy-changes-no-ai-slop).                                                                                                                                                                                                                                                                                                             |
 | `cb21bc2` | `src/js/vendor/three.module.min.js` is replaced with the byte-identical `build/three.module.min.js` from npm `three@0.170.0`. The repo copy had been run through a formatter, which made it 952 KB. README gains a "Vendored code" section with the source and SHA-256.                                                                                                                           |
 | `65642b2` | Same-origin CSP meta in `base.njk`: `default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'`. e2e test loads 5 pages and fails on any CSP violation.                                                                                                                                                                                                    |
+| `242a971` | All remaining actions (`actions/checkout`, `setup-python`, `upload-artifact`, `upload-pages-artifact`, `deploy-pages`) are pinned to the commit SHA of their current release, with the version in a comment. New `.github/dependabot.yml` opens one grouped weekly PR for `github-actions`.                                                                                                       |
+| `5f40b94` | Privacy and terms copy rewritten, EN and PT in sync. See [Privacy and terms copy](#privacy-and-terms-copy).                                                                                                                                                                                                                                                                                       |
+| `17dcd31` | Home curation note says the summaries are drafted with AI help, then a person reviews, edits and decides what to publish. The earlier wording ("a person writes") was inaccurate.                                                                                                                                                                                                                 |
 
 ## What each skill found
 
@@ -164,28 +168,28 @@ No Critical or High findings.
 - **Info.** PRs opened with `GITHUB_TOKEN` don't trigger CI.
 - **Non-security bugs found along the way.** The search pathPrefix 404 and the unescaped Atom content.
 - **Hardening.** A CSP meta is feasible because the site has no inline scripts or styles and no third-party resources. Record the vendored three.js source and hash.
-- **Applied.** Everything except the items under [Open questions](#open-questions-and-todos-for-pedro): dependabot, first-party action pins, curate-shortlist credentials, and the auto-PR CI trigger.
+- **Applied.** Everything, including Dependabot and first-party action pins after Pedro approved them. Still open: curate-shortlist credentials and the auto-PR CI trigger (see [Open questions](#open-questions-and-todos-for-pedro)).
 
 ## Copy changes (no-ai-slop)
 
 Every changed key was changed in both languages, or was a single-language fix to bring PT in line with EN (or the reverse).
 
-| Key                              | Before (EN)                                                                                     | After (EN)                                                                                                                                                                                |
-| -------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `home.lede`                      | "…on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries…" | "…on cystic kidney disease, including ADPKD and other forms. Each card has…"                                                                                                              |
-| `home.howIntro`                  | "…twice — for families and for clinicians — and helps you bring it to your visit."              | "…twice: once for families, once for clinicians."                                                                                                                                         |
-| `home.curationBody`              | "Assisted curation: PubMed/RSS shortlist, then human Dual Framing and publish."                 | "A script shortlists new PubMed papers each week. A person then reads each one, writes the plain-language summary and the clinical note, and decides what to publish." (Disclaimer kept.) |
-| `home.latestBody`                | "The newest cards, indexed as in the digest — …"                                                | Removed. The issue card and its new "Read the full issue" button already say this.                                                                                                        |
-| `home.ctaIssue` (new)            | n/a                                                                                             | "Read the full issue" / "Ler a edição completa"                                                                                                                                           |
-| `startHere.lede`                 | "New to cystic kidney disease? A short guide … to finding your way around PKD Digest."          | "A short guide for patients and families: what cystic kidney disease is, how to read a card, and where to go next in PKD Digest."                                                         |
-| `startHere.readingTitle`         | "What to keep track of — and how to read a card"                                                | "What to keep track of, and how to read a card"                                                                                                                                           |
-| `startHere.nextBody`             | "…browse individual updates… All three lead to published cards in English and Portuguese."      | "…browse cards one by one on the timeline…" (recap sentence cut)                                                                                                                          |
-| `timeline.lede`                  | "Cards in chronological order when present."                                                    | "All published cards, newest first." (Checked: `eleventy.config.js` sorts by `b.date - a.date`.)                                                                                          |
-| `digest.empty`, `timeline.empty` | "No published items…"                                                                           | "No published cards…"                                                                                                                                                                     |
-| `search.noResults`               | "No cards match that search."                                                                   | "…Try a shorter word." / "…Experimente uma palavra mais curta."                                                                                                                           |
-| `terms.accuracyBody`             | "…but we may be incomplete, delayed, or wrong."                                                 | "…but they may be incomplete, delayed, or wrong." (Grammar only. The warning is unchanged and matches PT "podem estar".)                                                                  |
-| `meta.notFoundBody`              | "This page is not part of PKD Digest…"                                                          | "We can’t find that page…"                                                                                                                                                                |
-| `topicBundles.lede`              | "Curated reading lists on shared concerns, bringing together…"                                  | "Reading lists by topic. Each one gathers published cards from different weekly issues."                                                                                                  |
+| Key                              | Before (EN)                                                                                     | After (EN)                                                                                                                                                                                                                                                         |
+| -------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `home.lede`                      | "…on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries…" | "…on cystic kidney disease, including ADPKD and other forms. Each card has…"                                                                                                                                                                                       |
+| `home.howIntro`                  | "…twice — for families and for clinicians — and helps you bring it to your visit."              | "…twice: once for families, once for clinicians."                                                                                                                                                                                                                  |
+| `home.curationBody`              | "Assisted curation: PubMed/RSS shortlist, then human Dual Framing and publish."                 | "A script shortlists new PubMed papers each week. The summaries are drafted with AI help, then a person reviews and edits each one and decides what to publish." (Disclaimer kept. Corrected on 2026-10-10 after Pedro pointed out the summaries are AI-assisted.) |
+| `home.latestBody`                | "The newest cards, indexed as in the digest — …"                                                | Removed. The issue card and its new "Read the full issue" button already say this.                                                                                                                                                                                 |
+| `home.ctaIssue` (new)            | n/a                                                                                             | "Read the full issue" / "Ler a edição completa"                                                                                                                                                                                                                    |
+| `startHere.lede`                 | "New to cystic kidney disease? A short guide … to finding your way around PKD Digest."          | "A short guide for patients and families: what cystic kidney disease is, how to read a card, and where to go next in PKD Digest."                                                                                                                                  |
+| `startHere.readingTitle`         | "What to keep track of — and how to read a card"                                                | "What to keep track of, and how to read a card"                                                                                                                                                                                                                    |
+| `startHere.nextBody`             | "…browse individual updates… All three lead to published cards in English and Portuguese."      | "…browse cards one by one on the timeline…" (recap sentence cut)                                                                                                                                                                                                   |
+| `timeline.lede`                  | "Cards in chronological order when present."                                                    | "All published cards, newest first." (Checked: `eleventy.config.js` sorts by `b.date - a.date`.)                                                                                                                                                                   |
+| `digest.empty`, `timeline.empty` | "No published items…"                                                                           | "No published cards…"                                                                                                                                                                                                                                              |
+| `search.noResults`               | "No cards match that search."                                                                   | "…Try a shorter word." / "…Experimente uma palavra mais curta."                                                                                                                                                                                                    |
+| `terms.accuracyBody`             | "…but we may be incomplete, delayed, or wrong."                                                 | "…but they may be incomplete, delayed, or wrong." (Grammar only. The warning is unchanged and matches PT "podem estar".)                                                                                                                                           |
+| `meta.notFoundBody`              | "This page is not part of PKD Digest…"                                                          | "We can’t find that page…"                                                                                                                                                                                                                                         |
+| `topicBundles.lede`              | "Curated reading lists on shared concerns, bringing together…"                                  | "Reading lists by topic. Each one gathers published cards from different weekly issues."                                                                                                                                                                           |
 
 PT-only alignments:
 
@@ -196,6 +200,26 @@ PT-only alignments:
 - Search `lede` and `hint` use the "você" register: "Pesquise" and "Escreva".
 
 None of these strings is a card, summary, clinical note, citation or disclaimer. Every "Educational only — not medical advice" line is untouched, dash included.
+
+### Privacy and terms copy
+
+Applied after Pedro approved it on 2026-10-10. The policy itself is unchanged: no analytics, no cookies of the site's own, Plausible as the preferred option if metrics are ever wanted. One sentence is new: the privacy page says it would be updated if that changed.
+
+| Key                     | Before (EN)                                                                                                                                          | After (EN)                                                                                                                                                                              |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `privacy.lede`          | "How PKD Digest handles analytics and personal data."                                                                                                | "How PKD Digest handles your data."                                                                                                                                                     |
+| `privacy.decisionTitle` | "Analytics decision (v1)"                                                                                                                            | "No analytics"                                                                                                                                                                          |
+| `privacy.decisionBody`  | "…There is no Plausible, Google Analytics, or similar tag in the layout."                                                                            | "…It does not load Plausible, Google Analytics or similar tools."                                                                                                                       |
+| `privacy.whyTitle`      | "Why none for now"                                                                                                                                   | "Why no tracking"                                                                                                                                                                       |
+| `privacy.whyBody`       | "…avoids unnecessary third-party data flows. GitHub Pages / GitHub may still process standard server or CDN logs outside this repository's control." | "…With no traffic trackers, this site sends no reader data to third parties. GitHub Pages, which hosts the site, may still process standard server or CDN logs that we do not control." |
+| `privacy.cookiesBody`   | "…Essential hosting/CDN behaviour may still apply at the infrastructure layer."                                                                      | "…The hosting provider and its CDN may still apply their own essential behaviour."                                                                                                      |
+| `privacy.revisitTitle`  | "Revisit"                                                                                                                                            | "Possible changes"                                                                                                                                                                      |
+| `privacy.revisitBody`   | "…only after an explicit product decision and a separate PR. Until then, "no analytics" remains the documented policy."                              | "…That would be a deliberate decision, and this page would be updated. Until then, the policy is no analytics."                                                                         |
+| `privacy.legalNote`     | "…See also the medical disclaimer on the site."                                                                                                      | "…See also Terms and disclaimer." (disclaimer sentence unchanged)                                                                                                                       |
+| `terms.noWarrantyBody`  | "…the maintainers are not liable…"                                                                                                                   | "…the people who run this site are not liable…"                                                                                                                                         |
+| `terms.licensingBody`   | "Linked papers and guidelines remain the property of their publishers; we provide attribution and links, not republication of full texts."           | "The papers and guidelines we link to belong to their publishers. We credit and link to them; we do not republish full texts."                                                          |
+
+PT follows the same structure and drops the Anglicisms: "analytics" becomes "análise de tráfego", "tracking/trackers" becomes "rastreio", "hosting" becomes "alojamento", "logs" becomes "registos", "guidelines" becomes "orientações clínicas", and "mantenedores" becomes "os responsáveis pelo site". "Na máxima medida" becomes "Na medida máxima", and "não são responsáveis" becomes "não respondem" to avoid repeating "responsáveis". The "Não é aconselhamento médico" and accuracy sections are unchanged in both languages.
 
 ## Medical content
 
@@ -233,93 +257,53 @@ Before and after screenshots at 1280px and 390px were taken during the run. They
 - **Section card stacks on home and start-here, mixed radii, cool shadow tint.** Flattening them is a visual redesign beyond polish.
 - **Serif heading tracking of -0.03em.** It is within the craft floor (-0.04em).
 - **Em dashes inside every disclaimer** ("Educational only — not medical advice"). Disclaimers are not touched.
-- **Privacy, terms and lifestyle copy.** These are legal or near-medical text. Proposals are listed below.
+- **Lifestyle copy.** It is near-medical text. The proposal is listed below.
 - **Inline help for ADPKD, tolvaptan and eGFR.** That would be new explanatory content, which is close to a medical claim.
 - **Dark mode.** There is none, and the paper brand suggests that is intended. `color-scheme: light` makes this explicit.
 
+## Pedro's decisions (2026-10-10)
+
+- **Remembered reader mode: not wanted.** Readers keep choosing plain or clinical per card. Nothing is stored.
+- **3D model: loading it when the reader opens start-here is fine.** The current behaviour stays.
+- **Dependabot and SHA pins for every action: approved.** Done in `242a971`.
+- **Privacy and terms rewrite: approved.** Done in `5f40b94`.
+- **Curation note: summaries are AI-assisted.** The home page now says so. Done in `17dcd31`.
+
 ## Open questions and TODOs for Pedro
 
-1. **Remembered reader mode.** Both design reviews ranked a site-wide "Reading as: Patient / Clinician" switch, remembered in `localStorage`, as the biggest win for clinicians. Today they tap "Clinical note" on every card. It is not tracking and not a cookie, but it is stored state. The privacy page only promises no analytics cookies, so it may deserve a sentence there. Should the site have it?
-2. **Mobile `/digest/` first screen.** Filters and the rail push the lead headline below the fold at 390×844. Options: make the rail a horizontal strip, move it after the lead, or collapse the filters into `<details>`.
-3. **Intent-gated three.js.** The 400px `rootMargin` fires on load because the section sits about 730px down, so start-here still downloads 171 KB gzip at first paint. Options: a "Load 3D model" button (the SVG fallback already exists), or `rootMargin: 0` plus `requestIdleCallback`. `lighthouserc` doesn't test `/start-here/`. Consider adding it.
-4. **Sticky kidney stage on mobile,** so tapping a structure button shows its effect.
-5. **Touch targets are 40px, not 44px.** That is above WCAG 2.5.8 AA (24px) and below 2.5.5 AAA (44px). 44px would make the mobile topbar taller again. Keep 40px?
-6. **Security.**
-   - Add `.github/dependabot.yml` for `github-actions` so the SHA pins get bumped.
-   - First-party `actions/*` are still on major tags. Pin them too?
+1. **Mobile `/digest/` first screen.** Filters and the rail push the lead headline below the fold at 390×844. Options: make the rail a horizontal strip, move it after the lead, or collapse the filters into `<details>`.
+2. **Sticky kidney stage on mobile,** so tapping a structure button shows its effect.
+3. **Touch targets are 40px, not 44px.** That is above WCAG 2.5.8 AA (24px) and below 2.5.5 AAA (44px). 44px would make the mobile topbar taller again. Keep 40px?
+4. **Lighthouse coverage.** `lighthouserc` doesn't test `/start-here/`, the heaviest page because of three.js. Consider adding it.
+5. **Security.**
    - `curate-shortlist.yml` keeps `persist-credentials` at its default because it pushes the branch.
    - PRs opened with `GITHUB_TOKEN` don't trigger CI, so the auto-PR's "CI green" checkbox can't turn green by itself. That needs a PAT/App token or a manual re-push.
    - A meta CSP can't set `frame-ancestors`, so Pages can't block framing.
-7. **Copy proposals not applied.**
-   - Privacy page: "Analytics decision (v1)" becomes "No analytics", plus PT Anglicisms ("hosting", "trackers", "analytics").
-   - Terms PT: "guidelines" and "mantenedores".
+6. **Copy proposals not applied.**
    - Lifestyle: drop "actually"/"realmente", and PT "prova" becomes "evidência".
    - `site.js` PT title says "poliquística", but the scope is "quística".
    - `home.howUse` nearly duplicates `startHere.trackingBody`.
    - The mobile header shows the brand twice.
-8. **WebKit e2e not run locally** (G6 abandoned). Check the WebKit job on the first CI run.
+7. **WebKit e2e not run locally** (G6 abandoned). Check the WebKit job on the first CI run.
 
 ## Check results
 
-All checks were run on the final code commit (`65642b2`), sequentially, with nothing else bound to the test ports.
+Final run on the last code commit (`17dcd31`), one command at a time, with no other server on the test ports.
 
-**`bun run build`**: exit 0
+| Command                                                                                  | Exit | Result                                                                          |
+| ---------------------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------- |
+| `bun run build`                                                                          | 0    | `[11ty] Copied 11 Wrote 115 files`                                              |
+| `bun run lint`                                                                           | 0    | oxlint clean                                                                    |
+| `bun run test`                                                                           | 0    | `Tests 57 passed (57)`                                                          |
+| `bun run format:check`                                                                   | 0    | `All matched files use the correct format.`                                     |
+| `bunx playwright test --workers=1` on chromium-desktop, chromium-mobile, firefox-desktop | 0    | `378 passed (4.4m)`                                                             |
+| `bun run test:lighthouse`                                                                | 0    | Assertions passed. Home, digest and PT digest each score 100 / 100 / 100 / 100. |
 
-```
-[11ty] Copied 11 Wrote 115 files in 1.18 seconds (10.2ms each, v3.1.6)
-```
+**`bun run test:e2e` with all four projects.** On `65642b2` it exited 1 with 391 passed and 113 failed. All 113 failures were `e2e-webkit-desktop`, and each one was the same launch error: "Host system is missing dependencies to run browsers". No WebKit test ran. CI installs the libraries with `--with-deps`.
 
-**`bun run lint`**: exit 0
+**A false alarm along the way.** A later four-project run also showed 41 Chromium and Firefox timeouts. The cause was a stale `eleventy --serve` on port 8901, left behind when the gate checker killed a timed-out e2e command. Locally, Playwright reuses an existing server (`reuseExistingServer: !process.env.CI`), so tests hit a server pinned at 85% CPU. Once that process was killed, the clean single-worker run above passed 378 of 378.
 
-```
-$ oxlint
-```
-
-**`bun run test`**: exit 0
-
-```
- Test Files  7 passed (7)
-      Tests  57 passed (57)
-```
-
-**`bun run format:check`**: exit 0
-
-```
-All matched files use the correct format.
-Finished in 924ms on 110 files using 8 threads.
-```
-
-**`bun run test:e2e`** (all 4 projects): exit 1
-
-```
-  113 failed
-  391 passed (3.5m)
-```
-
-All 113 failures are `e2e-webkit-desktop`, and each one is the same launch error: "Host system is missing dependencies to run browsers". No WebKit test ran. The three projects that can launch here were then run on their own.
-
-**`bunx playwright test --project=e2e-chromium-desktop --project=e2e-chromium-mobile --project=e2e-firefox-desktop`**: exit 0
-
-```
-  378 passed (1.9m)
-```
-
-**`bun run test:lighthouse`**: exit 0
-
-```
-Running Lighthouse 1 time(s) on http://localhost:8931/pkd-digest/
-Running Lighthouse 1 time(s) on http://localhost:8931/pkd-digest/digest/
-Running Lighthouse 1 time(s) on http://localhost:8931/pkd-digest/pt/digest/
-Checking assertions against 3 URL(s), 3 total run(s)
-All results processed!
-Done running autorun.
-```
-
-| URL                      | Performance | Accessibility | Best practices | SEO | LCP    | CLS | TBT |
-| ------------------------ | ----------- | ------------- | -------------- | --- | ------ | --- | --- |
-| `/pkd-digest/`           | 100         | 100           | 100            | 100 | 1353ms | 0   | 0ms |
-| `/pkd-digest/digest/`    | 100         | 100           | 100            | 100 | 1502ms | 0   | 0ms |
-| `/pkd-digest/pt/digest/` | 100         | 100           | 100            | 100 | 1502ms | 0   | 0ms |
+Lighthouse detail on `65642b2`: LCP 1353 ms on home and 1502 ms on both digest pages, CLS 0, TBT 0 ms.
 
 ## Process note
 
