@@ -5,8 +5,7 @@ module.exports = {
     otherLocaleLabel: 'PT',
     meta: {
       notFoundTitle: 'Page not found',
-      notFoundBody:
-        'This page is not part of PKD Digest. The weekly cystic kidney disease digest is still available from the home page.',
+      notFoundBody: 'We can’t find that page. The weekly cystic kidney disease digest is still on the home page.',
       notFoundCta: 'Back to PKD Digest home',
       notFoundCtaPt: 'Início Digest DRP (PT)',
     },
@@ -37,7 +36,7 @@ module.exports = {
         'Content on this site is for general education and information only. It is not a substitute for professional medical advice, diagnosis, or treatment. Do not ignore or delay seeking care because of something you read here.',
       accuracyTitle: 'Accuracy and currency',
       accuracyBody:
-        'We curate summaries in good faith from public sources, but we may be incomplete, delayed, or wrong. Always verify important details with the original source and your care team.',
+        'We curate summaries in good faith from public sources, but they may be incomplete, delayed, or wrong. Always verify important details with the original source and your care team.',
       noWarrantyTitle: 'No warranty',
       noWarrantyBody:
         'The site is provided “as is,” without warranties of any kind. To the fullest extent allowed by law, the maintainers are not liable for decisions you make based on this content.',
@@ -50,17 +49,15 @@ module.exports = {
     home: {
       eyebrow: 'Weekly curated digest',
       headline: 'Cystic kidney disease, week by week.',
-      lede: 'PKD Digest (Digest DRP) is a weekly digest in English and Portuguese on cystic kidney disease — general cystic kidney disease, not ADPKD-only. Each item carries a plain-language summary and a short clinical note.',
+      lede: 'PKD Digest (Digest DRP) is a weekly digest in English and Portuguese on cystic kidney disease, including ADPKD and other forms. Each card has a plain-language summary and a short clinical note.',
       audiences: 'For patients & families · For clinicians',
       ctaDigest: 'This week’s digest',
+      ctaIssue: 'Read the full issue',
       ctaTimeline: 'Browse the timeline',
       latestKicker: 'Latest issue',
       latestTitle: 'This week’s issue',
-      latestBody:
-        'The newest cards, indexed as in the digest — open the full issue for both perspectives on each card.',
       howTitle: 'How to read each card',
-      howIntro:
-        'Each card tells the same update twice — for families and for clinicians — and helps you bring it to your visit.',
+      howIntro: 'Each card tells the same update twice: once for families, once for clinicians.',
       howPlainLabel: 'Plain summary',
       howPlainText: 'says in one sentence what changed and who it matters for.',
       howClinicalLabel: 'Clinical note',
@@ -111,7 +108,7 @@ module.exports = {
       kidneyPickHint: 'pick a structure below to highlight it',
       curationTitle: 'How curation works',
       curationBody:
-        'Assisted curation: PubMed/RSS shortlist, then human Dual Framing and publish. Educational only — not medical advice.',
+        'A script shortlists new PubMed papers each week. A person then reads each one, writes the plain-language summary and the clinical note, and decides what to publish. Educational only — not medical advice.',
     },
     digest: {
       title: 'Weekly digest',
@@ -137,7 +134,7 @@ module.exports = {
         },
       },
       lede: 'This week’s curated cards on cystic kidney disease — each with a plain-language summary and a short clinical note, in English and Portuguese.',
-      empty: 'No published items for this issue yet.',
+      empty: 'No published cards in this issue yet.',
       issueLabel: 'Weekly issue',
       inThisIssue: 'In this issue',
       leadStory: 'Lead story',
@@ -156,7 +153,7 @@ module.exports = {
       label: 'Search terms',
       placeholder: 'e.g. tolvaptan, pregnancy, cyst infection…',
       hint: 'Type above to search across all published cards.',
-      noResults: 'No cards match that search.',
+      noResults: 'No cards match that search. Try a shorter word.',
       resultsOne: '1 matching card.',
       resultsMany: '{n} matching cards.',
     },
@@ -169,18 +166,18 @@ module.exports = {
     },
     startHere: {
       title: 'Start here',
-      lede: 'New to cystic kidney disease? A short guide for patients and families to finding your way around PKD Digest.',
+      lede: 'A short guide for patients and families: what cystic kidney disease is, how to read a card, and where to go next in PKD Digest.',
       scopeTitle: 'What is cystic kidney disease?',
       scopeBody:
         'Cysts are fluid-filled sacs. Cystic kidney disease covers different conditions involving cysts in the kidneys; their causes and effects vary. Autosomal dominant polycystic kidney disease (ADPKD) is one of them, not the whole picture. This digest covers cystic kidney disease in general, so not every card will apply to your diagnosis.',
-      readingTitle: 'What to keep track of — and how to read a card',
+      readingTitle: 'What to keep track of, and how to read a card',
       trackingBody:
         'Keep your questions, the name of your diagnosis, and the results and medicines discussed with your care team together for appointments. Ask your team what to monitor and how often; a research update is not a personal care plan.',
       readingBody:
         'Each card offers two perspectives: a plain-language summary for patients and families, and a short clinical note for clinicians. Switch between them, check the date and original source, and bring questions about relevance to your care team. Do not change treatment based on a card.',
       nextTitle: 'Where to go next',
       nextBody:
-        'Start with the latest weekly digest, browse individual updates on the timeline, or revisit a past issue in the archive. All three lead to published cards in English and Portuguese.',
+        'Start with the latest weekly digest, browse cards one by one on the timeline, or revisit a past issue in the archive.',
       disclaimer:
         'Educational curation only — not medical advice. This guide does not replace advice from your care team.',
     },
@@ -189,9 +186,9 @@ module.exports = {
     },
     timeline: {
       title: 'Timeline',
-      lede: 'Cards in chronological order when present.',
+      lede: 'All published cards, newest first.',
       indexTitle: 'On this timeline',
-      empty: 'No published timeline items yet.',
+      empty: 'No published cards on the timeline yet.',
     },
     privacy: {
       title: 'Privacy',
@@ -248,8 +245,8 @@ module.exports = {
     meta: {
       notFoundTitle: 'Página não encontrada',
       notFoundBody:
-        'Esta página não faz parte do Digest DRP. O digest semanal sobre doença renal quística continua disponível na página inicial.',
-      notFoundCta: 'Voltar ao início Digest DRP',
+        'Não encontrámos esta página. O digest semanal sobre doença renal quística continua na página inicial.',
+      notFoundCta: 'Voltar ao início do Digest DRP',
       notFoundCtaPt: 'PKD Digest home (EN)',
     },
     nav: {
@@ -292,25 +289,23 @@ module.exports = {
     home: {
       eyebrow: 'Digest semanal curado',
       headline: 'A doença renal quística, semana a semana.',
-      lede: 'O Digest DRP (PKD Digest) é um digest semanal em inglês e português sobre doença renal quística — em geral, não só ADPKD. Cada item tem um resumo em linguagem simples e uma nota clínica breve.',
+      lede: 'O Digest DRP (PKD Digest) é um digest semanal em inglês e português sobre doença renal quística, incluindo a ADPKD e outras formas. Cada cartão tem um resumo em linguagem simples e uma nota clínica breve.',
       audiences: 'Para doentes e famílias · Para clínicos',
       ctaDigest: 'Digest desta semana',
+      ctaIssue: 'Ler a edição completa',
       ctaTimeline: 'Ver a cronologia',
       latestKicker: 'Edição mais recente',
       latestTitle: 'A edição desta semana',
-      latestBody:
-        'Os cartões mais recentes, indexados como no digest — abre a edição completa para as duas perspetivas de cada cartão.',
       howTitle: 'Como ler cada cartão',
-      howIntro:
-        'Cada cartão conta a mesma novidade duas vezes — para a família e para o clínico — e ajuda a levá-la à consulta.',
+      howIntro: 'Cada cartão conta a mesma novidade duas vezes: uma para a família, outra para o clínico.',
       howPlainLabel: 'Resumo simples',
       howPlainText: 'explica numa frase o que mudou e para quem interessa.',
       howClinicalLabel: 'Nota clínica',
-      howClinicalText: 'resume em linguagem técnica o contexto para profissionais.',
+      howClinicalText: 'dá o contexto técnico aos profissionais.',
       howAskLabel: 'Pergunta e fonte',
       howAskText: 'sugere uma pergunta para a consulta e indica a fonte original com data.',
       howScope:
-        'A doença renal quística abrange diferentes condições com quistos nos rins; a ADPKD é só uma delas. Este digest cobre a doença em geral, pelo que nem todos os cartões se aplicam a este diagnóstico.',
+        'A doença renal quística abrange diferentes condições com quistos nos rins; a ADPKD é só uma delas. Este digest cobre a doença em geral, pelo que nem todos os cartões se aplicam ao seu diagnóstico.',
       howUse:
         'Registe as suas perguntas, o nome do diagnóstico e os resultados e medicamentos para levar à consulta. Confirme a data e a fonte original e pergunte à equipa o que se aplica ao seu caso.',
       howSafety:
@@ -354,7 +349,7 @@ module.exports = {
       kidneyPickHint: 'escolha uma estrutura abaixo para a destacar',
       curationTitle: 'Como funciona a curadoria',
       curationBody:
-        'Curadoria assistida: lista PubMed/RSS, depois Dual Framing humano e publicação. Apenas educativo — não constitui aconselhamento médico.',
+        'Todas as semanas, um script seleciona artigos novos do PubMed. Depois, uma pessoa lê cada um, escreve o resumo em linguagem simples e a nota clínica e decide o que publicar. Apenas educativo — não constitui aconselhamento médico.',
     },
     digest: {
       title: 'Digest semanal',
@@ -372,7 +367,7 @@ module.exports = {
           research: 'Investigação',
           treatment: 'Tratamento',
           lifestyle: 'Estilo de vida',
-          advocacy: 'Advocacia',
+          advocacy: 'Defesa dos doentes',
         },
         audienceNames: {
           patients: 'Doentes e famílias',
@@ -380,7 +375,7 @@ module.exports = {
         },
       },
       lede: 'Cartões curados desta semana sobre doença renal quística — cada um com resumo em linguagem simples e nota clínica breve, em inglês e português.',
-      empty: 'Ainda não há itens publicados nesta edição.',
+      empty: 'Ainda não há cartões publicados nesta edição.',
       issueLabel: 'Edição semanal',
       inThisIssue: 'Nesta edição',
       leadStory: 'Destaque',
@@ -395,11 +390,11 @@ module.exports = {
     },
     search: {
       title: 'Pesquisar cartões',
-      lede: 'Pesquisa cartões publicados em inglês e português — títulos, resumos, notas clínicas e perguntas para a consulta.',
+      lede: 'Pesquise cartões publicados em inglês e português — títulos, resumos, notas clínicas e perguntas para a consulta.',
       label: 'Termos de pesquisa',
       placeholder: 'ex. tolvaptan, gravidez, infeção…',
-      hint: 'Escreve acima para pesquisar todos os cartões publicados.',
-      noResults: 'Nenhum cartão corresponde a essa pesquisa.',
+      hint: 'Escreva acima para pesquisar todos os cartões publicados.',
+      noResults: 'Nenhum cartão corresponde a essa pesquisa. Experimente uma palavra mais curta.',
       resultsOne: '1 cartão correspondente.',
       resultsMany: '{n} cartões correspondentes.',
     },
@@ -412,18 +407,18 @@ module.exports = {
     },
     startHere: {
       title: 'Começar aqui',
-      lede: 'Recebeu um diagnóstico de doença renal quística? Um guia breve para doentes e famílias se orientarem no Digest DRP.',
+      lede: 'Um guia breve para doentes e famílias: o que é a doença renal quística, como ler um cartão e por onde continuar no Digest DRP.',
       scopeTitle: 'O que é a doença renal quística?',
       scopeBody:
-        'Os quistos são bolsas com líquido. A doença renal quística abrange diferentes condições com quistos nos rins; as causas e os efeitos variam. A doença renal poliquística autossómica dominante (ADPKD) é uma delas, não a única. Este digest cobre a doença renal quística em geral, pelo que nem todos os cartões se aplicam a este diagnóstico.',
-      readingTitle: 'O que registar — e como ler um cartão',
+        'Os quistos são bolsas com líquido. A doença renal quística abrange diferentes condições com quistos nos rins; as causas e os efeitos variam. A doença renal poliquística autossómica dominante (ADPKD) é uma delas, não a única. Este digest cobre a doença renal quística em geral, pelo que nem todos os cartões se aplicam ao seu diagnóstico.',
+      readingTitle: 'O que registar e como ler um cartão',
       trackingBody:
         'Reúna as suas perguntas, o nome do diagnóstico e os resultados e medicamentos discutidos com a equipa de cuidados para levar às consultas. Pergunte à equipa o que deve acompanhar e com que frequência; uma novidade de investigação não é um plano de cuidados individual.',
       readingBody:
         'Cada cartão oferece duas perspetivas: um resumo em linguagem simples para doentes e famílias e uma nota clínica breve para clínicos. Alterne entre ambas, consulte a data e a fonte original e leve à equipa de cuidados as dúvidas sobre a relevância para o seu caso. Não altere o tratamento com base num cartão.',
       nextTitle: 'Por onde continuar',
       nextBody:
-        'Comece pelo digest semanal mais recente, explore novidades individuais na cronologia ou consulte uma edição anterior no arquivo. Os três caminhos levam a cartões publicados em português e inglês.',
+        'Comece pelo digest semanal mais recente, explore os cartões um a um na cronologia ou consulte uma edição anterior no arquivo.',
       disclaimer:
         'Curadoria educativa — não constitui aconselhamento médico. Este guia não substitui as orientações da sua equipa de cuidados.',
     },
@@ -434,7 +429,7 @@ module.exports = {
       title: 'Cronologia',
       lede: 'Cartões publicados, do mais recente para o mais antigo.',
       indexTitle: 'Nesta cronologia',
-      empty: 'Ainda não há itens publicados na cronologia.',
+      empty: 'Ainda não há cartões publicados na cronologia.',
     },
     privacy: {
       title: 'Privacidade',
@@ -489,13 +484,13 @@ module.exports = {
 // BEGIN thematic collections
 module.exports.en.topicBundles = {
   title: 'Thematic collections',
-  lede: 'Curated reading lists on shared concerns, bringing together published cards across weekly issues.',
+  lede: 'Reading lists by topic. Each one gathers published cards from different weekly issues.',
   back: 'All collections',
   cardsTitle: 'Cards in this collection',
 };
 module.exports.pt.topicBundles = {
   title: 'Coleções temáticas',
-  lede: 'Listas de leitura sobre preocupações comuns, reunindo cartões publicados em diferentes edições semanais.',
+  lede: 'Listas de leitura por tema. Cada uma reúne cartões publicados de diferentes edições semanais.',
   back: 'Todas as coleções',
   cardsTitle: 'Cartões nesta coleção',
 };
