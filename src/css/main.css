@@ -336,10 +336,6 @@ button:focus-visible,
   background: var(--primary);
 }
 
-.topbar__brand {
-  display: none;
-}
-
 .locale-switcher {
   display: inline-flex;
   flex-shrink: 0;
@@ -1417,18 +1413,6 @@ h2 {
     padding: 0.15rem 0;
   }
 
-  /* Two-row topbar: brand + locale pill on row one, nav links wrap on row two. */
-  .topbar__brand {
-    display: block;
-    order: 1;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-  }
-
   .locale-switcher {
     order: 2;
   }
@@ -1447,10 +1431,10 @@ h2 {
     row-gap: 0.15rem;
   }
 
-  /* Force the links onto their own row under the brand + pill. */
+  /* Links and pill share a row; on the narrowest screens the links wrap inside the list. */
   .nav__list {
-    flex: 1 1 100%;
-    order: 3;
+    flex: 1 1 0;
+    order: 1;
     flex-wrap: wrap;
     width: auto;
     gap: 0.15rem;
