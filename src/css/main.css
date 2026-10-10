@@ -1214,6 +1214,17 @@ h2 {
   }
 }
 
+/* Until filters.js closes them, phones paint the disclosures as closed so nothing shifts. */
+@media (max-width: 760px) and (scripting: enabled) {
+  :root:not(.disclosures-ready) .disclosure[data-collapse-narrow] > :not(summary) {
+    display: none;
+  }
+
+  :root:not(.disclosures-ready) .disclosure[data-collapse-narrow] > .disclosure__summary::after {
+    transform: translateY(-0.15em) rotate(45deg);
+  }
+}
+
 .disclosure:has(> .filters) {
   margin-bottom: var(--space-6);
 }

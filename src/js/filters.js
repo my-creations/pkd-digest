@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
       details.open = false;
     });
   }
+  document.documentElement.classList.add('disclosures-ready');
   document.querySelectorAll('[data-filters]').forEach(initFilters);
 });
 

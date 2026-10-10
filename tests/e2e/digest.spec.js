@@ -112,4 +112,14 @@ test.describe('digest broadsheet rail', () => {
       await expect(page.locator('[data-filters]')).toBeVisible();
     });
   }
+
+  test.describe('phone without JavaScript', () => {
+    test.use({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+
+    test('filters and issue rail stay open', async ({ page }) => {
+      await page.goto('digest/');
+      await expect(page.locator('[data-filters]')).toBeVisible();
+      await expect(page.locator('.digest-rail ol')).toBeVisible();
+    });
+  });
 });
