@@ -66,8 +66,7 @@ module.exports = {
       howAskText: 'suggests a question for your visit and links the original source with its date.',
       howScope:
         'Cystic kidney disease covers different conditions involving cysts in the kidneys; ADPKD is only one of them. This digest covers the disease in general, so not every card will apply to your diagnosis.',
-      howUse:
-        'Keep your questions, diagnosis name, results and medicines together for appointments. Check the date and original source, and ask your care team what applies to you.',
+      howUse: 'Check each card’s date and original source, and ask your care team what applies to you.',
       howSafety: 'Do not change treatment based on a card. Educational curation only — not medical advice.',
       howGuideLink: 'Learn more about the disease and this project',
       kidneyEyebrow: 'Interactive anatomy',
@@ -216,7 +215,7 @@ module.exports = {
     // Lifestyle guide — begin
     lifestyle: {
       title: 'Care and lifestyle',
-      lede: 'Everyday habits that support kidneys, blood pressure and heart — and what the evidence actually shows about slowing cyst growth.',
+      lede: 'Everyday habits that support kidneys, blood pressure and heart — and what the evidence shows about slowing cyst growth.',
       evidenceTitle: 'What counts as evidence here',
       evidenceBody:
         'Some habits have strong support for blood pressure and heart protection. None has high-quality proof of slowing cyst growth itself. Below, consensus advice comes first; research-only ideas are marked as such.',
@@ -306,8 +305,7 @@ module.exports = {
       howAskText: 'sugere uma pergunta para a consulta e indica a fonte original com data.',
       howScope:
         'A doença renal quística abrange diferentes condições com quistos nos rins; a ADPKD é só uma delas. Este digest cobre a doença em geral, pelo que nem todos os cartões se aplicam ao seu diagnóstico.',
-      howUse:
-        'Registe as suas perguntas, o nome do diagnóstico e os resultados e medicamentos para levar à consulta. Confirme a data e a fonte original e pergunte à equipa o que se aplica ao seu caso.',
+      howUse: 'Confirme a data e a fonte original de cada cartão e pergunte à equipa o que se aplica ao seu caso.',
       howSafety:
         'Não mude o tratamento com base num cartão. Curadoria educativa — não constitui aconselhamento médico.',
       howGuideLink: 'Saber mais sobre a doença e este projeto',
@@ -457,10 +455,10 @@ module.exports = {
     // Lifestyle guide — begin
     lifestyle: {
       title: 'Cuidados e estilo de vida',
-      lede: 'Hábitos do dia a dia que protegem rins, tensão arterial e coração — e o que as provas realmente mostram sobre travar os quistos.',
-      evidenceTitle: 'O que conta como prova aqui',
+      lede: 'Hábitos do dia a dia que protegem rins, tensão arterial e coração — e o que a evidência mostra sobre travar os quistos.',
+      evidenceTitle: 'O que conta como evidência aqui',
       evidenceBody:
-        'Alguns hábitos têm forte apoio para a tensão arterial e o coração. Nenhum tem prova sólida de travar os quistos. Abaixo, o consenso vem primeiro; as ideias só de investigação estão marcadas.',
+        'Alguns hábitos têm forte apoio para a tensão arterial e o coração. Nenhum tem evidência sólida de travar os quistos. Abaixo, o consenso vem primeiro; as ideias só de investigação estão marcadas.',
       waterTitle: 'Água',
       waterBody:
         'Beba o suficiente para evitar a desidratação, sobretudo com calor, exercício ou tolvaptan. Mas um ensaio de 3 anos (PREVENT-ADPKD) concluiu que beber mais água por prescrição não travou o crescimento dos rins — por isso é um cuidado de suporte sensato, não um travão comprovado.',
@@ -469,7 +467,7 @@ module.exports = {
         'Aponte a cerca de 150 minutos por semana de atividade moderada mais algum reforço muscular, adaptado ao que consegue fazer. O exercício ajuda a tensão, o peso, o sono e o humor; nenhum ensaio mostra efeito direto nos quistos. Com rins muito aumentados, pergunte à equipa sobre desportos de contacto e cargas muito pesadas.',
       foodTitle: 'Comida e sal',
       foodBody:
-        'Mantenha o sal baixo (cerca de 5–6 g de sal por dia), coma de forma equilibrada e mantenha peso saudável — mais sal e excesso de peso estão ligados a progressão mais rápida. Evite excesso de proteína; dietas restritivas não têm prova na ADPKD e arriscam malnutrição.',
+        'Mantenha o sal baixo (cerca de 5–6 g de sal por dia), coma de forma equilibrada e mantenha peso saudável — mais sal e excesso de peso estão ligados a progressão mais rápida. Evite excesso de proteína; dietas restritivas não têm evidência na ADPKD e arriscam malnutrição.',
       ketoTitle: 'Dietas cetogénicas e jejum',
       ketoBody:
         'Só em investigação por agora: estudos em animais e ensaios curtos de exequibilidade mostram sinais, mas a KDIGO 2025 desaconselha o uso de rotina para travar a ADPKD fora de ensaios — com dúvidas sobre colesterol, pedras nos rins e nutrição. Só considerar num ensaio supervisionado.',
