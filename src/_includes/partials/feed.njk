@@ -26,7 +26,7 @@
     <id>{{ entryUrl }}</id>
     <updated>{{ item.date | toRfc3339 }}</updated>
     <summary>{{ summaryText }}</summary>
-    <content type="html">{{ entryHtml | safe }}</content>
+    <content type="html">{{ entryHtml | forceescape }}</content>
   </entry>
   {% endfor %}
 </feed>

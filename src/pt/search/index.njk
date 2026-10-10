@@ -18,7 +18,7 @@ eleventyComputed:
 <section
   class="section search"
   data-search
-  data-locale="pt"
+  data-card-base="{{ locale | sectionHref('digest') | url }}"
   data-index-url="{{ '/pt/search-index.json' | url }}"
   data-msg-hint="{{ t.search.hint }}"
   data-msg-none="{{ t.search.noResults }}"

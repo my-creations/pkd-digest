@@ -79,6 +79,9 @@ function validateDocuments(documents, glossaryRules = []) {
 
     if (!data.source || !data.source.url || typeof data.source.url !== 'string') {
       errors.push(`${file}: source.url is required`);
+    } else if (!/^https?:\/\//i.test(data.source.url)) {
+      // Rendered as a raw href; blocks javascript:/data: links reaching the page.
+      errors.push(`${file}: source.url must start with http:// or https://`);
     }
 
     if (!Array.isArray(data.tags) || !Array.isArray(data.audience)) {

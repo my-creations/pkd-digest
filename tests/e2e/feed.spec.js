@@ -18,6 +18,10 @@ test.describe('atom feed', () => {
     expect(entries.length).toBe(cardCount);
     const entryLinks = xml.match(/<link href="[^"]+\/pkd-digest\/digest\/[^"]+\/" \/>/g) || [];
     expect(entryLinks.length).toBe(cardCount);
+
+    // Atom type="html" content must be escaped text, not child elements.
+    expect(xml).toContain('<content type="html">&lt;p&gt;');
+    expect(xml).not.toMatch(/<content type="html"><p>/);
   });
 
   test('serves a PT feed with translated titles', async ({ request }) => {

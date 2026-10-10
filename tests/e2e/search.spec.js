@@ -17,8 +17,11 @@ test.describe('client-side search', () => {
     await expect(page.locator('[data-search-status]')).toContainText('matching card');
     await expect(results.first().locator('a')).toHaveAttribute(
       'href',
-      '/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/'
+      '/pkd-digest/digest/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026/'
     );
+    await results.first().locator('a').click();
+    await expect(page.locator('main h1')).toBeVisible();
+    await expect(page).toHaveURL(/\/pkd-digest\/digest\/kdoqi-us-commentary-kdigo-2025-adpkd-guideline-2026\/$/);
   });
 
   test('searches accent-insensitively in Portuguese', async ({ page }) => {
@@ -31,7 +34,7 @@ test.describe('client-side search', () => {
     const results = page.locator('[data-search-results] li');
     await expect(results.first()).toBeVisible();
     const href = await results.first().locator('a').getAttribute('href');
-    expect(href).toMatch(/^\/pt\/digest\/.+\/$/);
+    expect(href).toMatch(/^\/pkd-digest\/pt\/digest\/.+\/$/);
     await expect(page.locator('[data-search-status]')).toContainText('cart');
   });
 

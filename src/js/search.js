@@ -22,9 +22,9 @@ function cardText(card) {
   );
 }
 
-function cardUrl(locale, slug) {
+function cardUrl(base, slug) {
   const clean = String(slug || '').replace(/^\/+|\/+$/g, '');
-  return locale === 'pt' ? `/pt/digest/${clean}/` : `/digest/${clean}/`;
+  return `${base}${clean}/`;
 }
 
 async function initSearch(root) {
@@ -32,7 +32,7 @@ async function initSearch(root) {
   const status = root.querySelector('[data-search-status]');
   const results = root.querySelector('[data-search-results]');
   if (!input || !status || !results) return;
-  const locale = root.dataset.locale || 'en';
+  const cardBase = root.dataset.cardBase || '/digest/';
 
   let index = null;
   try {
@@ -55,7 +55,7 @@ async function initSearch(root) {
     matches.forEach((card) => {
       const item = document.createElement('li');
       const link = document.createElement('a');
-      link.href = cardUrl(locale, card.slug);
+      link.href = cardUrl(cardBase, card.slug);
       link.textContent = card.title;
       item.appendChild(link);
       results.appendChild(item);

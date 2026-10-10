@@ -73,6 +73,8 @@ def efetch_summaries(pmids: list[str]) -> list[dict]:
             continue
         pmid_el = medline.find("PMID")
         pmid = (pmid_el.text or "").strip() if pmid_el is not None else ""
+        if not pmid.isdigit():  # pmid becomes a filename and URL segment
+            continue
         art = medline.find("Article")
         if art is None:
             continue
@@ -128,7 +130,7 @@ def _parse_pub_date(pub_date_el: ET.Element | None) -> str:
     year = (pub_date_el.findtext("Year") or "").strip()
     month = (pub_date_el.findtext("Month") or "1").strip()
     day = (pub_date_el.findtext("Day") or "1").strip()
-    if not year:
+    if not re.fullmatch(r"\d{4}", year):
         medline = (pub_date_el.findtext("MedlineDate") or "").strip()
         m = re.match(r"(\d{4})", medline)
         return f"{m.group(1)}-01-01" if m else date.today().isoformat()
@@ -285,12 +287,8 @@ def to_item_markdown(item: dict) -> str:
     clinical = item.get("clinicalNote") or {}
 
     def yaml_str(s: str) -> str:
-        if s == "":
-            return '""'
-        if any(c in s for c in ':"\'\n') or s.startswith(" "):
-            escaped = s.replace("\\", "\\\\").replace('"', '\\"')
-            return f'"{escaped}"'
-        return f'"{s}"'
+        escaped = s.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
+        return f'"{escaped}"'
 
     raw_title = item.get("title") or ""
     title = raw_title if isinstance(raw_title, dict) else {"en": raw_title, "pt": ""}

@@ -86,7 +86,8 @@ function initKidney(mount) {
   setPressed(modeButtons, state.mode, 'kidney3dMode');
   syncModeUI();
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // A MediaQueryList, read every frame, so changing the OS setting applies live.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const load = async () => {
     if (status && mount.dataset.loading) status.textContent = mount.dataset.loading;
@@ -1158,12 +1159,21 @@ function createScene(THREE, canvas, { reduceMotion }) {
   canvas.addEventListener('pointercancel', stopDrag);
 
   // Render on demand: only the spinning outside view needs every frame.
-  const tick = () => {
+  // The auto-spin stops 5 s after the model is first on screen (WCAG 2.2.2);
+  // dragging still rotates.
+  let spinUntil = null;
+  let lastFrame = performance.now();
+  const tick = (now = performance.now()) => {
     requestAnimationFrame(tick);
+    const elapsed = Math.min(now - lastFrame, 100);
+    lastFrame = now;
     if (!visible || document.hidden) return;
+    spinUntil ??= now + 5000;
     // The cut face stays put so it can be read; only the outside view spins.
-    const spinning = !reduceMotion && !dragging && currentView === 'external';
-    if (spinning) kidney.rotation.y += 0.0025;
+    const spinning = !reduceMotion.matches && !dragging && currentView === 'external' && now < spinUntil;
+    // 0.00015 rad/ms is the old 0.0025 rad/frame at 60 Hz, now frame-rate independent.
+    if (String(spinning) !== canvas.dataset.spinning) canvas.dataset.spinning = String(spinning);
+    if (spinning) kidney.rotation.y += 0.00015 * elapsed;
     else if (!dirty) return;
     dirty = false;
     // Clip in the kidney's own frame so the cut follows rotation. Update from the

@@ -13,6 +13,17 @@ test.describe('start-here guide', () => {
       await expect(page.locator('html')).toHaveAttribute('lang', locale);
       await expect(page.locator('main h1')).toHaveText(title);
       await expect(page.locator('main h2')).toHaveCount(10);
+      const origin = 'https://my-creations.github.io/pkd-digest/';
+      for (const [lang, path] of [
+        ['en', ''],
+        ['pt', 'pt/'],
+        ['x-default', ''],
+      ]) {
+        await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveAttribute(
+          'href',
+          `${origin}${path}start-here/`
+        );
+      }
       await expect(page.locator('main')).toContainText(i18n[locale].lifestyle.waterTitle);
       await expect(page.locator('main')).toContainText('ADPKD');
       await expect(page.locator('main')).toContainText(disclaimer);

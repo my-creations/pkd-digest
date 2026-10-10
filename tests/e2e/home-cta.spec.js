@@ -11,6 +11,8 @@ for (const locale of ['en', 'pt']) {
     const actions = page.locator('.hero__actions');
     const primary = actions.locator('a.button--primary');
     await expect(primary).toHaveCount(1);
+    // One primary action on the whole page, not just in the hero.
+    await expect(page.locator('main a.button--primary')).toHaveCount(1);
     await expect(primary).toHaveAttribute('href', digestHref);
     await expect(primary).toContainText(i18n[locale].home.ctaDigest);
 

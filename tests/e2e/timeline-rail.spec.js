@@ -89,7 +89,7 @@ test.describe('home latest-issue rail', () => {
     }
 
     // Same cards as the digest river.
-    await expect(page.locator('.section--latest a.button--primary')).toHaveAttribute('href', '/pkd-digest/digest/');
+    await expect(page.locator('.section--latest a.button')).toHaveAttribute('href', '/pkd-digest/digest/');
     await page.goto('digest/');
     expect(await page.locator('.digest-river article').count()).toBe(homeCount);
   });
