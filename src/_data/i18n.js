@@ -39,10 +39,10 @@ module.exports = {
         'We curate summaries in good faith from public sources, but they may be incomplete, delayed, or wrong. Always verify important details with the original source and your care team.',
       noWarrantyTitle: 'No warranty',
       noWarrantyBody:
-        'The site is provided “as is,” without warranties of any kind. To the fullest extent allowed by law, the maintainers are not liable for decisions you make based on this content.',
+        'The site is provided “as is,” without warranties of any kind. To the fullest extent allowed by law, the people who run this site are not liable for decisions you make based on this content.',
       licensingTitle: 'Site and source material',
       licensingBody:
-        'Site code is on GitHub. Linked papers and guidelines remain the property of their publishers; we provide attribution and links, not republication of full texts.',
+        'The site code is on GitHub. The papers and guidelines we link to belong to their publishers. We credit and link to them; we do not republish full texts.',
       contactTitle: 'Contact',
       contactBody: 'For site issues or corrections:',
     },
@@ -192,20 +192,20 @@ module.exports = {
     },
     privacy: {
       title: 'Privacy',
-      lede: 'How PKD Digest handles analytics and personal data.',
-      decisionTitle: 'Analytics decision (v1)',
+      lede: 'How PKD Digest handles your data.',
+      decisionTitle: 'No analytics',
       decisionBody:
-        'We do not use analytics, advertising pixels, or third-party tracking scripts on this site. There is no Plausible, Google Analytics, or similar tag in the layout.',
-      whyTitle: 'Why none for now',
+        'This site uses no analytics, advertising pixels or third-party tracking scripts. It does not load Plausible, Google Analytics or similar tools.',
+      whyTitle: 'Why no tracking',
       whyBody:
-        'This digest serves patients, families, and clinicians around cystic kidney disease. Keeping the site free of traffic trackers avoids unnecessary third-party data flows. GitHub Pages / GitHub may still process standard server or CDN logs outside this repository’s control.',
+        'PKD Digest is read by patients, families and clinicians dealing with cystic kidney disease. With no traffic trackers, this site sends no reader data to third parties. GitHub Pages, which hosts the site, may still process standard server or CDN logs that we do not control.',
       cookiesTitle: 'Cookies',
       cookiesBody:
-        'This static site does not set its own analytics cookies. Essential hosting/CDN behaviour may still apply at the infrastructure layer.',
-      revisitTitle: 'Revisit',
+        'This site sets no analytics cookies of its own. The hosting provider and its CDN may still apply their own essential behaviour.',
+      revisitTitle: 'Possible changes',
       revisitBody:
-        'If we later need privacy-friendly aggregate traffic metrics, Plausible (cookieless) is the preferred candidate — only after an explicit product decision and a separate PR. Until then, “no analytics” remains the documented policy.',
-      legalNote: 'Educational curation only — not medical advice. See also the medical disclaimer on the site.',
+        'If we later want aggregate traffic numbers, the preferred option is Plausible, which uses no cookies. That would be a deliberate decision, and this page would be updated. Until then, the policy is no analytics.',
+      legalNote: 'Educational curation only — not medical advice. See also Terms and disclaimer.',
     },
     // Patient dictionary — begin
     glossary: {
@@ -279,10 +279,10 @@ module.exports = {
         'Curamos resumos de boa-fé a partir de fontes públicas, mas podem estar incompletos, atrasados ou errados. Confirme sempre detalhes importantes na fonte original e com a sua equipa de cuidados.',
       noWarrantyTitle: 'Sem garantia',
       noWarrantyBody:
-        'O site é disponibilizado “como está”, sem garantias de qualquer tipo. Na máxima medida permitida por lei, os mantenedores não são responsáveis por decisões tomadas com base neste conteúdo.',
+        'O site é disponibilizado “como está”, sem garantias de qualquer tipo. Na medida máxima permitida por lei, os responsáveis pelo site não respondem por decisões tomadas com base neste conteúdo.',
       licensingTitle: 'Site e material de origem',
       licensingBody:
-        'O código do site está no GitHub. Artigos e guidelines ligados continuam a pertencer aos editores; fornecemos atribuição e ligações, não a republicação de textos completos.',
+        'O código do site está no GitHub. Os artigos e as orientações clínicas a que ligamos pertencem aos respetivos editores. Indicamos a fonte e a ligação; não republicamos os textos completos.',
       contactTitle: 'Contacto',
       contactBody: 'Para problemas do site ou correções:',
     },
@@ -433,20 +433,20 @@ module.exports = {
     },
     privacy: {
       title: 'Privacidade',
-      lede: 'Como o Digest DRP trata analytics e dados pessoais.',
-      decisionTitle: 'Decisão de analytics (v1)',
+      lede: 'Como o Digest DRP trata os seus dados.',
+      decisionTitle: 'Sem análise de tráfego',
       decisionBody:
-        'Não usamos analytics, pixels de publicidade nem scripts de tracking de terceiros neste site. Não há Plausible, Google Analytics nem tags semelhantes no layout.',
-      whyTitle: 'Porquê nenhum por agora',
+        'Este site não usa análise de tráfego, pixels de publicidade nem scripts de rastreio de terceiros. Não carrega Plausible, Google Analytics nem ferramentas semelhantes.',
+      whyTitle: 'Porque não há rastreio',
       whyBody:
-        'Este digest serve doentes, famílias e clínicos em torno da doença renal quística. Evitar trackers de tráfego reduz fluxos desnecessários de dados a terceiros. O GitHub Pages / GitHub pode ainda processar logs de servidor ou CDN fora do controlo deste repositório.',
+        'O Digest DRP é lido por doentes, famílias e clínicos que lidam com a doença renal quística. Sem ferramentas de rastreio, este site não envia dados dos leitores a terceiros. O GitHub Pages, que aloja o site, pode ainda processar registos de servidor ou de CDN que não controlamos.',
       cookiesTitle: 'Cookies',
       cookiesBody:
-        'Este site estático não define cookies próprios de analytics. Pode ainda aplicar-se comportamento essencial de hosting/CDN ao nível da infraestrutura.',
-      revisitTitle: 'Revisão futura',
+        'Este site não define cookies próprios de análise de tráfego. O fornecedor de alojamento e a sua CDN podem ainda aplicar o seu próprio comportamento essencial.',
+      revisitTitle: 'Alterações futuras',
       revisitBody:
-        'Se mais tarde precisarmos de métricas agregadas privacy-friendly, Plausible (sem cookies) é o candidato preferido — só após decisão explícita de produto e um PR separado. Até lá, a política documentada é “sem analytics”.',
-      legalNote: 'Curadoria educativa — não constitui aconselhamento médico. Ver também o aviso médico no site.',
+        'Se mais tarde quisermos números agregados de tráfego, a opção preferida é o Plausible, que não usa cookies. Seria uma decisão deliberada, e esta página seria atualizada. Até lá, a política é não usar análise de tráfego.',
+      legalNote: 'Curadoria educativa — não constitui aconselhamento médico. Ver também Termos e aviso legal.',
     },
     // Patient dictionary — begin
     glossary: {
