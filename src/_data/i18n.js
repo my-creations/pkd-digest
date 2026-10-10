@@ -108,7 +108,7 @@ module.exports = {
       kidneyPickHint: 'pick a structure below to highlight it',
       curationTitle: 'How curation works',
       curationBody:
-        'A script shortlists new PubMed papers each week. A person then reads each one, writes the plain-language summary and the clinical note, and decides what to publish. Educational only — not medical advice.',
+        'A script shortlists new PubMed papers each week. The summaries are drafted with AI help, then a person reviews and edits each one and decides what to publish. Educational only — not medical advice.',
     },
     digest: {
       title: 'Weekly digest',
@@ -349,7 +349,7 @@ module.exports = {
       kidneyPickHint: 'escolha uma estrutura abaixo para a destacar',
       curationTitle: 'Como funciona a curadoria',
       curationBody:
-        'Todas as semanas, um script seleciona artigos novos do PubMed. Depois, uma pessoa lê cada um, escreve o resumo em linguagem simples e a nota clínica e decide o que publicar. Apenas educativo — não constitui aconselhamento médico.',
+        'Todas as semanas, um script seleciona artigos novos do PubMed. Os resumos são redigidos com ajuda de IA; depois, uma pessoa revê e edita cada um e decide o que publicar. Apenas educativo — não constitui aconselhamento médico.',
     },
     digest: {
       title: 'Digest semanal',
