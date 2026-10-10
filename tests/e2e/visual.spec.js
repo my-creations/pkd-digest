@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { openDisclosures } = require('./disclosures');
 
 // Pixel snapshots were tried and rejected: full-page images depend on the
 // OS font stack (local vs CI render different line breaks) and break on
@@ -41,6 +42,7 @@ test.describe('visual layout invariants', () => {
 
   test('filter bar keeps breathing room above the issue content', async ({ page }) => {
     await page.goto('digest/');
+    await openDisclosures(page);
 
     const bar = page.locator('[data-filters]');
     const shell = page.locator('.digest-shell');

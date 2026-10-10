@@ -32,7 +32,8 @@ eleventyComputed:
 
   <div class="digest-shell">
     <aside class="digest-rail" aria-label="{{ t.digest.inThisIssue }}">
-      <h2>{{ t.digest.inThisIssue }}</h2>
+      <details class="disclosure" open data-collapse-narrow>
+      <summary class="disclosure__summary"><h2>{{ t.digest.inThisIssue }}</h2></summary>
       <ol>
         {% for item in items %}
           <li data-rail-item="{{ loop.index }}">
@@ -40,6 +41,7 @@ eleventyComputed:
           </li>
         {% endfor %}
       </ol>
+      </details>
     </aside>
 
     <div class="digest-river">

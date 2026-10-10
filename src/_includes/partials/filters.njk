@@ -1,6 +1,8 @@
 {# Card filters (progressive enhancement: no-JS shows everything).
    Expects `t` (i18n) and `locale`. Cards carry data-tags/data-audience. #}
 {% set f = t.digest.filters %}
+<details class="disclosure" open data-collapse-narrow>
+<summary class="disclosure__summary">{{ f.toggle }}</summary>
 <div
   class="filters"
   data-filters
@@ -31,3 +33,4 @@
     <p class="filters__count" aria-live="polite" data-filters-count></p>
   </div>
 </div>
+</details>

@@ -9,6 +9,7 @@ module.exports = {
         'http://localhost:8931/pkd-digest/',
         'http://localhost:8931/pkd-digest/digest/',
         'http://localhost:8931/pkd-digest/pt/digest/',
+        'http://localhost:8931/pkd-digest/start-here/',
       ],
       numberOfRuns: 1,
     },

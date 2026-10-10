@@ -6,6 +6,13 @@
  * single-select tag + audience groups, rail sync via data-filter-index, live count.
  */
 document.addEventListener('DOMContentLoaded', () => {
+  // Filters and the issue rail start closed on phones so the lead story is in the first screen.
+  if (matchMedia('(max-width: 760px)').matches) {
+    document.querySelectorAll('details[data-collapse-narrow]').forEach((details) => {
+      details.open = false;
+    });
+  }
+  document.documentElement.classList.add('disclosures-ready');
   document.querySelectorAll('[data-filters]').forEach(initFilters);
 });
 

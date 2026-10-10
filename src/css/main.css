@@ -336,10 +336,6 @@ button:focus-visible,
   background: var(--primary);
 }
 
-.topbar__brand {
-  display: none;
-}
-
 .locale-switcher {
   display: inline-flex;
   flex-shrink: 0;
@@ -1090,6 +1086,7 @@ h2 {
   .dual__btn,
   .chip,
   .filters__reset,
+  .disclosure__summary,
   .kidney3d__table th button {
     min-height: 2.5rem;
   }
@@ -1176,6 +1173,64 @@ h2 {
 /* ——— Card filters ——— */
 [hidden] {
   display: none !important;
+}
+
+/* Filters and the issue rail: open on desktop, closed on phones (filters.js). */
+.disclosure__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure__summary::after {
+  content: '';
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-0.15em) rotate(45deg);
+}
+
+.disclosure[open] > .disclosure__summary::after {
+  transform: translateY(0.1em) rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .disclosure__summary::after {
+    transition: transform 0.2s ease-out;
+  }
+}
+
+/* Until filters.js closes them, phones paint the disclosures as closed so nothing shifts. */
+@media (max-width: 760px) and (scripting: enabled) {
+  :root:not(.disclosures-ready) .disclosure[data-collapse-narrow] > :not(summary) {
+    display: none;
+  }
+
+  :root:not(.disclosures-ready) .disclosure[data-collapse-narrow] > .disclosure__summary::after {
+    transform: translateY(-0.15em) rotate(45deg);
+  }
+}
+
+.disclosure:has(> .filters) {
+  margin-bottom: var(--space-6);
+}
+
+.disclosure > .filters {
+  margin: var(--space-2) 0 0;
 }
 
 .filters {
@@ -1417,18 +1472,6 @@ h2 {
     padding: 0.15rem 0;
   }
 
-  /* Two-row topbar: brand + locale pill on row one, nav links wrap on row two. */
-  .topbar__brand {
-    display: block;
-    order: 1;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted-foreground);
-  }
-
   .locale-switcher {
     order: 2;
   }
@@ -1447,10 +1490,10 @@ h2 {
     row-gap: 0.15rem;
   }
 
-  /* Force the links onto their own row under the brand + pill. */
+  /* Links and pill share a row; on the narrowest screens the links wrap inside the list. */
   .nav__list {
-    flex: 1 1 100%;
-    order: 3;
+    flex: 1 1 0;
+    order: 1;
     flex-wrap: wrap;
     width: auto;
     gap: 0.15rem;

@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { openDisclosures } = require('./disclosures');
 
 async function visibleCards(page, scope = '.digest-river') {
   return page.locator(`${scope} [data-filterable]:not([hidden])`).count();
@@ -21,6 +22,7 @@ async function partialTag(page, scope = '.digest-river') {
 test.describe('card filters', () => {
   test('narrows digest cards by topic and syncs the rail', async ({ page }) => {
     await page.goto('digest/');
+    await openDisclosures(page);
 
     const total = await page.locator('.digest-river [data-filterable]').count();
     expect(total).toBeGreaterThan(0);
@@ -50,6 +52,7 @@ test.describe('card filters', () => {
 
   test('combines audience filter and resets', async ({ page }) => {
     await page.goto('digest/');
+    await openDisclosures(page);
     const total = await page.locator('.digest-river [data-filterable]').count();
 
     await page.locator('[data-filter-group="audience"] [data-filter-value="clinicians"]').click();
@@ -67,6 +70,7 @@ test.describe('card filters', () => {
 
   test('shows an empty state when nothing matches', async ({ page }) => {
     await page.goto('digest/');
+    await openDisclosures(page);
 
     // Find a topic × audience pair with zero matches in the live data.
     const combo = await page.locator('.digest-river [data-filterable]').evaluateAll((nodes) => {
@@ -97,6 +101,7 @@ test.describe('card filters', () => {
 
   test('filters work in Portuguese with localized labels', async ({ page }) => {
     await page.goto('pt/digest/');
+    await openDisclosures(page);
     const total = await page.locator('.digest-river [data-filterable]').count();
 
     await expect(page.locator('[data-filter-group="tag"]')).toContainText('Tema');
@@ -111,6 +116,7 @@ test.describe('card filters', () => {
 
   test('filters narrow the timeline list', async ({ page }) => {
     await page.goto('timeline/');
+    await openDisclosures(page);
     const total = await page.locator('.timeline-list [data-filterable]').count();
     expect(total).toBeGreaterThan(0);
 
